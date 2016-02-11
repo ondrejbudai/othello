@@ -3,5 +3,5 @@ project(othello)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
-set(SOURCE_FILES main.cpp)
-add_executable(othello ${SOURCE_FILES})
+set(SOURCE_FILES_CLI GameBoard.cc GameLogic.cc MainGame.cc Player.cc AI.cc main.cc)
+add_executable(othello-cli ${SOURCE_FILES_CLI})
