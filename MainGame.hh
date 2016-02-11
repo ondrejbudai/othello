@@ -19,7 +19,7 @@ namespace othello {
 
         void initPlayers(); // struktura do parametru potom
 
-        void event() { } // event funkce
+        void event(); // event funkce
     };
 }
 

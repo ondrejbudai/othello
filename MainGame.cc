@@ -6,4 +6,17 @@
 
 namespace othello {
 
+    void MainGame::initPlayers(){
+
+
+    }
+
+
+
+    void MainGame::event(){ // event funkce
+    
+    
+    }
+
+
 }
