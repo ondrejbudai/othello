@@ -15,7 +15,7 @@ namespace othello {
 
     struct Field {
         Color piece_;
-        bool occupied;
+        bool occupied_;
         bool frozen_;
     };
 
@@ -24,13 +24,14 @@ namespace othello {
 
         using Board = std::vector<std::vector<Field>>;
         Board board_;
+        unsigned size_;
 
     public:
         GameBoard(unsigned size);
 
         const Field& GetField(unsigned x, unsigned y) const;
 
-        void setPiece(unsigned x, unsigned y, Color p);
+        void setPiece(unsigned x, unsigned y, Color c);
 
         void setFrozen(unsigned x, unsigned y, bool f);
     };
