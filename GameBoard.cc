@@ -11,8 +11,12 @@ namespace othello {
     GameBoard::GameBoard(unsigned size):size_(size) {
         assert(size % 2 == 0);
         for (unsigned i = 0; i < size; i++){
-            board_.push_back(std::vector<Field>(size,{Color::BLACK,false,false}));	
-            
+            std::vector<Field> newRow;
+            for (unsigned j = 0; j < size; j++){
+                newRow.push_back(Field{Color::BLACK,false,false,i,j});
+            //board_.push_back(std::vector<Field>(size,{Color::BLACK,false,false}));	
+            }
+            board_.push_back(newRow);
         }
         unsigned middle = size / 2;
         this->setPiece(middle, middle, Color::BLACK);

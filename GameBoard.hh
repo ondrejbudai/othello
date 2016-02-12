@@ -17,6 +17,8 @@ namespace othello {
         Color piece_;
         bool occupied_;
         bool frozen_;
+        unsigned x_;
+        unsigned y_;
     };
 
     class GameBoard {

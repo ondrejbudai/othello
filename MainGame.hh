@@ -31,7 +31,7 @@ namespace othello {
 
         Color getCurrentPlayer() const { return current_player_; }
         
-        bool isMoveValid(unsigned x, unsigned y, Color addingColor, std::vector<std::pair<int,int> > &toChange);
+        bool isMoveValid(unsigned x, unsigned y, Color addingColor, std::vector<Field> &toChange);
     };
 }
 
