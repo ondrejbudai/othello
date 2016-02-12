@@ -13,10 +13,10 @@ int main() {
     //samotne okno pri udalosti, vyvola funkcie, ktore su implementovane v gamelogic a v maingame
     //nasledujuca cast je pre terminal a tesotvanie
     while (true){
+        g.printGameBoard();
         std::cout<<"Zadaj suradnice: "<<std::flush;
         int x, y;
         std::cin>>x>>y;
         g.event(x,y);
-        g.printGameBoard();
     }
 }
