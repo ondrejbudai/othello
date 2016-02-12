@@ -41,7 +41,7 @@ namespace othello {
 
 
     //pomocna funkcia pre pracu bez gui 
-    void MainGame::printGameBoard() {//Zobrazi hraciu plochu na terminal
+    void MainGame::printGameBoard() const {//Zobrazi hraciu plochu na terminal
         using namespace std;
         cout << "   ";
         for (unsigned i = 0; i < board_.getSize(); i++) {

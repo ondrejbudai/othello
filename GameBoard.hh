@@ -35,11 +35,9 @@ namespace othello {
 
         void setFrozen(unsigned x, unsigned y, bool f);
 
-        bool isOccupied(unsigned x, unsigned y);
+        bool isOccupied(unsigned x, unsigned y) const;
 
-        unsigned getSize(){return size_;}
-
-        int getColor(unsigned x, unsigned y);
+        unsigned getSize() const { return size_; }
 
         void getNeighbours(unsigned x, unsigned y, std::vector<Field> &fields);
     };

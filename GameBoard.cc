@@ -40,17 +40,12 @@ namespace othello {
         
     }
 
-    
-    bool GameBoard::isOccupied(unsigned x, unsigned y){
+
+    bool GameBoard::isOccupied(unsigned x, unsigned y) const {
         assert(x < size_ && y < size_);
         return board_[x][y].occupied_;
     }
-    
-    int GameBoard::getColor(unsigned x, unsigned y){
-        assert(x < size_ && y < size_);
 
-        return board_[x][y].piece_==Color::BLACK?0:1;
-    }
     
     void GameBoard::getNeighbours(unsigned x, unsigned y, std::vector<Field> &fields){
         int xj = -1;
