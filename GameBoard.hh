@@ -41,7 +41,7 @@ namespace othello {
 
         unsigned getSize() const { return size_; }
 
-        void getNeighbours(unsigned x, unsigned y, std::vector<Field> &fields);
+        std::vector<Field> getNeighbours(unsigned x, unsigned y) const;
     };
 }
 

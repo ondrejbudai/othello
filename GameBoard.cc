@@ -50,8 +50,9 @@ namespace othello {
         return board_[x][y].occupied_;
     }
 
-    
-    void GameBoard::getNeighbours(unsigned x, unsigned y, std::vector<Field> &fields){
+
+    std::vector<Field>GameBoard::getNeighbours(unsigned x, unsigned y) const {
+        std::vector<Field> fields;
         int xj = -1;
         int yj = -1;
         int xf =  1;
@@ -63,6 +64,7 @@ namespace othello {
         for (int i = xj; i <= xf; i++)
             for (int j = yj; j <= yf; j++)
                 fields.push_back(board_[x+i][y+j]);
+        return fields;
     }
 }
 

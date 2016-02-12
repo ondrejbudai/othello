@@ -78,10 +78,7 @@ namespace othello {
         //zistime ci dava na volne policko
         if (board_.isOccupied(x,y))
             return false;//obsadene policko
-        std::vector<Field> fields;
-        
-        //najdeme vsetky susedne policka
-        board_.getNeighbours(x, y, fields);
+        std::vector<Field> fields = board_.getNeighbours(x, y);
         
         //zo vsetkych susednych vytriedime len tie, ktore su obsadene superom
         std::vector<Field> oppositeFields;
