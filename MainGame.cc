@@ -5,7 +5,7 @@
 #include "MainGame.hh"
 
 #include <iostream>
-
+#include <vector>
 
 namespace othello {
 
@@ -58,5 +58,26 @@ namespace othello {
         }
     }
 
+    /// x, y su suradnice
+    //adding color je farba kamena, ktory chceme pridat
+    //toChange je referencia na vektor parov, ktory naplnime vsetkymi poziciami, ktore sa maju
+    //zmenit
+    bool MainGame::isMoveValid(unsigned x, unsigned y, Color addingColor, std::vector<std::pair<int,int> > &toChange){
+        //zistime ci dava na volne policko
+        if (board_.isOccupied(x,y))
+            return false;//obsadene policko
+        std::vector<Field> fields;
+        //najdeme vsetky susedne policka
+        board_.getNeighbours(x, y, fields);
+        //zo vsetkych susednych vytriedime len tie, ktore su obsadene superom
+        std::vector<Field> validFields;
+        for (auto const& fld: fields){
+            //if (fld.occupied_ && fld.piece_ == addingColor+1)%2)
+                validFields.push_back(fld);
+        }
+        
+        //pre kazdy najdeny kamen zistime ci existuje cesta a pridam vsetky kamene z cesty do
+        //toChange
+    }
 
 }

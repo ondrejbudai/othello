@@ -7,9 +7,8 @@
 
 namespace othello {
 
-    GameBoard::GameBoard(unsigned size) {
+    GameBoard::GameBoard(unsigned size):size_(size) {
         assert(size % 2 == 0);
-        size_ = size;
         for (unsigned i = 0; i < size; i++){
             board_.push_back(std::vector<Field>(size,{Color::BLACK,false,false}));	
             
@@ -44,6 +43,26 @@ namespace othello {
     bool GameBoard::isOccupied(unsigned x, unsigned y){
         assert(x < size_ && y < size_);
         return board_[x][y].occupied_;
+    }
+    
+    int GameBoard::getColor(unsigned x, unsigned y){
+        assert(x < size_ && y < size_);
+
+        return board_[x][y].piece_==Color::BLACK?0:1;
+    }
+    
+    void GameBoard::getNeighbours(unsigned x, unsigned y, std::vector<Field> &fields){
+        int xj = -1;
+        int yj = -1;
+        int xf =  1;
+        int yf =  1;
+        if (x == 0)       xj = 0;
+        if (x == size_-1) xf = 0;
+        if (y == 0)       yj = 0;
+        if (y == size_-1) yf = 0;
+        for (int i = xj; xj <= xf; i++)
+            for (int j = yj; j <= yf; j++)
+                fields.push_back(board_[i][j]);
     }
 }
 
