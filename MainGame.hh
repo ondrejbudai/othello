@@ -27,9 +27,9 @@ namespace othello {
 
         void event(unsigned x, unsigned y); // event funkce
 
-        void printGameBoard();//Zobrazi hraciu plochu na terminal
-        
-        Color getCurrentPlayer() { return current_player_; }
+        void printGameBoard() const;//Zobrazi hraciu plochu na terminal
+
+        Color getCurrentPlayer() const { return current_player_; }
         
         bool isMoveValid(unsigned x, unsigned y, Color addingColor, std::vector<std::pair<int,int> > &toChange);
     };
