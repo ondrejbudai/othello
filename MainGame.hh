@@ -25,7 +25,7 @@ namespace othello {
 
         void initPlayers(); // struktura do parametru potom
 
-        Color event(unsigned x, unsigned y); // event funkce
+        Color event(unsigned x, unsigned y, Color playedBy); // event funkce
 
         void printGameBoard();//Zobrazi hraciu plochu na terminal
         

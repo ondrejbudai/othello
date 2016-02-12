@@ -18,7 +18,7 @@ namespace othello {
 
     //Ak uzivatel zada suradnice alebo staci prislusne okenko
     //vracia ukazatel na hraca ktory je na rade
-    Color MainGame::event(unsigned x, unsigned y ){ // event funkce
+    Color MainGame::event(unsigned x, unsigned y, Color playedBy ){ // event funkce
         //kontrola ci sa jedna o validny tah od uzivatela co je na rade(ako to kontrolovat?)
         //ak jedna ho nastavime
         board_.setPiece(x,y, current_player_);
