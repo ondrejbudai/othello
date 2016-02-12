@@ -19,8 +19,8 @@ namespace othello {
         Player players_[2];
         // frozen stuff
     public:
-        MainGame(unsigned size):board_{size}{}; 
-        
+        MainGame(unsigned size) : board_{size} { };
+
         void play(unsigned x, unsigned y, Color playing);
 
         void initPlayers(); // struktura do parametru potom
@@ -30,8 +30,10 @@ namespace othello {
         void printGameBoard() const;//Zobrazi hraciu plochu na terminal
 
         Color getCurrentPlayer() const { return current_player_; }
-        
-        bool isMoveValid(unsigned x, unsigned y, Color addingColor, std::vector<Field> &toChange);
+
+        bool isMoveValid(unsigned x, unsigned y, Color addingColor, std::vector<Field>& toChange);
+
+        bool isEnd();
     };
 }
 

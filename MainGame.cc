@@ -129,4 +129,27 @@ namespace othello {
         return true;
     }
 
+    bool MainGame::isEnd() {
+
+        // najdi vsechna volna policka
+        std::vector<Field> emptyFields;
+        for (unsigned x = 0; x < board_.getSize(); ++x) {
+            for (unsigned y = 0; y < board_.getSize(); ++y) {
+                if (!board_.isOccupied(x, y))
+                    emptyFields.push_back(board_.GetField(x, y));
+            }
+        }
+
+        if (emptyFields.empty())
+            return true;
+
+        // projdi vsechny, pokud je alespon pro jednoho hrace mozny tah, hra nekonci
+        std::vector<Field> dummy;
+        for (const auto& f : emptyFields) {
+            if (isMoveValid(f.x_, f.y_, Color::WHITE, dummy) || isMoveValid(f.x_, f.y_, Color::BLACK, dummy))
+                return false;
+        }
+
+        return true;
+    }
 }
