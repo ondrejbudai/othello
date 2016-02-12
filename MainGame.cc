@@ -105,21 +105,21 @@ namespace othello {
                 //ak sme sa dostali mimo pole
                 if (pomX < 0 || pomX >= int(board_.getSize()) || pomY < 0 || pomY >= int(board_.getSize()))
                     break;
-                Field candidat = board_.GetField(pomX, pomY);
+                Field candidate = board_.GetField(pomX, pomY);
                 //ak dane poliecko nie je obsadene, nie je to kandidat
-                if (!candidat.occupied_)
+                if (!candidate.occupied_)
                     break;
                 //ak sme nasli svoju farbu a mame aspon jednu superovu medzitym
-                if (candidat.piece_ == addingColor && !possibleChanges.empty()) {
+                if (candidate.piece_ == addingColor && !possibleChanges.empty()) {
                     for (unsigned f = 0; f < possibleChanges.size(); f++)
                         std::cout << possibleChanges[f].x_ << " " << possibleChanges[f].y_ << std::endl << std::flush;
-                    toChange.insert(toChange.end(), possibleChanges.begin(), possibleChanges.end());
+                    toChange.insert(end(toChange), begin(possibleChanges), end(possibleChanges));
                     std::cout << "Najdeny jeden vektor\n";
                     break;
                 }
                 //ak patri field superovy
-                if (candidat.piece_ == GetOppositeColor(addingColor))
-                    possibleChanges.push_back(candidat);
+                if (candidate.piece_ == GetOppositeColor(addingColor))
+                    possibleChanges.push_back(candidate);
             }
 
         }
