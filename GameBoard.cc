@@ -45,11 +45,5 @@ namespace othello {
         assert(x < size_ && y < size_);
         return board_[x][y].occupied_;
     }
-    
-    int GameBoard::getColor(unsigned x, unsigned y){
-        assert(x < size_ && y < size_);
-
-        return board_[x][y].piece_==Color::BLACK?0:1;
-    }
 }
 

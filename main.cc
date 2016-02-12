@@ -13,14 +13,13 @@ int main() {
     othello::MainGame g(8);//toto potom tu nebude
     //samotne okno pri udalosti, vyvola funkcie, ktore su implementovane v gamelogic a v maingame
     //nasledujuca cast je pre terminal a tesotvanie
-    othello::Color moves = othello::Color::BLACK;//alebo ten co zacina z menu sa vyberie
     while (true) {
         g.printGameBoard();
-        std::cout << "Na tahu je " << (moves == othello::Color::BLACK ? "BLACK" : "WHITE") << std::endl;
+        std::cout << "Na tahu je " << (g.getCurrentPlayer() == othello::Color::BLACK ? "BLACK" : "WHITE") << std::endl;
         std::cout << "Zadaj suradnice: " << std::flush;
         int x, y;
         std::cin >> x >> y;
-        moves = g.event(x, y, moves);//but vrati tu istu farbu ak je druhy AI, alebo vrati opacnu  farbu
+        g.event(x, y);//but vrati tu istu farbu ak je druhy AI, alebo vrati opacnu  farbu
         // ak ma tah...
 
     }

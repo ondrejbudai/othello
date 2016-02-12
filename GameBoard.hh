@@ -37,9 +37,7 @@ namespace othello {
 
         bool isOccupied(unsigned x, unsigned y);
 
-        unsigned getSize(){return size_;}
-
-        int getColor(unsigned x, unsigned y);
+        unsigned getSize() { return size_; }
     };
 }
 

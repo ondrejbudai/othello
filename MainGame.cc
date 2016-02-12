@@ -18,7 +18,7 @@ namespace othello {
 
     //Ak uzivatel zada suradnice alebo staci prislusne okenko
     //vracia ukazatel na hraca ktory je na rade
-    Color MainGame::event(unsigned x, unsigned y, Color /*playedBy*/) { // event funkce
+    void MainGame::event(unsigned x, unsigned y) { // event funkce
         //kontrola ci sa jedna o validny tah od uzivatela co je na rade(ako to kontrolovat?)
         //ak jedna ho nastavime
         board_.setPiece(x, y, current_player_);
@@ -29,7 +29,7 @@ namespace othello {
         //while (current_player == AI){
         //AI.play();//play vyvolava tuto funckiu
         //}
-        return current_player_;
+        current_player_ = current_player_ == Color::WHITE ? Color::BLACK : Color::WHITE;
 
     }
 
@@ -50,7 +50,7 @@ namespace othello {
             cout << i << " ";
             for (unsigned j = 0; j < board_.getSize(); j++) {
                 if (board_.isOccupied(i, j))
-                    cout << (board_.getColor(i, j) ? "\u25CB" : "\u25CD") << " ";
+                    cout << (board_.GetField(i, j).piece_ == Color::BLACK ? "\u25CB" : "\u25CD") << " ";
                 else
                     cout << "  ";
             }
