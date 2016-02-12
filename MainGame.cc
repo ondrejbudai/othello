@@ -19,6 +19,12 @@ namespace othello {
     //Ak uzivatel zada suradnice alebo staci prislusne okenko
     //vracia ukazatel na hraca ktory je na rade
     void MainGame::event(unsigned x, unsigned y) { // event funkce
+        std::vector<std::pair<int,int> > toChange;
+        if (!isMoveValid(x, y, current_player_, toChange)){
+            std::cout<<"Neplatny tah\n";
+            return;
+        }
+
         //kontrola ci sa jedna o validny tah od uzivatela co je na rade(ako to kontrolovat?)
         //ak jedna ho nastavime
         board_.setPiece(x, y, current_player_);
@@ -67,17 +73,27 @@ namespace othello {
         if (board_.isOccupied(x,y))
             return false;//obsadene policko
         std::vector<Field> fields;
+        
         //najdeme vsetky susedne policka
         board_.getNeighbours(x, y, fields);
+        
         //zo vsetkych susednych vytriedime len tie, ktore su obsadene superom
         std::vector<Field> validFields;
         for (auto const& fld: fields){
-            //if (fld.occupied_ && fld.piece_ == addingColor+1)%2)
+            if (fld.occupied_ && fld.piece_ == (addingColor== othello::Color::BLACK ? othello::Color::WHITE : othello::Color::BLACK))
                 validFields.push_back(fld);
         }
-        
+
+        //ak sme nic nenasli, invalidny tah
+        if (validFields.empty())
+            return false;
+
         //pre kazdy najdeny kamen zistime ci existuje cesta a pridam vsetky kamene z cesty do
+        for (auto const& fld: validFields){
+            int f = 0;    
+        }
         //toChange
+        return true;
     }
 
 }

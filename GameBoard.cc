@@ -4,6 +4,7 @@
 
 #include "GameBoard.hh"
 #include <cassert>
+#include <iostream>
 
 namespace othello {
 
@@ -60,9 +61,9 @@ namespace othello {
         if (x == size_-1) xf = 0;
         if (y == 0)       yj = 0;
         if (y == size_-1) yf = 0;
-        for (int i = xj; xj <= xf; i++)
+        for (int i = xj; i <= xf; i++)
             for (int j = yj; j <= yf; j++)
-                fields.push_back(board_[i][j]);
+                fields.push_back(board_[x+i][y+j]);
     }
 }
 
