@@ -24,7 +24,7 @@ namespace othello {
 
         using Board = std::vector<std::vector<Field>>;
         Board board_;
-        unsigned size_;
+        const unsigned size_;
 
     public:
         GameBoard(unsigned size);
@@ -40,6 +40,8 @@ namespace othello {
         unsigned getSize(){return size_;}
 
         int getColor(unsigned x, unsigned y);
+
+        void getNeighbours(unsigned x, unsigned y, std::vector<Field> &fields);
     };
 }
 
