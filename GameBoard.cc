@@ -13,7 +13,7 @@ namespace othello {
             board_.push_back(std::vector<Field>(size,{Color::BLACK,false,false}));	
             
         }
-        int middle = size / 2;
+        unsigned middle = size / 2;
         this->setPiece(middle, middle, Color::BLACK);
         this->setPiece(middle-1, middle-1, Color::BLACK);
             

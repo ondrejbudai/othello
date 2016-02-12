@@ -15,7 +15,7 @@ namespace othello {
     class MainGame {
     private:
         GameBoard board_;
-        Color current_player_;
+        Color current_player_ = Color::WHITE;
         Player players_[2];
         // frozen stuff
     public:
@@ -25,7 +25,7 @@ namespace othello {
 
         void initPlayers(); // struktura do parametru potom
 
-        Color event(unsigned x, unsigned y, Color playedBy); // event funkce
+        void event(unsigned x, unsigned y); // event funkce
 
         void printGameBoard();//Zobrazi hraciu plochu na terminal
         
