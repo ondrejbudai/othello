@@ -39,4 +39,17 @@ namespace othello {
         board_[x][y].frozen_ = f;
         
     }
+
+    
+    bool GameBoard::isOccupied(unsigned x, unsigned y){
+        assert(x < size_ && y < size_);
+        return board_[x][y].occupied_;
+    }
+    
+    int GameBoard::getColor(int x, int y){
+        assert(x < size_ && y < size_);
+
+        return board_[x][y].piece_==Color::BLACK?0:1;
+    }
 }
+

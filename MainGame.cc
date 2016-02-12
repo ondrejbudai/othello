@@ -4,7 +4,11 @@
 
 #include "MainGame.hh"
 
+#include <iostream>
+
+
 namespace othello {
+
 
     void MainGame::initPlayers(){
 
@@ -13,10 +17,24 @@ namespace othello {
 
 
 
-    void MainGame::event(){ // event funkce
-    
+    void MainGame::event(int x, int y){ // event funkce
     
     }
+
+
+    
+    void MainGame::printGameBoard(){//Zobrazi hraciu plochu na terminal
+        for (unsigned i = 0; i < board_.getSize(); i++){
+            for (int j = 0; j < board_.getSize(); j++){
+                if (board_.isOccupied(i, j))
+                    std::cout<<board_.getColor(i,j)<<" ";
+                else
+                    std::cout<<"_ ";
+            }
+            std::cout<<std::endl;
+        }
+    }
+
 
 
 }

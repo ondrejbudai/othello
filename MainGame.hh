@@ -5,21 +5,31 @@
 #ifndef OTHELLO_MAINGAME_HH
 #define OTHELLO_MAINGAME_HH
 
-#include "GameLogic.hh"
 #include "Player.hh"
+#include "GameBoard.hh"
 
 
 namespace othello {
+
+
     class MainGame {
     private:
-        GameLogic game_logic_;
+        GameBoard board_;
+        Color current_player_;
         Player players_[2];
+        // frozen stuff
     public:
-        MainGame(unsigned size) : game_logic_{size} { }
+        MainGame(unsigned size):board_{size}{}; 
+        
+        void play(unsigned x, unsigned y, Color playing);
 
         void initPlayers(); // struktura do parametru potom
 
-        void event(); // event funkce
+        void event(int x, int y); // event funkce
+
+        void printGameBoard();//Zobrazi hraciu plochu na terminal
+        
+        Color getCurrentPlayer() { return current_player_; }
     };
 }
 

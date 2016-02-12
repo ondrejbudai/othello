@@ -34,6 +34,12 @@ namespace othello {
         void setPiece(unsigned x, unsigned y, Color c);
 
         void setFrozen(unsigned x, unsigned y, bool f);
+
+        bool isOccupied(unsigned x, unsigned y);
+
+        int getSize(){return size_;}
+
+        int getColor(int x, int y);
     };
 }
 
