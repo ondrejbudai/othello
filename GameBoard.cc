@@ -10,7 +10,7 @@ namespace othello {
     GameBoard::GameBoard(unsigned size) {
         assert(size % 2 == 0);
         size_ = size;
-        for (int i = 0; i < size; i++){
+        for (unsigned i = 0; i < size; i++){
             board_.push_back(std::vector<Field>(size,{Color::BLACK,false,false}));	
             
         }
@@ -46,7 +46,7 @@ namespace othello {
         return board_[x][y].occupied_;
     }
     
-    int GameBoard::getColor(int x, int y){
+    int GameBoard::getColor(unsigned x, unsigned y){
         assert(x < size_ && y < size_);
 
         return board_[x][y].piece_==Color::BLACK?0:1;
