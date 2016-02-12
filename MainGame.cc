@@ -7,10 +7,11 @@
 #include <iostream>
 #include <vector>
 
-#define OPOSITE_COLOR(myColor) (myColor == othello::Color::BLACK ? othello::Color::WHITE : othello::Color::BLACK)
-
 namespace othello {
 
+    inline Color GetOppositeColor(Color myColor) {
+        return myColor == othello::Color::BLACK ? othello::Color::WHITE : othello::Color::BLACK;
+    }
 
     void MainGame::initPlayers() {
 
@@ -22,14 +23,14 @@ namespace othello {
     //vracia ukazatel na hraca ktory je na rade
     void MainGame::event(unsigned x, unsigned y) { // event funkce
         std::vector<Field> toChange;
-        if (!isMoveValid(x, y, current_player_, toChange)){
-            std::cout<<"Neplatny tah\n";
+        if (!isMoveValid(x, y, current_player_, toChange)) {
+            std::cout << "Neplatny tah\n";
             return;
         }
-        for (auto const& fld: toChange){
+        for (auto const& fld: toChange) {
             board_.setPiece(fld.x_, fld.y_, current_player_);
         }
-        
+
 
         //kontrola ci sa jedna o validny tah od uzivatela co je na rade(ako to kontrolovat?)
         //ak jedna ho nastavime
@@ -74,16 +75,16 @@ namespace othello {
     //adding color je farba kamena, ktory chceme pridat
     //toChange je referencia na vektor parov, ktory naplnime vsetkymi poziciami, ktore sa maju
     //zmenit
-    bool MainGame::isMoveValid(unsigned x, unsigned y, Color addingColor, std::vector<Field> &toChange){
+    bool MainGame::isMoveValid(unsigned x, unsigned y, Color addingColor, std::vector<Field>& toChange) {
         //zistime ci dava na volne policko
-        if (board_.isOccupied(x,y))
+        if (board_.isOccupied(x, y))
             return false;//obsadene policko
         std::vector<Field> fields = board_.getNeighbours(x, y);
-        
+
         //zo vsetkych susednych vytriedime len tie, ktore su obsadene superom
         std::vector<Field> oppositeFields;
-        for (auto const& fld: fields){
-            if (fld.occupied_ && fld.piece_ == OPOSITE_COLOR(addingColor))
+        for (auto const& fld: fields) {
+            if (fld.occupied_ && fld.piece_ == GetOppositeColor(addingColor))
                 oppositeFields.push_back(fld);
         }
 
@@ -92,13 +93,13 @@ namespace othello {
             return false;
 
         //pre kazdy najdeny kamen zistime ci existuje cesta a pridam vsetky kamene z cesty do
-        for (auto const& fld: oppositeFields){
+        for (auto const& fld: oppositeFields) {
             int deltaX = fld.x_ - x; //smer posuvania x
             int deltaY = fld.y_ - y; //smer posuvania y
-            int pomX = x; 
+            int pomX = x;
             int pomY = y;
             std::vector<Field> possibleChanges;
-            while (true){
+            while (true) {
                 pomX += deltaX;
                 pomY += deltaY;
                 //ak sme sa dostali mimo pole
@@ -109,15 +110,15 @@ namespace othello {
                 if (!candidat.occupied_)
                     break;
                 //ak sme nasli svoju farbu a mame aspon jednu superovu medzitym
-                if (candidat.piece_ == addingColor && !possibleChanges.empty()){
+                if (candidat.piece_ == addingColor && !possibleChanges.empty()) {
                     for (unsigned f = 0; f < possibleChanges.size(); f++)
-                        std::cout<<possibleChanges[f].x_<<" "<<possibleChanges[f].y_<<std::endl<<std::flush;
+                        std::cout << possibleChanges[f].x_ << " " << possibleChanges[f].y_ << std::endl << std::flush;
                     toChange.insert(toChange.end(), possibleChanges.begin(), possibleChanges.end());
-                    std::cout<<"Najdeny jeden vektor\n";
+                    std::cout << "Najdeny jeden vektor\n";
                     break;
                 }
                 //ak patri field superovy
-                if (candidat.piece_ == OPOSITE_COLOR(addingColor))  
+                if (candidat.piece_ == GetOppositeColor(addingColor))
                     possibleChanges.push_back(candidat);
             }
 
