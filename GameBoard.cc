@@ -13,7 +13,7 @@ namespace othello {
         for (unsigned i = 0; i < size; i++){
             std::vector<Field> newRow;
             for (unsigned j = 0; j < size; j++){
-                newRow.push_back(Field{Color::BLACK,false,false,i,j});
+                newRow.push_back(Field{Color::BLACK, false, false});
             //board_.push_back(std::vector<Field>(size,{Color::BLACK,false,false}));	
             }
             board_.push_back(newRow);
@@ -51,8 +51,8 @@ namespace othello {
     }
 
 
-    std::vector<Field>GameBoard::getNeighbours(unsigned x, unsigned y) const {
-        std::vector<Field> fields;
+    std::vector<Coords> GameBoard::getNeighbours(unsigned x, unsigned y) const {
+        std::vector<Coords> fields;
         int xj = -1;
         int yj = -1;
         int xf =  1;
@@ -63,8 +63,13 @@ namespace othello {
         if (y == size_-1) yf = 0;
         for (int i = xj; i <= xf; i++)
             for (int j = yj; j <= yf; j++)
-                fields.push_back(board_[x+i][y+j]);
+                fields.emplace_back(x + i, y + j);
         return fields;
+    }
+
+    Color GameBoard::GetColor(unsigned x, unsigned y) const {
+        assert(x < size_ && y < size_);
+        return board_[x][y].piece_;
     }
 }
 

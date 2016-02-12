@@ -22,13 +22,13 @@ namespace othello {
     //Ak uzivatel zada suradnice alebo staci prislusne okenko
     //vracia ukazatel na hraca ktory je na rade
     void MainGame::event(unsigned x, unsigned y) { // event funkce
-        std::vector<Field> toChange;
+        std::vector<Coords> toChange;
         if (!isMoveValid(x, y, current_player_, toChange)) {
             std::cout << "Neplatny tah\n";
             return;
         }
         for (auto const& fld: toChange) {
-            board_.setPiece(fld.x_, fld.y_, current_player_);
+            board_.setPiece(fld.first, fld.second, current_player_);
         }
 
 
@@ -75,16 +75,19 @@ namespace othello {
     //adding color je farba kamena, ktory chceme pridat
     //toChange je referencia na vektor parov, ktory naplnime vsetkymi poziciami, ktore sa maju
     //zmenit
-    bool MainGame::isMoveValid(unsigned x, unsigned y, Color addingColor, std::vector<Field>& toChange) {
+    bool MainGame::isMoveValid(unsigned x, unsigned y, Color addingColor, std::vector<Coords>& toChange) {
+
+        Color oppositeColor = GetOppositeColor(addingColor);
+
         //zistime ci dava na volne policko
         if (board_.isOccupied(x, y))
             return false;//obsadene policko
-        std::vector<Field> fields = board_.getNeighbours(x, y);
+        std::vector<Coords> fields = board_.getNeighbours(x, y);
 
         //zo vsetkych susednych vytriedime len tie, ktore su obsadene superom
-        std::vector<Field> oppositeFields;
+        std::vector<Coords> oppositeFields;
         for (auto const& fld: fields) {
-            if (fld.occupied_ && fld.piece_ == GetOppositeColor(addingColor))
+            if (board_.isOccupied(fld) && board_.GetColor(fld) != addingColor)
                 oppositeFields.push_back(fld);
         }
 
@@ -94,31 +97,32 @@ namespace othello {
 
         //pre kazdy najdeny kamen zistime ci existuje cesta a pridam vsetky kamene z cesty do
         for (auto const& fld: oppositeFields) {
-            int deltaX = fld.x_ - x; //smer posuvania x
-            int deltaY = fld.y_ - y; //smer posuvania y
+            int deltaX = fld.first - x; //smer posuvania x
+            int deltaY = fld.second - y; //smer posuvania y
             int pomX = x;
             int pomY = y;
-            std::vector<Field> possibleChanges;
+            std::vector<Coords> possibleChanges;
             while (true) {
                 pomX += deltaX;
                 pomY += deltaY;
                 //ak sme sa dostali mimo pole
                 if (pomX < 0 || pomX >= int(board_.getSize()) || pomY < 0 || pomY >= int(board_.getSize()))
                     break;
-                Field candidate = board_.GetField(pomX, pomY);
+                Coords candidate{pomX, pomY};
+//                Field candidate = board_.GetField(pomX, pomY);
                 //ak dane poliecko nie je obsadene, nie je to kandidat
-                if (!candidate.occupied_)
+                if (!board_.isOccupied(candidate))
                     break;
                 //ak sme nasli svoju farbu a mame aspon jednu superovu medzitym
-                if (candidate.piece_ == addingColor && !possibleChanges.empty()) {
-                    for (unsigned f = 0; f < possibleChanges.size(); f++)
-                        std::cout << possibleChanges[f].x_ << " " << possibleChanges[f].y_ << std::endl << std::flush;
+                if (board_.GetColor(candidate) == addingColor && !possibleChanges.empty()) {
+                    for (const auto& f : possibleChanges)
+                        std::cout << f.first << " " << f.second << std::endl << std::flush;
                     toChange.insert(end(toChange), begin(possibleChanges), end(possibleChanges));
                     std::cout << "Najdeny jeden vektor\n";
                     break;
                 }
                 //ak patri field superovy
-                if (candidate.piece_ == GetOppositeColor(addingColor))
+                if (board_.GetColor(candidate) == oppositeColor)
                     possibleChanges.push_back(candidate);
             }
 
@@ -132,11 +136,11 @@ namespace othello {
     bool MainGame::isEnd() {
 
         // najdi vsechna volna policka
-        std::vector<Field> emptyFields;
+        std::vector<Coords> emptyFields;
         for (unsigned x = 0; x < board_.getSize(); ++x) {
             for (unsigned y = 0; y < board_.getSize(); ++y) {
                 if (!board_.isOccupied(x, y))
-                    emptyFields.push_back(board_.GetField(x, y));
+                    emptyFields.emplace_back(x, y);
             }
         }
 
@@ -144,9 +148,10 @@ namespace othello {
             return true;
 
         // projdi vsechny, pokud je alespon pro jednoho hrace mozny tah, hra nekonci
-        std::vector<Field> dummy;
+        std::vector<Coords> dummy;
         for (const auto& f : emptyFields) {
-            if (isMoveValid(f.x_, f.y_, Color::WHITE, dummy) || isMoveValid(f.x_, f.y_, Color::BLACK, dummy))
+            if (isMoveValid(f.first, f.second, Color::WHITE, dummy) ||
+                isMoveValid(f.first, f.second, Color::BLACK, dummy))
                 return false;
         }
 

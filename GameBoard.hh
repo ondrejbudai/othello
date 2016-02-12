@@ -9,6 +9,8 @@
 
 namespace othello {
 
+    using Coords = std::pair<unsigned, unsigned>;
+
     enum class Color {
         BLACK, WHITE
     };
@@ -17,8 +19,6 @@ namespace othello {
         Color piece_;
         bool occupied_;
         bool frozen_;
-        unsigned x_;
-        unsigned y_;
     };
 
     class GameBoard {
@@ -39,9 +39,15 @@ namespace othello {
 
         bool isOccupied(unsigned x, unsigned y) const;
 
+        bool isOccupied(const Coords& c) const { return isOccupied(c.first, c.second); }
+
         unsigned getSize() const { return size_; }
 
-        std::vector<Field> getNeighbours(unsigned x, unsigned y) const;
+        std::vector<Coords> getNeighbours(unsigned x, unsigned y) const;
+
+        Color GetColor(unsigned x, unsigned y) const;
+
+        Color GetColor(const Coords& c) const { return GetColor(c.first, c.second); }
     };
 }
 
