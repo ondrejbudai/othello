@@ -6,6 +6,7 @@
 #define OTHELLO_MAINGAME_HH
 
 #include "Player.hh"
+#include "AI.hh"
 #include "GameBoard.hh"
 #include "GameLogic.hh"
 
@@ -15,18 +16,18 @@ namespace othello {
     class MainGame {
     private:
         GameBoard board_;
-        Player players_[2];
-        Color current_player_ = Color::WHITE;
+        Player *players_[2];
+        int current_player_num = 0; 
         // frozen stuff
     public:
-        MainGame(unsigned size) : board_{size} {};
+        MainGame(unsigned size);
 
         void event(unsigned x, unsigned y); // event funkce
 
-        Color getCurrentPlayer() const { return current_player_; }
-
         const GameBoard &getBoard() {return board_;}
-        
+       
+        Color getCurrentPlayerColor() {return players_[current_player_num]->getColor();}
+
         void printGameBoard() const;//Zobrazi hraciu plochu na terminal
         
         void initPlayers() {}

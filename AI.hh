@@ -10,13 +10,14 @@
 
 namespace othello {
 
-
     class AI : public Player {
     public:
-    public:
+        AI(Color c) : Player(c){}
+        
         virtual bool isAi() override { return true; }
 
-        virtual void play(const GameBoard &board, Coords &thisMove) ;
+        virtual void play(const GameBoard &board, Coords &thisMove) override;
+        
     };
 
 }

@@ -7,15 +7,21 @@
 
 #include<string>
 #include "GameBoard.hh"
+#include <iostream>
+
+#define UNUSED __attribute__((unused))
 
 namespace othello {
 
     class Player {
-    private:
+    protected:
         Color color_;
         std::string name;
     public:
-        virtual void play() { }
+        Player(Color c) :color_(c){}
+        virtual void play(UNUSED const GameBoard &board,UNUSED Coords &thisMove){}
+
+        virtual Color getColor() {return color_;}
 
         virtual bool isAi() { return false; }
     };

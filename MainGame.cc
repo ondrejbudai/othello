@@ -9,10 +9,17 @@
 #include <vector>
 
 namespace othello {
+    MainGame::MainGame(unsigned size) : board_{size} {
+        players_[0] = new Player(Color::WHITE);//priklad
+        players_[1] = new AI(Color::BLACK);//priklad
+    }
+
+
 
     //Ak uzivatel zada suradnice alebo staci prislusne okenko
     //vracia ukazatel na hraca ktory je na rade
     void MainGame::event(unsigned x, unsigned y) { // event funkce
+        Color current_player_ = players_[current_player_num]->getColor();
         //kontrola ci sa jedna o validny tah od uzivatela
         std::vector<Coords> toChange;
         if (!isMoveValid(x, y, current_player_, toChange, board_)) {
@@ -25,14 +32,22 @@ namespace othello {
 
         //ak jedna ho nastavime
         board_.setPiece(x, y, current_player_);
-
+        
         // ak bol validny zisti ci dalsi hrac ma co hrat
         //ak ma, tak nastav current_player_ na dalsieho inak nemen (Bacha, kontrola ci maju obaja co
         //hrat!)
         //while (current_player == AI){
         //AI.play();//play vyvolava tuto funckiu
         //}
-        current_player_ = current_player_ == Color::WHITE ? Color::BLACK : Color::WHITE;
+        current_player_num++;
+        current_player_num = current_player_num % 2;
+        if (players_[current_player_num]->isAi()){
+            Coords thisMove;
+            players_[current_player_num]->play(board_,thisMove);
+            std::cout<<"AI zahral: "<<thisMove.first<<" "<<thisMove.second<<std::endl<<std::flush;
+            this->event(thisMove.first, thisMove.second);
+        }
+        //current_player_ = current_player_ == Color::WHITE ? Color::BLACK : Color::WHITE;
 
     }
 

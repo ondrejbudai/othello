@@ -15,7 +15,7 @@ int main() {
     //nasledujuca cast je pre terminal a tesotvanie
     while (true) {
         g.printGameBoard();
-        std::cout << "Na tahu je " << (g.getCurrentPlayer() == othello::Color::BLACK ? "BLACK" : "WHITE") << std::endl;
+        std::cout << "Na tahu je " << (g.getCurrentPlayerColor() == othello::Color::BLACK ? "BLACK" : "WHITE") << std::endl;
         std::cout << "Zadaj suradnice: " << std::flush;
         int x, y;
         std::cin >> x >> y;

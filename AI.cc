@@ -31,12 +31,13 @@ namespace othello {
         std::vector<std::pair<Coords,int> > validMoves;
         for (const auto& f : emptyFields) {
             std::vector<Coords> dummy;
-            if (isMoveValid(f.first, f.second, Color::WHITE, dummy, board))
+            if (isMoveValid(f.first, f.second, color_, dummy, board)){
                 validMoves.push_back(std::make_pair(std::make_pair(f.first,f.second),dummy.size()));
+            }
         }
         
         if (validMoves.empty()){
-            std::cout<<"AI nema kam tahat!! COMMON\n";
+            std::cout<<"AI nema kam tahat!! COMMON\n"<<std::flush;
             return;
         }
         
