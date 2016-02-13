@@ -16,7 +16,7 @@ namespace othello {
     public:
         virtual bool isAi() override { return true; }
 
-        virtual void play(const GameBoard &board, Coords &thisMove) ;
+        virtual Coords play(const GameBoard& board);
     };
 
 }

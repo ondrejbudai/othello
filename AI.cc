@@ -5,11 +5,12 @@
 #include "AI.hh"
 #include "GameLogic.hh"
 #include <iostream>
+#include <map>
 
 namespace othello {
 
     //do thisMove ulozi, kam chce tahat
-    void AI::play(const GameBoard &board, Coords &thisMove) {
+    Coords AI::play(const GameBoard& board) {
         //Najde vsetky mozne tahy a pre kazdy tah, spocita kolko by zmenil kamenov
         // najdi vsechna volna policka
         std::vector<Coords> emptyFields;
@@ -23,26 +24,25 @@ namespace othello {
         if (emptyFields.empty()){//toto by sa nemalo stat, skor nez zacne tah, by sme
                                 // mali vediet co ozaj moze ist alebo nie
             std::cout<<"SCHEISSE...\n";
-            return;
+            //vyjimka?
         }
-            
 
-        // projdi vsechny, uloz do validMoves "x,y,pocetZmenenychKamenov"
-        std::vector<std::pair<Coords,int> > validMoves;
+
+        // projdi vsechny, uloz do validMoves s indexem pocet upravenych kamenu
+        std::map<unsigned, Coords> validMoves;
         for (const auto& f : emptyFields) {
             std::vector<Coords> dummy;
             if (isMoveValid(f.GetX(), f.GetY(), Color::WHITE, dummy, board))
-                validMoves.push_back(std::make_pair(Coords{f.GetX(), f.GetY()}, dummy.size()));
+                validMoves[dummy.size()] = Coords{f.GetX(), f.GetY()};
         }
         
         if (validMoves.empty()){
             std::cout<<"AI nema kam tahat!! COMMON\n";
-            return;
+            //vyjimka?
         }
-        
-        //trivialne riesenie ->vyber prve
-        Coords tmp{validMoves[0].first.GetX(), validMoves[0].first.GetY()};
-        thisMove = tmp;
+
+        // map je serazena, vezmeme posledni prvek (na ktery ukazuje reverzni iterator)
+        return validMoves.rend()->second;
 
         //pre kazdy tah, vynasobi si pocet kamenov s konstantou vhodneho umiestenia
         //vrati to, kde ma najvhodnejsie umiestenie
