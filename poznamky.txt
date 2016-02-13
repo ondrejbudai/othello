@@ -1,0 +1,6 @@
+main.cc ->  GUI a cyklus az kym je co hrat
+MainGame -> Vlastni vsetky prostriedky (hracov, dosku...) a zaistuje volanie medzi main a (hracmi,
+            doskou)
+GameLogic -> Je zbierka funkcii, ktore len odpovedaju na otazky ohaladom pravidiel a stavu hry,
+             napr. jedna sa o platny tah, je mozne pokacovat v hre a pod
+Player ->   Nerobi nic, Ale AI hra:D

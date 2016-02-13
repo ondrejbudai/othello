@@ -6,6 +6,7 @@
 #define OTHELLO_AI_HH
 
 #include "Player.hh"
+#include "GameBoard.hh"
 
 namespace othello {
 
@@ -15,7 +16,7 @@ namespace othello {
     public:
         virtual bool isAi() override { return true; }
 
-        virtual void play() override {/*do awesome stuff*/}
+        virtual void play(const GameBoard &board, Coords &thisMove) ;
     };
 
 }

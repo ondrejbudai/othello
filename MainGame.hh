@@ -7,7 +7,7 @@
 
 #include "Player.hh"
 #include "GameBoard.hh"
-
+#include "GameLogic.hh"
 
 namespace othello {
 
@@ -15,25 +15,22 @@ namespace othello {
     class MainGame {
     private:
         GameBoard board_;
-        Color current_player_ = Color::WHITE;
         Player players_[2];
+        Color current_player_ = Color::WHITE;
         // frozen stuff
     public:
-        MainGame(unsigned size) : board_{size} { };
-
-        void play(unsigned x, unsigned y, Color playing);
-
-        void initPlayers(); // struktura do parametru potom
+        MainGame(unsigned size) : board_{size} {};
 
         void event(unsigned x, unsigned y); // event funkce
 
-        void printGameBoard() const;//Zobrazi hraciu plochu na terminal
-
         Color getCurrentPlayer() const { return current_player_; }
 
-        bool isMoveValid(unsigned x, unsigned y, Color addingColor, std::vector<Coords>& toChange);
+        const GameBoard &getBoard() {return board_;}
+        
+        void printGameBoard() const;//Zobrazi hraciu plochu na terminal
+        
+        void initPlayers() {}
 
-        bool isEnd();
     };
 }
 

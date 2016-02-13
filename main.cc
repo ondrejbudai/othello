@@ -21,7 +21,7 @@ int main() {
         std::cin >> x >> y;
         g.event(x, y);//but vrati tu istu farbu ak je druhy AI, alebo vrati opacnu  farbu
         // ak ma tah...
-        if (g.isEnd())
+        if (isEnd(g.getBoard()))
             break;
     }
 }
