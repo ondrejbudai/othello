@@ -12,11 +12,11 @@ namespace othello {
 
     class AI : public Player {
     public:
-        AI(Color c) : Player(c){}
+        AI(Color c, const GameLogic& logic) : Player(c, logic) { }
         
         virtual bool isAi() override { return true; }
 
-        virtual Coords play(const GameBoard &board) override;
+        virtual Coords play() override;
     };
 
 }

@@ -25,6 +25,10 @@ namespace othello {
         BLACK, WHITE, RED
     };
 
+    inline Color GetOppositeColor(Color myColor) {
+        return myColor == Color::BLACK ? Color::WHITE : Color::BLACK;
+    }
+
     struct Field {
         Color piece_;
         bool occupied_;

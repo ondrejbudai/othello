@@ -6,10 +6,7 @@
 #define OTHELLO_PLAYER_HH
 
 #include<string>
-#include "GameBoard.hh"
-#include <iostream>
-
-#define UNUSED __attribute__((unused))
+#include "GameLogic.hh"
 
 namespace othello {
 
@@ -17,11 +14,13 @@ namespace othello {
     protected:
         Color color_;
         std::string name;
+        const GameLogic& logic_;
     public:
-        Player(Color c) :color_(c){}
-        virtual Coords play(UNUSED const GameBoard &board){Coords x(0,0);return x;}
+        Player(Color c, const GameLogic& logic) : color_{c}, logic_{logic} { }
 
-        virtual Color getColor() {return color_;}
+        virtual Coords play() { return {0, 0}; }
+
+        virtual Color getColor() { return color_; }
 
         virtual bool isAi() { return false; }
     };

@@ -5,19 +5,22 @@
 #ifndef OTHELLO_GAMELOGIC_HH
 #define OTHELLO_GAMELOGIC_HH
 
-#include "Player.hh"
 #include "GameBoard.hh"
 
 
 namespace othello {
+    class GameLogic {
+    private:
+        GameBoard board_;
+    public:
+        GameLogic(unsigned size) : board_{size} { }
 
-    void play(unsigned x, unsigned y, Color playing);
+        std::vector<Coords> prepareTurn(unsigned x, unsigned y, Color addingColor) const;
 
-    void initPlayers(); // struktura do parametru potom
+        void commitTurn(const std::vector<Coords>& pieces, Color player);
 
-    bool isMoveValid(unsigned x, unsigned y, Color addingColor, std::vector<Coords>& toChange, const GameBoard &board_);
-
-    bool isEnd(const GameBoard &board_);
+        const GameBoard& getBoard() const { return board_; }
+    };
 }
 
 

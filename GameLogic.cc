@@ -1,24 +1,20 @@
 #include "GameLogic.hh"
-#include <iostream>
+#include "MainGame.hh"
 
 namespace othello {
-
-    inline Color GetOppositeColor(Color myColor) {
-        return myColor == othello::Color::BLACK ? othello::Color::WHITE : othello::Color::BLACK;
-    }
-
 
     /// x, y su suradnice
     //adding color je farba kamena, ktory chceme pridat
     //toChange je referencia na vektor parov, ktory naplnime vsetkymi poziciami, ktore sa maju
     //zmenit
-    bool isMoveValid(unsigned x, unsigned y, Color addingColor, std::vector<Coords>& toChange,const GameBoard &board_) {
+    std::vector<Coords> GameLogic::prepareTurn(unsigned x, unsigned y, Color addingColor) const {
 
         Color oppositeColor = GetOppositeColor(addingColor);
+        std::vector<Coords> toChange;
 
         //zistime ci dava na volne policko
         if (board_.isOccupied(x, y))
-            return false;//obsadene policko
+            return toChange;
         std::vector<Coords> fields = board_.getNeighbours(x, y);
 
         //zo vsetkych susednych vytriedime len tie, ktore su obsadene superom
@@ -30,7 +26,7 @@ namespace othello {
 
         //ak sme nic nenasli, invalidny tah
         if (oppositeFields.empty())
-            return false;
+            return toChange;
 
         //pre kazdy najdeny kamen zistime ci existuje cesta a pridam vsetky kamene z cesty do
         for (auto const& fld: oppositeFields) {
@@ -57,43 +53,23 @@ namespace othello {
                 }
                 //ak sme nasli nas kamen, ale nic medzi nim
                 if (board_.GetColor(candidate) == addingColor && possibleChanges.empty())
-                    break;       
+                    break;
                 //ak patri field superovy
                 if (board_.GetColor(candidate) == oppositeColor)
                     possibleChanges.push_back(candidate);
             }
 
         }
-        //DUPLICITY v toChange
-        if (toChange.empty())
-            return false;
+        if (!toChange.empty())
+            toChange.push_back({x, y});
 
-        return true;
+        return toChange;
     }
 
-    bool isEnd(const GameBoard &board_) {
-
-        // najdi vsechna volna policka
-        std::vector<Coords> emptyFields;
-        for (unsigned x = 0; x < board_.getSize(); ++x) {
-            for (unsigned y = 0; y < board_.getSize(); ++y) {
-                if (!board_.isOccupied(x, y))
-                    emptyFields.emplace_back(x, y);
-            }
+    void GameLogic::commitTurn(const std::vector<Coords>& pieces, Color player) {
+        for (auto const& fld: pieces) {
+            board_.setPiece(fld.GetX(), fld.GetY(), player);
         }
-
-        if (emptyFields.empty())
-            return true;
-
-        // projdi vsechny, pokud je alespon pro jednoho hrace mozny tah, hra nekonci
-        std::vector<Coords> dummy;
-        for (const auto& f : emptyFields) {
-            if (isMoveValid(f.GetX(), f.GetY(), Color::WHITE, dummy, board_) ||
-                isMoveValid(f.GetX(), f.GetY(), Color::BLACK, dummy, board_))
-                return false;
-        }
-
-        return true;
     }
 }
 
