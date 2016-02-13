@@ -10,13 +10,22 @@
 #include <QGraphicsView>
 #include <QWidget>
 
+namespace Ui{
+    class OthelloGui;
+}
+
 namespace othello {
     class OthelloGui : public QWidget {
+
+        Q_OBJECT
+
+    private:
+        Ui::OthelloGui *ui;
     public:
         QGraphicsScene* scene;
         QGraphicsView* view;
 
-        OthelloGui();
+        explicit OthelloGui(QWidget *parent = 0);
     };
 }
 
