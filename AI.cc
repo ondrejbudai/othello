@@ -42,7 +42,7 @@ namespace othello {
         }
 
         // map je serazena, vezmeme posledni prvek (na ktery ukazuje reverzni iterator)
-        return validMoves.rend()->second;
+        return validMoves.rbegin()->second;
 
         //pre kazdy tah, vynasobi si pocet kamenov s konstantou vhodneho umiestenia
         //vrati to, kde ma najvhodnejsie umiestenie
