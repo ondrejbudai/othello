@@ -7,9 +7,15 @@
 #include <iostream>
 
 namespace othello {
-    MainGame::MainGame(unsigned size) : logic_{size} {
-        players_[0] = new Player(Color::WHITE, logic_);//priklad
-        players_[1] = new AI(Color::BLACK, logic_);//priklad
+    MainGame::MainGame(unsigned size, PlayerType white, PlayerType black) : logic_{size} {
+        if (white == PlayerType::HUMAN)
+            players_.push_back(std::make_unique<Player>(Color::WHITE, logic_));
+        else
+            players_.push_back(std::make_unique<AI>(Color::WHITE, logic_));
+        if (black == PlayerType::HUMAN)
+            players_.push_back(std::make_unique<Player>(Color::BLACK, logic_));
+        else
+            players_.push_back(std::make_unique<AI>(Color::BLACK, logic_));
     }
 
 
@@ -35,8 +41,7 @@ namespace othello {
         current_player_num++;
         current_player_num = current_player_num % 2;
         if (players_[current_player_num]->isAi()) {
-            Coords thisMove(0, 0);
-            thisMove = players_[current_player_num]->play();
+            Coords thisMove = players_[current_player_num]->play();
             std::cout << "AI zahral: " << thisMove.GetX() << " " << thisMove.GetY() << std::endl << std::flush;
             this->event(thisMove.GetX(), thisMove.GetY());
         }

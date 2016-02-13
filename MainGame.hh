@@ -5,6 +5,7 @@
 #ifndef OTHELLO_MAINGAME_HH
 #define OTHELLO_MAINGAME_HH
 
+#include <memory>
 #include "Player.hh"
 #include "AI.hh"
 #include "GameBoard.hh"
@@ -12,15 +13,19 @@
 
 namespace othello {
 
+    enum class PlayerType {
+        HUMAN, AI
+    };
+
 
     class MainGame {
     private:
         GameLogic logic_;
-        Player* players_[2];
+        std::vector<std::unique_ptr<Player>> players_;
         int current_player_num = 0;
         // frozen stuff
     public:
-        MainGame(unsigned size);
+        MainGame(unsigned size, PlayerType white, PlayerType black);
 
         void event(unsigned x, unsigned y); // event funkce
 
