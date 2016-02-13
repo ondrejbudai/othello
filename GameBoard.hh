@@ -9,7 +9,17 @@
 
 namespace othello {
 
-    using Coords = std::pair<unsigned, unsigned>;
+    class Coords {
+    private:
+        unsigned x_;
+        unsigned y_;
+    public:
+        Coords(unsigned x, unsigned y) : x_{x}, y_{y} { }
+
+        unsigned GetX() const { return x_; }
+
+        unsigned GetY() const { return y_; }
+    };
 
     enum class Color {
         BLACK, WHITE, RED
@@ -39,7 +49,7 @@ namespace othello {
 
         bool isOccupied(unsigned x, unsigned y) const;
 
-        bool isOccupied(const Coords& c) const { return isOccupied(c.first, c.second); }
+        bool isOccupied(const Coords& c) const { return isOccupied(c.GetX(), c.GetY()); }
 
         unsigned getSize() const { return size_; }
 
@@ -47,7 +57,7 @@ namespace othello {
 
         Color GetColor(unsigned x, unsigned y) const;
 
-        Color GetColor(const Coords& c) const { return GetColor(c.first, c.second); }
+        Color GetColor(const Coords& c) const { return GetColor(c.GetX(), c.GetY()); }
     };
 }
 

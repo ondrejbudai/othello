@@ -4,9 +4,11 @@
 
 #include "MainGame.hh"
 #include "GameLogic.hh"
+#include "GameBoard.hh"
 
 #include <iostream>
 #include <vector>
+
 
 namespace othello {
     MainGame::MainGame(unsigned size) : board_{size} {
@@ -27,7 +29,7 @@ namespace othello {
             return;
         }
         for (auto const& fld: toChange) {
-            board_.setPiece(fld.first, fld.second, current_player_);
+            board_.setPiece(fld.GetX(), fld.GetY(), current_player_);
         }
 
         //ak jedna ho nastavime
@@ -42,10 +44,10 @@ namespace othello {
         current_player_num++;
         current_player_num = current_player_num % 2;
         if (players_[current_player_num]->isAi()){
-            Coords thisMove;
-            players_[current_player_num]->play(board_,thisMove);
-            std::cout<<"AI zahral: "<<thisMove.first<<" "<<thisMove.second<<std::endl<<std::flush;
-            this->event(thisMove.first, thisMove.second);
+            Coords thisMove(0,0);
+            thisMove = players_[current_player_num]->play(board_);
+            std::cout<<"AI zahral: "<<thisMove.GetX()<<" "<<thisMove.GetY()<<std::endl<<std::flush;
+            this->event(thisMove.GetX(), thisMove.GetY());
         }
         //current_player_ = current_player_ == Color::WHITE ? Color::BLACK : Color::WHITE;
 

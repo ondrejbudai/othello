@@ -19,7 +19,7 @@ namespace othello {
         std::string name;
     public:
         Player(Color c) :color_(c){}
-        virtual void play(UNUSED const GameBoard &board,UNUSED Coords &thisMove){}
+        virtual Coords play(UNUSED const GameBoard &board){Coords x(0,0);return x;}
 
         virtual Color getColor() {return color_;}
 

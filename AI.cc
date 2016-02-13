@@ -5,11 +5,12 @@
 #include "AI.hh"
 #include "GameLogic.hh"
 #include <iostream>
+#include <map>
 
 namespace othello {
 
     //do thisMove ulozi, kam chce tahat
-    void AI::play(const GameBoard &board, Coords &thisMove) {
+    Coords AI::play(const GameBoard& board) {
         //Najde vsetky mozne tahy a pre kazdy tah, spocita kolko by zmenil kamenov
         // najdi vsechna volna policka
         std::vector<Coords> emptyFields;
@@ -23,27 +24,25 @@ namespace othello {
         if (emptyFields.empty()){//toto by sa nemalo stat, skor nez zacne tah, by sme
                                 // mali vediet co ozaj moze ist alebo nie
             std::cout<<"SCHEISSE...\n";
-            return;
+            //vyjimka?
         }
-            
 
-        // projdi vsechny, uloz do validMoves "x,y,pocetZmenenychKamenov"
-        std::vector<std::pair<Coords,int> > validMoves;
+
+        // projdi vsechny, uloz do validMoves s indexem pocet upravenych kamenu
+        std::map<unsigned, Coords> validMoves;
         for (const auto& f : emptyFields) {
             std::vector<Coords> dummy;
-            if (isMoveValid(f.first, f.second, color_, dummy, board)){
-                validMoves.push_back(std::make_pair(std::make_pair(f.first,f.second),dummy.size()));
-            }
+            if (isMoveValid(f.GetX(), f.GetY(), color_, dummy, board))
+                validMoves.insert({dummy.size(), f});
         }
         
         if (validMoves.empty()){
-            std::cout<<"AI nema kam tahat!! COMMON\n"<<std::flush;
-            return;
+            std::cout<<"AI nema kam tahat!! COMMON\n";
+            //vyjimka?
         }
-        
-        //trivialne riesenie ->vyber prve
-        thisMove.first = validMoves[0].first.first;
-        thisMove.second = validMoves[0].first.second;
+
+        // map je serazena, vezmeme posledni prvek (na ktery ukazuje reverzni iterator)
+        return validMoves.rend()->second;
 
         //pre kazdy tah, vynasobi si pocet kamenov s konstantou vhodneho umiestenia
         //vrati to, kde ma najvhodnejsie umiestenie
