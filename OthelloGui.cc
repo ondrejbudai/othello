@@ -1,14 +1,3 @@
-//
-// Do NOT try this at home
-// YOU HAVE BEEN WARNED...
-//   _____
-//  /     \
-// | () () |
-//  \  ^  /
-//   ||||
-//   ||||
-//
-
 #include <QApplication>
 #include <QMainWindow>
 #include <QGridLayout>
@@ -16,6 +5,7 @@
 #include <QScrollBar>
 #include <QGraphicsRectItem>
 #include <iostream>
+#include <QResizeEvent>
 #include "OthelloGui.hh"
 #include "MainGame.hh"
 
@@ -26,9 +16,10 @@ namespace othello {
     public:
         MainGame game_;
         std::vector<std::vector<QGraphicsRectItem*>> b;
+        unsigned size;
 
-        GraphicsScene() : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE}, game_(10, PlayerType::HUMAN, PlayerType::AI) {
-            addRect(0, 0, GAME_SIZE, GAME_SIZE);
+        GraphicsScene() : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE}, game_(10, PlayerType::HUMAN, PlayerType::AI),
+                          size{GAME_SIZE} {
             const GameBoard& board = game_.getLogic().getBoard();
             const double pieceSize = getPieceSize();
             b.reserve(10);
@@ -43,6 +34,7 @@ namespace othello {
 
         void repaint() {
             const GameBoard& board = game_.getLogic().getBoard();
+            const double pieceSize = getPieceSize();
             for (unsigned x = 0; x < board.getSize(); ++x) {
                 for (unsigned y = 0; y < board.getSize(); ++y) {
                     QColor c;
@@ -54,6 +46,7 @@ namespace othello {
                         c = {200, 200, 200};
                     }
                     b[x][y]->setBrush(QBrush(c));
+                    b[x][y]->setRect(x * pieceSize, y * pieceSize, pieceSize, pieceSize);
                 }
             }
         }
@@ -64,9 +57,14 @@ namespace othello {
             QGraphicsScene::mouseReleaseEvent(mouseEvent);
         }
 
-        unsigned getPieceSize() const {
+        double getPieceSize() const {
             const GameBoard& board = game_.getLogic().getBoard();
-            return unsigned(double(GAME_SIZE) / board.getSize());
+            return double(double(size) / board.getSize());
+        }
+
+        void setSize(QSize s) {
+            size = s.width() > s.height() ? s.height() : s.width();
+            repaint();
         }
     };
 
@@ -75,7 +73,8 @@ namespace othello {
         GraphicsView(QGraphicsScene* s) : QGraphicsView(s) { }
 
         virtual void resizeEvent(QResizeEvent* event) {
-            fitInView(0, 0, GAME_SIZE, GAME_SIZE, Qt::KeepAspectRatio);
+            //fitInView(0, 0, GAME_SIZE, GAME_SIZE, Qt::KeepAspectRatio);
+            dynamic_cast<GraphicsScene*>(scene())->setSize(event->size());
         }
     };
 
