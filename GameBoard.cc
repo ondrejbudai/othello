@@ -52,6 +52,7 @@ namespace othello {
 
 
     std::vector<Coords> GameBoard::getNeighbours(unsigned x, unsigned y) const {
+        assert(x < size_ && y < size_);
         std::vector<Coords> fields;
         int xj = -1;
         int yj = -1;
