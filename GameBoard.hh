@@ -12,7 +12,7 @@ namespace othello {
     using Coords = std::pair<unsigned, unsigned>;
 
     enum class Color {
-        BLACK, WHITE
+        BLACK, WHITE, RED
     };
 
     struct Field {

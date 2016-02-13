@@ -22,20 +22,19 @@ namespace othello {
     //Ak uzivatel zada suradnice alebo staci prislusne okenko
     //vracia ukazatel na hraca ktory je na rade
     void MainGame::event(unsigned x, unsigned y) { // event funkce
+        //kontrola ci sa jedna o validny tah od uzivatela
         std::vector<Coords> toChange;
         if (!isMoveValid(x, y, current_player_, toChange)) {
-            std::cout << "Neplatny tah\n";
+            std::cout << "Neplatny tah\n"<<std::flush;
             return;
         }
         for (auto const& fld: toChange) {
             board_.setPiece(fld.first, fld.second, current_player_);
         }
 
-
-        //kontrola ci sa jedna o validny tah od uzivatela co je na rade(ako to kontrolovat?)
         //ak jedna ho nastavime
         board_.setPiece(x, y, current_player_);
-        //else ignorujeme (uzivatel moze klikat dobludu a nechceme ho na to upozronovat)
+
         // ak bol validny zisti ci dalsi hrac ma co hrat
         //ak ma, tak nastav current_player_ na dalsieho inak nemen (Bacha, kontrola ci maju obaja co
         //hrat!)
@@ -87,7 +86,7 @@ namespace othello {
         //zo vsetkych susednych vytriedime len tie, ktore su obsadene superom
         std::vector<Coords> oppositeFields;
         for (auto const& fld: fields) {
-            if (board_.isOccupied(fld) && board_.GetColor(fld) != addingColor)
+            if (board_.isOccupied(fld) && board_.GetColor(fld) == oppositeColor)
                 oppositeFields.push_back(fld);
         }
 
@@ -115,18 +114,19 @@ namespace othello {
                     break;
                 //ak sme nasli svoju farbu a mame aspon jednu superovu medzitym
                 if (board_.GetColor(candidate) == addingColor && !possibleChanges.empty()) {
-                    for (const auto& f : possibleChanges)
-                        std::cout << f.first << " " << f.second << std::endl << std::flush;
                     toChange.insert(end(toChange), begin(possibleChanges), end(possibleChanges));
-                    std::cout << "Najdeny jeden vektor\n";
                     break;
                 }
+                //ak sme nasli nas kamen, ale nic medzi nim
+                if (board_.GetColor(candidate) == addingColor && possibleChanges.empty())
+                    break;       
                 //ak patri field superovy
                 if (board_.GetColor(candidate) == oppositeColor)
                     possibleChanges.push_back(candidate);
             }
 
         }
+        //DUPLICITY v toChange
         if (toChange.empty())
             return false;
 

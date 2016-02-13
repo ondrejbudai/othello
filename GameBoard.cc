@@ -13,7 +13,7 @@ namespace othello {
         for (unsigned i = 0; i < size; i++){
             std::vector<Field> newRow;
             for (unsigned j = 0; j < size; j++){
-                newRow.push_back(Field{Color::BLACK, false, false});
+                newRow.push_back(Field{Color::RED, false, false});
             //board_.push_back(std::vector<Field>(size,{Color::BLACK,false,false}));	
             }
             board_.push_back(newRow);
