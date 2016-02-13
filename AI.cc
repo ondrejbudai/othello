@@ -33,7 +33,7 @@ namespace othello {
         for (const auto& f : emptyFields) {
             std::vector<Coords> dummy;
             if (isMoveValid(f.GetX(), f.GetY(), Color::WHITE, dummy, board))
-                validMoves[dummy.size()] = Coords{f.GetX(), f.GetY()};
+                validMoves.insert({dummy.size(), f});
         }
         
         if (validMoves.empty()){
