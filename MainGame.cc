@@ -20,7 +20,7 @@ namespace othello {
             return;
         }
         for (auto const& fld: toChange) {
-            board_.setPiece(fld.first, fld.second, current_player_);
+            board_.setPiece(fld.GetX(), fld.GetY(), current_player_);
         }
 
         //ak jedna ho nastavime

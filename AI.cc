@@ -31,8 +31,8 @@ namespace othello {
         std::vector<std::pair<Coords,int> > validMoves;
         for (const auto& f : emptyFields) {
             std::vector<Coords> dummy;
-            if (isMoveValid(f.first, f.second, Color::WHITE, dummy, board))
-                validMoves.push_back(std::make_pair(std::make_pair(f.first,f.second),dummy.size()));
+            if (isMoveValid(f.GetX(), f.GetY(), Color::WHITE, dummy, board))
+                validMoves.push_back(std::make_pair(Coords{f.GetX(), f.GetY()}, dummy.size()));
         }
         
         if (validMoves.empty()){
@@ -41,8 +41,8 @@ namespace othello {
         }
         
         //trivialne riesenie ->vyber prve
-        thisMove.first = validMoves[0].first.first;
-        thisMove.second = validMoves[0].first.second;
+        Coords tmp{validMoves[0].first.GetX(), validMoves[0].first.GetY()};
+        thisMove = tmp;
 
         //pre kazdy tah, vynasobi si pocet kamenov s konstantou vhodneho umiestenia
         //vrati to, kde ma najvhodnejsie umiestenie

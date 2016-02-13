@@ -34,8 +34,8 @@ namespace othello {
 
         //pre kazdy najdeny kamen zistime ci existuje cesta a pridam vsetky kamene z cesty do
         for (auto const& fld: oppositeFields) {
-            int deltaX = fld.first - x; //smer posuvania x
-            int deltaY = fld.second - y; //smer posuvania y
+            int deltaX = fld.GetX() - x; //smer posuvania x
+            int deltaY = fld.GetY() - y; //smer posuvania y
             int pomX = x;
             int pomY = y;
             std::vector<Coords> possibleChanges;
@@ -45,7 +45,7 @@ namespace othello {
                 //ak sme sa dostali mimo pole
                 if (pomX < 0 || pomX >= int(board_.getSize()) || pomY < 0 || pomY >= int(board_.getSize()))
                     break;
-                Coords candidate{pomX, pomY};
+                Coords candidate{unsigned(pomX), unsigned(pomY)};
 //                Field candidate = board_.GetField(pomX, pomY);
                 //ak dane poliecko nie je obsadene, nie je to kandidat
                 if (!board_.isOccupied(candidate))
@@ -88,8 +88,8 @@ namespace othello {
         // projdi vsechny, pokud je alespon pro jednoho hrace mozny tah, hra nekonci
         std::vector<Coords> dummy;
         for (const auto& f : emptyFields) {
-            if (isMoveValid(f.first, f.second, Color::WHITE, dummy, board_) ||
-                isMoveValid(f.first, f.second, Color::BLACK, dummy, board_))
+            if (isMoveValid(f.GetX(), f.GetY(), Color::WHITE, dummy, board_) ||
+                isMoveValid(f.GetX(), f.GetY(), Color::BLACK, dummy, board_))
                 return false;
         }
 
