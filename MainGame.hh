@@ -35,6 +35,8 @@ namespace othello {
 
         bool isEnd() const;
 
+        const GameLogic& getLogic() const { return logic_; }
+
     };
 }
 
