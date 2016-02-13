@@ -40,6 +40,8 @@ namespace othello {
         //}
         current_player_num++;
         current_player_num = current_player_num % 2;
+
+        //TODO: Tohle zpusobuje fakt hnusnou rekurzi, pokud hraji pouze AI!
         if (players_[current_player_num]->isAi()) {
             Coords thisMove = players_[current_player_num]->play();
             std::cout << "AI zahral: " << thisMove.GetX() << " " << thisMove.GetY() << std::endl << std::flush;
