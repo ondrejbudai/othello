@@ -12,16 +12,18 @@ int main() {
     othello::MainGame g(8, othello::PlayerType::HUMAN, othello::PlayerType::AI);//toto potom tu nebude
     //samotne okno pri udalosti, vyvola funkcie, ktore su implementovane v gamelogic a v maingame
     //nasledujuca cast je pre terminal a tesotvanie
-    while (true) {
+    while (!g.isEnd()) {
         g.printGameBoard();
         std::cout << "Na tahu je " << (g.getCurrentPlayer().getColor() == othello::Color::BLACK ? "BLACK" : "WHITE") <<
         std::endl;
-        std::cout << "Zadaj suradnice: " << std::flush;
-        int x, y;
-        std::cin >> x >> y;
-        g.event(x, y);//but vrati tu istu farbu ak je druhy AI, alebo vrati opacnu  farbu
-        // ak ma tah...
-        if (g.isEnd())
-            break;
+
+        // zjisti souradnice (pokud nehraje AI)
+        int x = 0, y = 0;
+        if (!g.getCurrentPlayer().isAi()) {
+            std::cout << "Zadaj suradnice: " << std::flush;
+            std::cin >> x >> y;
+        }
+
+        g.event(x, y);
     }
 }

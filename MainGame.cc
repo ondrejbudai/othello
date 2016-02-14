@@ -5,6 +5,7 @@
 #include "MainGame.hh"
 
 #include <iostream>
+#include <cassert>
 
 namespace othello {
     MainGame::MainGame(unsigned size, PlayerType white, PlayerType black) : logic_{size} {
@@ -22,33 +23,38 @@ namespace othello {
     //Ak uzivatel zada suradnice alebo staci prislusne okenko
     //vracia ukazatel na hraca ktory je na rade
     void MainGame::event(unsigned x, unsigned y) { // event funkce
-        Color current_player_ = players_[current_player_num]->getColor();
+        Player& current_player = *players_[current_player_num];
+
+        // pokud aktualni hrac nemuze hrat, je neco fakt spatne
+        assert(canPlay(current_player.getColor()));
+
+        // pokud je aktualne na tahu AI, ziskame tah
+        if(current_player.isAi()){
+            Coords c = current_player.play();
+            x = c.GetX();
+            y = c.GetY();
+        }
+
+        // priprava tahu
+        std::vector<Coords> toChange = logic_.prepareTurn(x, y, current_player.getColor());
+
         //kontrola ci sa jedna o validny tah od uzivatela
-        std::vector<Coords> toChange = logic_.prepareTurn(x, y, current_player_);
         if (toChange.empty()) {
-            std::cout << "Neplatny tah\n" << std::flush;
+            // aktualni hrac nemuze byt AI (pokud je, AI selhala!)
+            assert(!current_player.isAi());
+
+            std::cout << "Neplatny tah" << std::endl << std::flush;
             return;
         }
 
-        logic_.commitTurn(toChange, current_player_);
+        logic_.commitTurn(toChange, current_player.getColor());
 
-        // ak bol validny zisti ci dalsi hrac ma co hrat
-        //ak ma, tak nastav current_player_ na dalsieho inak nemen (Bacha, kontrola ci maju obaja co
-        //hrat!)
-        //while (current_player == AI){
-        //AI.play();//play vyvolava tuto funckiu
-        //}
-        current_player_num++;
-        current_player_num = current_player_num % 2;
-
-        //TODO: Tohle zpusobuje fakt hnusnou rekurzi, pokud hraji pouze AI!
-        if (players_[current_player_num]->isAi()) {
-            Coords thisMove = players_[current_player_num]->play();
-            std::cout << "AI zahral: " << thisMove.GetX() << " " << thisMove.GetY() << std::endl << std::flush;
-            this->event(thisMove.GetX(), thisMove.GetY());
+        // zmen hrace, jen pokud ma ten druhy co hrat
+        // pokud nema nikdo co hrat, GUI to zjisti
+        if(canPlay(GetOppositeColor(current_player.getColor()))){
+            current_player_num++;
+            current_player_num = current_player_num % 2;
         }
-        //current_player_ = current_player_ == Color::WHITE ? Color::BLACK : Color::WHITE;
-
     }
 
 
@@ -80,16 +86,19 @@ namespace othello {
     }
 
     bool MainGame::isEnd() const {
+        return !canPlay(Color::BLACK) && !canPlay(Color::WHITE);
+    }
+
+    bool MainGame::canPlay(Color color) const {
         const GameBoard& board = logic_.getBoard();
 
         for (unsigned x = 0; x < board.getSize(); ++x) {
             for (unsigned y = 0; y < board.getSize(); ++y) {
-                if (!logic_.prepareTurn(x, y, Color::WHITE).empty() ||
-                    !logic_.prepareTurn(x, y, Color::BLACK).empty())
-                    return false;
+                if (!logic_.prepareTurn(x, y, color).empty())
+                    return true;
             }
         }
 
-        return true;
+        return false;
     }
 }
