@@ -8,7 +8,7 @@
 #include <QResizeEvent>
 #include "OthelloGui.hh"
 #include "MainGame.hh"
-#include "ui_othellogui.h"
+#include "ui_OthelloGui.h"
 
 namespace othello {
     constexpr unsigned GAME_SIZE = 200;
@@ -84,13 +84,7 @@ namespace othello {
 
         scene = new GraphicsScene;
         view = new GraphicsView(scene);
-//        view->setFixedSize(GAME_SIZE, GAME_SIZE);
-        //view->horizontalScrollBar()->hide();
-        //view->verticalScrollBar()->hide();
-
-        //ui->gameBoard = new QGridLayout;
         ui->gameBoard->layout()->addWidget(view);
-        //setLayout(ui->gameBoard);
     }
 }
 

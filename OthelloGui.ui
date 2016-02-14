@@ -24,6 +24,19 @@
    </property>
    <layout class="QGridLayout" name="gameBoard"/>
   </widget>
+  <widget class="QPushButton" name="ButtonPlayGame">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>540</y>
+     <width>201</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Play Game</string>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
