@@ -29,7 +29,7 @@ namespace othello {
 
         void event(unsigned x, unsigned y); // event funkce
 
-        Color getCurrentPlayerColor() { return players_[current_player_num]->getColor(); }
+        const Player& getCurrentPlayer() { return *players_[current_player_num]; }
 
         void printGameBoard() const;//Zobrazi hraciu plochu na terminal
 

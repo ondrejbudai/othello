@@ -20,9 +20,9 @@ namespace othello {
 
         virtual Coords play() { return {0, 0}; }
 
-        virtual Color getColor() { return color_; }
+        virtual Color getColor() const { return color_; }
 
-        virtual bool isAi() { return false; }
+        virtual bool isAi() const { return false; }
     };
 }
 
