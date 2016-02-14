@@ -53,7 +53,12 @@ namespace othello {
         }
 
         virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
-            game_.event(mouseEvent->scenePos().x() / getPieceSize(), mouseEvent->scenePos().y() / getPieceSize());
+            if (!game_.getCurrentPlayer().isAi()) {
+                game_.event(mouseEvent->scenePos().x() / getPieceSize(), mouseEvent->scenePos().y() / getPieceSize());
+                if (game_.getCurrentPlayer().isAi()) {
+                    //TODO: nastav timer
+                }
+            }
             repaint();
             QGraphicsScene::mouseReleaseEvent(mouseEvent);
         }
