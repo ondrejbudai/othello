@@ -24,7 +24,7 @@
    </property>
    <layout class="QGridLayout" name="gameBoard"/>
   </widget>
-  <widget class="QPushButton" name="ButtonPlayGame">
+  <widget class="QPushButton" name="ButtonNewGame">
    <property name="geometry">
     <rect>
      <x>670</x>
@@ -34,7 +34,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Play Game</string>
+    <string>New Game</string>
    </property>
   </widget>
  </widget>

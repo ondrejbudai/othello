@@ -9,6 +9,7 @@
 #include "OthelloGui.hh"
 #include "MainGame.hh"
 #include "ui_OthelloGui.h"
+#include "PlayerSelection.hh"
 
 namespace othello {
     constexpr unsigned GAME_SIZE = 200;
@@ -79,23 +80,43 @@ namespace othello {
         }
     };
 
+    //vykresli hraciu dosku
     void OthelloGui::ShowGameBoard(){
         ui->gameBoard->layout()->removeWidget(startView);
         ui->gameBoard->layout()->addWidget(view);
     }
+    
+    //po staceni tlacitka Start Game
+    void OthelloGui::on_ButtonNewGame_clicked(){
+        
+        ui->gameBoard->layout()->removeWidget(startView);
+        
+        QImage image("img/startScreenImageLight.jpg");
+        startSceneLight = new QGraphicsScene();
+        startViewLight  = new QGraphicsView(startScene);
+        QGraphicsPixmapItem *startImageLight  = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+        startScene->addItem(startImageLight);
+        ui->gameBoard->layout()->addWidget(startViewLight);
 
-    void OthelloGui::on_ButtonPlayGame_clicked(){
-        ShowGameBoard();
+        ui->gameBoard->layout()->removeWidget(startViewLight);
+        
+        ui->gameBoard->layout()->addWidget(playerScreen);
+        //ShowGameBoard();
     }
 
     OthelloGui::OthelloGui(QWidget *parent): QWidget(parent), ui(new Ui::OthelloGui) {
         
+        //iniciaizujeme UI 
         ui->setupUi(this);      
-        
+       
+        //inicilizujeme hraciu dosku
         scene = new GraphicsScene;
         view = new GraphicsView(scene);
         
-        
+        //inicializujem si okno pre vyber hracov
+        playerScreen = new PlayerSelection(); 
+
+        //inicilziujeme a nastavime uvodnu obrazovku
         QImage image("img/startScreenImage.jpg");
         startScene = new QGraphicsScene();
         startView  = new QGraphicsView(startScene);
