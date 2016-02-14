@@ -21,6 +21,7 @@ namespace othello {
 
     public slots:
         void on_ButtonNewGame_clicked();
+        void ShowGameBoard();
             
     private:
         Ui::OthelloGui *ui;
@@ -32,7 +33,6 @@ namespace othello {
     public:
         QGraphicsScene* scene;
         QGraphicsView* view;
-        void ShowGameBoard();
         
 
         explicit OthelloGui(QWidget *parent = 0);

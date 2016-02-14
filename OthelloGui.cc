@@ -124,6 +124,7 @@ namespace othello {
         startScene->addItem(startImage);
         ui->gameBoard->layout()->addWidget(startView);
         
+        connect(playerScreen , SIGNAL(on_ButtonStartGame_clicked()),this, SLOT(ShowGameBoard()));        
     }
 }
 

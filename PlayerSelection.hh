@@ -15,8 +15,8 @@ public:
     explicit PlayerSelection(QWidget *parent = 0);
     ~PlayerSelection();
 
-//signals:
-//    void on_ButtonStartGame_clicked();
+signals:
+    void on_ButtonStartGame_clicked();
 
 private:
     Ui::PlayerSelection *ui;
