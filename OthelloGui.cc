@@ -2,7 +2,6 @@
 #include <QMainWindow>
 #include <QGridLayout>
 #include <QGraphicsSceneMouseEvent>
-#include <QScrollBar>
 #include <QGraphicsRectItem>
 #include <iostream>
 #include <QResizeEvent>
@@ -74,7 +73,7 @@ namespace othello {
     public:
         GraphicsView(QGraphicsScene* s) : QGraphicsView(s) { }
 
-        virtual void resizeEvent(QResizeEvent* event) {
+        virtual void resizeEvent(QResizeEvent*) {
             fitInView(0, 0, GAME_SIZE, GAME_SIZE, Qt::KeepAspectRatio);
             //dynamic_cast<GraphicsScene*>(scene())->setSize(event->size());
         }
