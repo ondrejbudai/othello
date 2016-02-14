@@ -2,7 +2,7 @@
 
 namespace othello {
         
-    GraphicsScene::GraphicsScene() : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE}, game_(10, PlayerType::HUMAN, PlayerType::AI),
+    GraphicsScene::GraphicsScene() : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE}, game_(10, PlayerType::AI, PlayerType::AI),
                       size{GAME_SIZE} {
 
         

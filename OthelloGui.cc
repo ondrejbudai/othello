@@ -25,6 +25,9 @@ namespace othello {
 
     //vykresli hraciu dosku
     void OthelloGui::ShowGameBoard(){
+        //inicilizujeme hraciu dosku
+        scene = new GraphicsScene;
+        view = new GraphicsView(scene);
         if (ui->ButtonNewGame->text() == QString("Reset Game"))
             std::cout<< "Sme v resete\n"<<std::endl; 
         
@@ -61,8 +64,8 @@ namespace othello {
         ui->setupUi(this);      
        
         //inicilizujeme hraciu dosku
-        scene = new GraphicsScene;
-        view = new GraphicsView(scene);
+        //scene = new GraphicsScene;
+        //view = new GraphicsView(scene);
         
         //inicializujem si okno pre vyber hracov
         playerScreen = new PlayerSelection(); 
