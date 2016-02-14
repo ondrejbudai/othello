@@ -80,6 +80,7 @@ namespace othello {
     };
 
     void OthelloGui::ShowGameBoard(){
+        ui->gameBoard->layout()->removeWidget(startView);
         ui->gameBoard->layout()->addWidget(view);
     }
 
@@ -88,9 +89,20 @@ namespace othello {
     }
 
     OthelloGui::OthelloGui(QWidget *parent): QWidget(parent), ui(new Ui::OthelloGui) {
+        
         ui->setupUi(this);      
+        
         scene = new GraphicsScene;
         view = new GraphicsView(scene);
+        
+        
+        QImage image("img/startScreenImage.jpg");
+        startScene = new QGraphicsScene();
+        startView  = new QGraphicsView(startScene);
+        QGraphicsPixmapItem *startImage  = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+        startScene->addItem(startImage);
+        ui->gameBoard->layout()->addWidget(startView);
+        
     }
 }
 

@@ -24,6 +24,8 @@ namespace othello {
         
     private:
         Ui::OthelloGui *ui;
+        QGraphicsScene *startScene;
+        QGraphicsView  *startView;
     public:
         QGraphicsScene* scene;
         QGraphicsView* view;
