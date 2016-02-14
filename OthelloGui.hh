@@ -19,11 +19,16 @@ namespace othello {
 
         Q_OBJECT
 
+    private slots:
+        void on_ButtonPlayGame_clicked();
+        
     private:
         Ui::OthelloGui *ui;
     public:
         QGraphicsScene* scene;
         QGraphicsView* view;
+
+        void ShowGameBoard();
 
         explicit OthelloGui(QWidget *parent = 0);
     };

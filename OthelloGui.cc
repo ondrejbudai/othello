@@ -79,12 +79,18 @@ namespace othello {
         }
     };
 
-    OthelloGui::OthelloGui(QWidget *parent): QWidget(parent), ui(new Ui::OthelloGui) {
-        ui->setupUi(this);
+    void OthelloGui::ShowGameBoard(){
+        ui->gameBoard->layout()->addWidget(view);
+    }
 
+    void OthelloGui::on_ButtonPlayGame_clicked(){
+        ShowGameBoard();
+    }
+
+    OthelloGui::OthelloGui(QWidget *parent): QWidget(parent), ui(new Ui::OthelloGui) {
+        ui->setupUi(this);      
         scene = new GraphicsScene;
         view = new GraphicsView(scene);
-        ui->gameBoard->layout()->addWidget(view);
     }
 }
 
