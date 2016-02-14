@@ -109,3 +109,4 @@ othello*
 moc*
 ui*
 *automoc.cpp
+CMakeLists.txt.user

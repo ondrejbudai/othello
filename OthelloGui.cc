@@ -74,8 +74,8 @@ namespace othello {
         GraphicsView(QGraphicsScene* s) : QGraphicsView(s) { }
 
         virtual void resizeEvent(QResizeEvent* event) {
-            //fitInView(0, 0, GAME_SIZE, GAME_SIZE, Qt::KeepAspectRatio);
-            dynamic_cast<GraphicsScene*>(scene())->setSize(event->size());
+            fitInView(0, 0, GAME_SIZE, GAME_SIZE, Qt::KeepAspectRatio);
+            //dynamic_cast<GraphicsScene*>(scene())->setSize(event->size());
         }
     };
 
@@ -85,12 +85,12 @@ namespace othello {
         scene = new GraphicsScene;
         view = new GraphicsView(scene);
 //        view->setFixedSize(GAME_SIZE, GAME_SIZE);
-        view->horizontalScrollBar()->hide();
-        view->verticalScrollBar()->hide();
+        //view->horizontalScrollBar()->hide();
+        //view->verticalScrollBar()->hide();
 
-        QGridLayout* layout = new QGridLayout;
-        layout->addWidget(view);
-        setLayout(layout);
+        //ui->gameBoard = new QGridLayout;
+        ui->gameBoard->layout()->addWidget(view);
+        //setLayout(ui->gameBoard);
     }
 }
 
