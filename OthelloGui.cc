@@ -81,25 +81,32 @@ namespace othello {
 
     //vykresli hraciu dosku
     void OthelloGui::ShowGameBoard(){
-        ui->gameBoard->layout()->removeWidget(startView);
+        if (ui->ButtonNewGame->text() == QString("Reset Game"))
+            std::cout<< "Sme v resete\n"<<std::endl; 
+        
+        ui->gameBoard->layout()->removeWidget(topFeature);
         ui->gameBoard->layout()->addWidget(view);
+        topFeature = view;
+        ui->ButtonNewGame->setText("Reset Game"); 
     }
     
     //po staceni tlacitka Start Game
     void OthelloGui::on_ButtonNewGame_clicked(){
-        
-        ui->gameBoard->layout()->removeWidget(startView);
-        
-        QImage image("img/startScreenImageLight.jpg");
-        startSceneLight = new QGraphicsScene();
-        startViewLight  = new QGraphicsView(startScene);
-        QGraphicsPixmapItem *startImageLight  = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+       
+
+        ui->gameBoard->layout()->removeWidget(topFeature);
+       
+        //pridame pozadie 
         startScene->addItem(startImageLight);
         ui->gameBoard->layout()->addWidget(startViewLight);
 
+        ui->gameBoard->layout()->update();
+        //odoberieme ho
         ui->gameBoard->layout()->removeWidget(startViewLight);
         
+        //a pridame tabulku
         ui->gameBoard->layout()->addWidget(playerScreen);
+        topFeature = playerScreen;        
         //ShowGameBoard();
     }
 
@@ -122,7 +129,14 @@ namespace othello {
         QGraphicsPixmapItem *startImage  = new QGraphicsPixmapItem(QPixmap::fromImage(image));
         startScene->addItem(startImage);
         ui->gameBoard->layout()->addWidget(startView);
+        topFeature = startView;        
         
+        //iniciliazujem svetlejsiu obrazovku 
+        startSceneLight = new QGraphicsScene();
+        startViewLight  = new QGraphicsView(startSceneLight);
+        QImage imageLight("img/startScreenImageLight.jpg");
+        startImageLight  = new QGraphicsPixmapItem(QPixmap::fromImage(imageLight));
+
         connect(playerScreen , SIGNAL(on_ButtonStartGame_clicked()),this, SLOT(ShowGameBoard()));        
     }
 }
