@@ -30,6 +30,9 @@ namespace othello {
         QGraphicsScene *startSceneLight;
         QGraphicsView  *startViewLight;
         QWidget *playerScreen;
+        QWidget *topFeature;
+        QGraphicsPixmapItem *startImageLight;
+
     public:
         QGraphicsScene* scene;
         QGraphicsView* view;
