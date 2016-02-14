@@ -3,6 +3,7 @@ project(othello)
 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wextra -pedantic")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
 #------------Only command line
 set(SOURCE_FILES_CLI GameBoard.cc MainGame.cc GameLogic.cc Player.cc AI.cc main.cc)
