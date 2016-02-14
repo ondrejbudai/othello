@@ -8,6 +8,11 @@
 
 namespace othello {
 
+    AI::AI(Color c, const GameLogic& logic, double randomness) : Player(c, logic), randomness_{randomness} {
+        std::random_device rd;
+        random = std::mt19937(rd());
+    }
+
     //do thisMove ulozi, kam chce tahat
     Coords AI::play() {
         //Najde vsetky mozne tahy a pre kazdy tah, spocita kolko by zmenil kamenov
@@ -22,9 +27,9 @@ namespace othello {
             }
         }
 
-        if (emptyFields.empty()){//toto by sa nemalo stat, skor nez zacne tah, by sme
-                                // mali vediet co ozaj moze ist alebo nie
-            std::cout<<"SCHEISSE...\n";
+        if (emptyFields.empty()) {//toto by sa nemalo stat, skor nez zacne tah, by sme
+            // mali vediet co ozaj moze ist alebo nie
+            std::cout << "SCHEISSE...\n";
             //vyjimka?
         }
 
@@ -32,22 +37,22 @@ namespace othello {
         // projdi vsechny, uloz do validMoves s indexem pocet upravenych kamenu
         std::map<unsigned, Coords> validMoves;
         for (const auto& f : emptyFields) {
-            unsigned changedPieces = logic_.prepareTurn(f.GetX(), f.GetY(), color_).size();
+            unsigned changedPieces = unsigned(logic_.prepareTurn(f.GetX(), f.GetY(), color_).size());
             if (changedPieces > 0)
                 validMoves.insert({changedPieces, f});
         }
-        
-        if (validMoves.empty()){
-            std::cout<<"AI nema kam tahat!! COMMON\n";
+
+        if (validMoves.empty()) {
+            std::cout << "AI nema kam tahat!! COMMON\n";
             //vyjimka?
         }
 
+        unsigned offset = unsigned(random() % unsigned(validMoves.size() * randomness_));
+        auto p = validMoves.rbegin();
+        //std::advance(p, offset);
+        std::cout << "offset: " << offset << std::endl;
         // map je serazena, vezmeme posledni prvek (na ktery ukazuje reverzni iterator)
-        return validMoves.rbegin()->second;
-
-        //pre kazdy tah, vynasobi si pocet kamenov s konstantou vhodneho umiestenia
-        //vrati to, kde ma najvhodnejsie umiestenie
-        //trochu sumu do toho?
+        return p->second;
     }
 
 
