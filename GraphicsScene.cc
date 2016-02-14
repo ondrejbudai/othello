@@ -11,15 +11,17 @@ namespace othello {
 
         const GameBoard& board = game_.getLogic().getBoard();
         const double pieceSize = getPieceSize();
-        b.reserve(10);
         for (unsigned x = 0; x < board.getSize(); ++x) {
-            b[x].reserve(10);
+            b.emplace_back();
             for (unsigned y = 0; y < board.getSize(); ++y) {
-                b[x][y] = addRect(x * pieceSize, y * pieceSize, pieceSize, pieceSize);
+                b[x].emplace_back(addRect(x * pieceSize, y * pieceSize, pieceSize, pieceSize));
             }
         }
         repaint();
         connect(timer,SIGNAL(timeout()), this, SLOT(TickingClocks()));
+        if (game_.getCurrentPlayer().isAi()) {
+            timer->start(1000);
+        }
     }
 
 
@@ -47,7 +49,6 @@ namespace othello {
             game_.event(mouseEvent->scenePos().x() / getPieceSize(), mouseEvent->scenePos().y() / getPieceSize());
             if (game_.getCurrentPlayer().isAi()) {
                 this->timer->start(1000);
-                //TODO: nastav timer
             }
         }
         repaint();
@@ -70,6 +71,9 @@ namespace othello {
         Coords c = p.play();
         game_.event(c.GetX(), c.GetY());
         repaint();
+        if (game_.getCurrentPlayer().isAi()) {
+            this->timer->start(1000);
+        }
     }
 }
 
