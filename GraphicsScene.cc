@@ -1,9 +1,11 @@
 #include "GraphicsScene.hh"
 
 namespace othello {
-        
-    GraphicsScene::GraphicsScene() : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE}, game_(10, PlayerType::AI, PlayerType::AI),
-                      size{GAME_SIZE} {
+    constexpr unsigned AI_DELAY = 1000;
+
+    GraphicsScene::GraphicsScene() : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE},
+                                     game_(10, PlayerType::HUMAN, PlayerType::AI),
+                                     size{GAME_SIZE} {
 
         
         timer = new QTimer(this);
@@ -20,7 +22,7 @@ namespace othello {
         repaint();
         connect(timer,SIGNAL(timeout()), this, SLOT(TickingClocks()));
         if (game_.getCurrentPlayer().isAi()) {
-            timer->start(1000);
+            timer->start(AI_DELAY);
         }
     }
 
@@ -48,7 +50,7 @@ namespace othello {
         if (!game_.getCurrentPlayer().isAi()) {
             game_.event(mouseEvent->scenePos().x() / getPieceSize(), mouseEvent->scenePos().y() / getPieceSize());
             if (game_.getCurrentPlayer().isAi()) {
-                this->timer->start(1000);
+                this->timer->start(AI_DELAY);
             }
         }
         repaint();
@@ -72,7 +74,7 @@ namespace othello {
         game_.event(c.GetX(), c.GetY());
         repaint();
         if (game_.getCurrentPlayer().isAi()) {
-            this->timer->start(1000);
+            this->timer->start(AI_DELAY);
         }
     }
 }
