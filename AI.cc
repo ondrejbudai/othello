@@ -47,10 +47,13 @@ namespace othello {
             //vyjimka?
         }
 
-        unsigned offset = unsigned(random() % unsigned(validMoves.size() * randomness_));
+        unsigned maxOffset = unsigned(validMoves.size() * randomness_);
         auto p = validMoves.rbegin();
-        std::advance(p, offset);
-        std::cout << "offset: " << offset << std::endl;
+        if (maxOffset > 0) {
+            unsigned offset = unsigned(random() % unsigned(validMoves.size() * randomness_));
+            std::advance(p, offset);
+            std::cout << "offset: " << offset << std::endl;
+        }
         // map je serazena, vezmeme posledni prvek (na ktery ukazuje reverzni iterator)
         return p->second;
     }
