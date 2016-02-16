@@ -1,11 +1,10 @@
 #include "GraphicsScene.hh"
 
 namespace othello {
-    constexpr unsigned AI_DELAY = 1000;
+    constexpr unsigned AI_DELAY = 0;
 
-    GraphicsScene::GraphicsScene() : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE},
-                                     game_(10, PlayerType::HUMAN, PlayerType::HUMAN),
-                                     size{GAME_SIZE} {
+    GraphicsScene::GraphicsScene(MainGame &gm) : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE},
+                                     game_{&gm}, size{GAME_SIZE} {
 
         
         timer = new QTimer(this);
@@ -14,7 +13,7 @@ namespace othello {
         whiteDisc = new QImage("img/whiteDisc.jpg");
         blank = new QImage("img/blank.jpg");
 
-        const GameBoard& board = game_.getLogic().getBoard();
+        const GameBoard& board = game_->getLogic().getBoard();
         const double pieceSize = getPieceSize();
         for (unsigned x = 0; x < board.getSize(); ++x) {
             b.emplace_back();
@@ -28,14 +27,14 @@ namespace othello {
         }
         repaint();
         connect(timer,SIGNAL(timeout()), this, SLOT(TickingClocks()));
-        if (game_.getCurrentPlayer().isAi()) {
+        if (game_->getCurrentPlayer().isAi()) {
             timer->start(AI_DELAY);
         }
     }
 
 
     void  GraphicsScene::repaint() {
-        const GameBoard& board = game_.getLogic().getBoard();
+        const GameBoard& board = game_->getLogic().getBoard();
         const double pieceSize = getPieceSize();
         for (unsigned x = 0; x < board.getSize(); ++x) {
             for (unsigned y = 0; y < board.getSize(); ++y) {
@@ -63,14 +62,15 @@ namespace othello {
         int black = 0;
         board.CountScore(black, white);
         std::cout<<"Biely: "<<white<<"   Cierny: "<<black<<std::endl;
-        
+        if (!game_->canPlay(game_->getCurrentPlayer().getColor()))     
+            emit (EndOfGame());
         emit(Score_Changed(black, white));
     }
 
     void  GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
-        if (!game_.getCurrentPlayer().isAi()) {
-            game_.event(mouseEvent->scenePos().x() / getPieceSize(), mouseEvent->scenePos().y() / getPieceSize());
-            if (game_.getCurrentPlayer().isAi()) {
+        if (!game_->getCurrentPlayer().isAi()) {
+            game_->event(mouseEvent->scenePos().x() / getPieceSize(), mouseEvent->scenePos().y() / getPieceSize());
+            if (game_->getCurrentPlayer().isAi()) {
                 this->timer->start(AI_DELAY);
             }
         }
@@ -79,7 +79,7 @@ namespace othello {
     }
 
     double  GraphicsScene::getPieceSize() const {
-        const GameBoard& board = game_.getLogic().getBoard();
+        const GameBoard& board = game_->getLogic().getBoard();
         return double(double(size) / board.getSize());
     }
 
@@ -90,11 +90,11 @@ namespace othello {
 
 
     void GraphicsScene::TickingClocks(){
-        Player p = game_.getCurrentPlayer();
+        Player p = game_->getCurrentPlayer();
         Coords c = p.play();
-        game_.event(c.GetX(), c.GetY());
+        game_->event(c.GetX(), c.GetY());
         repaint();
-        if (game_.getCurrentPlayer().isAi()) {
+        if (game_->getCurrentPlayer().isAi()) {
             this->timer->start(AI_DELAY);
         }
     }

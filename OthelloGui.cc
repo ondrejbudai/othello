@@ -26,7 +26,7 @@ namespace othello {
     //vykresli hraciu dosku
     void OthelloGui::ShowGameBoard(){
         //inicilizujeme hraciu dosku
-        scene = new GraphicsScene();
+        scene = new GraphicsScene(game_);
         view = new GraphicsView(scene);
         if (ui->ButtonNewGame->text() == QString("Reset Game"))
             std::cout<< "Sme v resete\n"<<std::endl; 
@@ -37,6 +37,7 @@ namespace othello {
         ui->ButtonNewGame->setText("Reset Game"); 
         
         connect(scene , SIGNAL(Score_Changed(int, int)),this, SLOT(WriteScore(int, int)));        
+        connect(scene,  SIGNAL(EndOfGame()), this, SLOT(EndOfGame()));
     }
 
     void OthelloGui::WriteScore(int black, int white){
@@ -45,7 +46,10 @@ namespace othello {
         QString sw = QString::number(white);
         ui->WhiteScoreLabel->setText(sw);
     }
-
+   
+    void OthelloGui::EndOfGame(){
+        std::cout<<"SHOUDL END----------------------------\n"<<std::flush;
+    } 
     
     //po staceni tlacitka Start Game
     void OthelloGui::on_ButtonNewGame_clicked(){
@@ -68,15 +72,12 @@ namespace othello {
     }
     
 
-    OthelloGui::OthelloGui(QWidget *parent): QWidget(parent), ui(new Ui::OthelloGui) {
+    OthelloGui::OthelloGui(QWidget *parent): QWidget(parent), ui(new Ui::OthelloGui),
+                    game_{10,PlayerType::AI,PlayerType::AI} {
         
         //iniciaizujeme UI 
         ui->setupUi(this);      
        
-        //inicilizujeme hraciu dosku
-        //scene = new GraphicsScene;
-        //view = new GraphicsView(scene);
-        
         //inicializujem si okno pre vyber hracov
         playerScreen = new PlayerSelection(); 
 

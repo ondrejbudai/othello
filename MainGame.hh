@@ -39,8 +39,6 @@ namespace othello {
 
         const GameLogic& getLogic() const { return logic_; }
 
-    //signals:
-    //    void ScoreChanged(int black, int white);
 
     };
 }

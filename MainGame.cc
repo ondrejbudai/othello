@@ -17,6 +17,8 @@ namespace othello {
             players_.push_back(std::make_unique<Player>(Color::BLACK, logic_));
         else
             players_.push_back(std::make_unique<AI>(Color::BLACK, logic_, 0));
+    
+        
 
     }
 
@@ -27,7 +29,6 @@ namespace othello {
         
         Player& current_player = *players_[current_player_num];
 
-        // pokud aktualni hrac nemuze hrat, je neco fakt spatne
         assert(canPlay(current_player.getColor()));
 
         // pokud je aktualne na tahu AI, ziskame tah

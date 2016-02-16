@@ -9,6 +9,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QWidget>
+#include "MainGame.hh"
 
 namespace Ui{
     class OthelloGui;
@@ -25,8 +26,10 @@ namespace othello {
         void on_ButtonNewGame_clicked();
         void ShowGameBoard();
         void WriteScore(int white, int black);
+        void EndOfGame();
             
     private:
+        MainGame game_;
         Ui::OthelloGui *ui;
         QGraphicsScene *startScene;
         QGraphicsView  *startView;

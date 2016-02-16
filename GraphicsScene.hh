@@ -25,9 +25,10 @@ namespace othello {
     
     signals:
         void Score_Changed(int white, int black);
+        void EndOfGame();
     
     public:
-        MainGame game_;
+        MainGame *game_;
         std::vector<std::vector<QGraphicsPixmapItem*>> b;
         unsigned size;
         QTimer *timer;
@@ -37,7 +38,7 @@ namespace othello {
         QImage* blank;
 
 
-        GraphicsScene();
+        GraphicsScene(MainGame &gm);
         void repaint();
         virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
         double getPieceSize() const ;
