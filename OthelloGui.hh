@@ -8,7 +8,8 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QWidget>
+#include <QFrame>
+#include <memory>
 #include "MainGame.hh"
 
 namespace Ui{
@@ -28,11 +29,10 @@ namespace othello {
             
     private:
         Ui::OthelloGui *ui;
-        MainGame game_;
+        std::unique_ptr<MainGame> game_;
         QGraphicsScene *startScene;
         QGraphicsView  *startView;
-        QWidget *playerScreen;
-        QWidget *topFeature;
+        QFrame* playerScreen;
         QGraphicsScene* scene;
         QGraphicsView* view;
 

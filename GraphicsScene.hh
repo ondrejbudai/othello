@@ -29,9 +29,9 @@ namespace othello {
     
     public:
         std::vector<std::vector<QGraphicsPixmapItem*>> b;
-        MainGame *game_;
+        MainGame& game_;
         unsigned size;
-        QTimer *timer;
+        QTimer* timer;
 
         QImage* blackDisc;
         QImage* whiteDisc;

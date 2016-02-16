@@ -22,17 +22,36 @@ namespace othello {
         }
     };
 
+    OthelloGui::OthelloGui(QWidget* parent) : QWidget(parent), ui(new Ui::OthelloGui) {
+
+        //iniciaizujeme UI
+        ui->setupUi(this);
+
+        //inicializujem si okno pre vyber hracov
+        playerScreen = new PlayerSelection();
+
+        //inicilziujeme a nastavime uvodnu obrazovku
+        QImage image("img/startScreenImage.jpg");
+        startScene = new QGraphicsScene();
+        startView = new QGraphicsView(startScene);
+        QGraphicsPixmapItem* startImage = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+        startScene->addItem(startImage);
+        ui->gameBoard->layout()->addWidget(startView);
+
+        connect(playerScreen, SIGNAL(on_ButtonStartGame_clicked()), this, SLOT(ShowGameBoard()));
+    }
+
     // reaguje na klik v lepevem sloupci, zobrazi herni desku
     void OthelloGui::ShowGameBoard(){
         //inicilizujeme hraciu dosku
-        scene = new GraphicsScene(game_);
+        game_ = std::make_unique<MainGame>(10, PlayerType::HUMAN, PlayerType::AI);
+        scene = new GraphicsScene(*game_);
         view = new GraphicsView(scene);
         if (ui->ButtonNewGame->text() == QString("Reset Game"))
-            std::cout<< "Sme v resete\n"<<std::endl; 
-        
-        ui->gameBoard->layout()->removeWidget(topFeature);
+            std::cout<< "Sme v resete\n"<<std::endl;
+
+        ui->gameBoard->layout()->removeWidget(playerScreen);
         ui->gameBoard->layout()->addWidget(view);
-        topFeature = view;
         ui->ButtonNewGame->setText("Reset Game"); 
         
         connect(scene , SIGNAL(Score_Changed(int, int)),this, SLOT(WriteScore(int, int)));        
@@ -45,9 +64,9 @@ namespace othello {
         QString sw = QString::number(white);
         ui->WhiteScoreLabel->setText(sw);
     }
-   
+
     void OthelloGui::EndOfGame(){
-        game_.StopRunning();
+        game_->StopRunning();
         disconnect(scene , SIGNAL(Score_Changed(int, int)),this, SLOT(WriteScore(int, int)));        
         disconnect(scene,  SIGNAL(EndOfGame()), this, SLOT(EndOfGame()));
         //delete view;
@@ -57,39 +76,12 @@ namespace othello {
     }
 
     // v pravem sloupci, zobrazi obrazovku s vyberem hracu
-    void OthelloGui::on_ButtonNewGame_clicked(){
+    void OthelloGui::on_ButtonNewGame_clicked() {
 
 
-        ui->gameBoard->layout()->removeWidget(topFeature);
+        ui->gameBoard->layout()->removeWidget(startView);
 
-        //ui->gameBoard->layout()->addWidget(startViewLight);
-//        playerScreen->setStyleSheet("QWidget { background-image: url(./img/startScreenImageLight.jpg) }");
-        //a pridame tabulku
         ui->gameBoard->layout()->addWidget(playerScreen);
-        topFeature = playerScreen;
-        //ShowGameBoard();
-    }
-
-
-    OthelloGui::OthelloGui(QWidget *parent): QWidget(parent), ui(new Ui::OthelloGui),
-                    game_{10,PlayerType::AI,PlayerType::AI} {
-        
-        //iniciaizujeme UI 
-        ui->setupUi(this);      
-       
-        //inicializujem si okno pre vyber hracov
-        playerScreen = new PlayerSelection(); 
-
-        //inicilziujeme a nastavime uvodnu obrazovku
-        QImage image("img/startScreenImage.jpg");
-        startScene = new QGraphicsScene();
-        startView  = new QGraphicsView(startScene);
-        QGraphicsPixmapItem *startImage  = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-        startScene->addItem(startImage);
-        ui->gameBoard->layout()->addWidget(startView);
-        topFeature = startView;
-
-        connect(playerScreen, SIGNAL(on_ButtonStartGame_clicked()), this, SLOT(ShowGameBoard()));
     }
 }
 
