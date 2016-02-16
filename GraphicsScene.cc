@@ -1,7 +1,7 @@
 #include "GraphicsScene.hh"
 
 namespace othello {
-    constexpr unsigned AI_DELAY = 0;
+    constexpr unsigned AI_DELAY = 1000;
 
     GraphicsScene::GraphicsScene(MainGame &gm) : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE},
                                                  game_{gm}, size{GAME_SIZE} {

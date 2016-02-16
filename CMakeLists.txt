@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.3)
 project(othello)
 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wextra -pedantic")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wextra -pedantic ")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
 #------------Only command line
@@ -18,10 +18,6 @@ set (othelloLib_src AI.cc GameBoard.cc GameLogic.cc MainGame.cc OthelloGui.cc Pl
     PlayerSelection.cc GraphicsScene.cc)
 set (othelloLib_hdr OthelloGui.hh  PlayerSelection.hh GraphicsScene.hh)
 
-#set (othelloLib_src AI.cc GameBoard.cc GameLogic.cc MainGame.cc OthelloGui.cc Player.cc
-#    PlayerSelection.cc GraphicsScene.cc)
-#set (othelloLib_hdr AI.hh GameBoard.hh GameLogic.hh MainGame.hh OthelloGui.hh Player.hh
-#    PlayerSelection.hh GraphicsScene.hh)
 set (othelloLib_ui  OthelloGui.ui PlayerSelection.ui)
 set (othelloBin_src main-qt.cc)
 
