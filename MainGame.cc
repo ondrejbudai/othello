@@ -17,12 +17,14 @@ namespace othello {
             players_.push_back(std::make_unique<Player>(Color::BLACK, logic_));
         else
             players_.push_back(std::make_unique<AI>(Color::BLACK, logic_, 0));
+
     }
 
 
     //Ak uzivatel zada suradnice alebo staci prislusne okenko
     //vracia ukazatel na hraca ktory je na rade
     void MainGame::event(unsigned x, unsigned y) { // event funkce
+        
         Player& current_player = *players_[current_player_num];
 
         // pokud aktualni hrac nemuze hrat, je neco fakt spatne
@@ -49,6 +51,10 @@ namespace othello {
 
         logic_.commitTurn(toChange, current_player.getColor());
 
+        
+        //zavolame aj v GUI ukazovanie skore
+        
+        
         // zmen hrace, jen pokud ma ten druhy co hrat
         // pokud nema nikdo co hrat, GUI to zjisti
         if(canPlay(GetOppositeColor(current_player.getColor()))){

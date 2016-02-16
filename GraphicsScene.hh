@@ -23,14 +23,17 @@ namespace othello {
     public slots:
         void TickingClocks();
     
+    signals:
+        void Score_Changed(int white, int black);
+    
     public:
         MainGame game_;
         std::vector<std::vector<QGraphicsPixmapItem*>> b;
         unsigned size;
         QTimer *timer;
 
-        QImage* matej;
-        QImage* ondra;
+        QImage* blackDisc;
+        QImage* whiteDisc;
         QImage* blank;
 
 

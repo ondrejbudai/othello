@@ -26,7 +26,7 @@ namespace othello {
     //vykresli hraciu dosku
     void OthelloGui::ShowGameBoard(){
         //inicilizujeme hraciu dosku
-        scene = new GraphicsScene;
+        scene = new GraphicsScene();
         view = new GraphicsView(scene);
         if (ui->ButtonNewGame->text() == QString("Reset Game"))
             std::cout<< "Sme v resete\n"<<std::endl; 
@@ -35,7 +35,17 @@ namespace othello {
         ui->gameBoard->layout()->addWidget(view);
         topFeature = view;
         ui->ButtonNewGame->setText("Reset Game"); 
+        
+        connect(scene , SIGNAL(Score_Changed(int, int)),this, SLOT(WriteScore(int, int)));        
     }
+
+    void OthelloGui::WriteScore(int black, int white){
+        QString sb = QString::number(black);
+        ui->BlackScoreLabel->setText(sb);
+        QString sw = QString::number(white);
+        ui->WhiteScoreLabel->setText(sw);
+    }
+
     
     //po staceni tlacitka Start Game
     void OthelloGui::on_ButtonNewGame_clicked(){

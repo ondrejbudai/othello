@@ -18,10 +18,13 @@ namespace othello {
     class OthelloGui : public QWidget {
 
         Q_OBJECT
+    signals:
+        void on_ButtonStartGame_clicked();
 
     public slots:
         void on_ButtonNewGame_clicked();
         void ShowGameBoard();
+        void WriteScore(int white, int black);
             
     private:
         Ui::OthelloGui *ui;

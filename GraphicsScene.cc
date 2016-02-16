@@ -10,8 +10,8 @@ namespace othello {
         
         timer = new QTimer(this);
         timer->setSingleShot(true);
-        matej = new QImage("img/matej.jpg");
-        ondra = new QImage("img/ondra.jpg");
+        blackDisc = new QImage("img/blackDisc.jpg");
+        whiteDisc = new QImage("img/whiteDisc.jpg");
         blank = new QImage("img/blank.jpg");
 
         const GameBoard& board = game_.getLogic().getBoard();
@@ -45,20 +45,26 @@ namespace othello {
                 if (!board.isOccupied(x, y)) {
                     newItem = new QGraphicsPixmapItem(QPixmap::fromImage(*blank));
                 } else if (board.GetColor(x, y) == Color::BLACK) {
-                    newItem = new QGraphicsPixmapItem(QPixmap::fromImage(*matej));
+                    newItem = new QGraphicsPixmapItem(QPixmap::fromImage(*blackDisc));
                 } else {
-                    newItem = new QGraphicsPixmapItem(QPixmap::fromImage(*ondra));
+                    newItem = new QGraphicsPixmapItem(QPixmap::fromImage(*whiteDisc));
                 }
                 newItem->setScale(pieceSize / newItem->boundingRect().width());
                 newItem->setPos(x * pieceSize, y * pieceSize);
                 addItem(newItem);
                 b[x][y] = newItem;
 
-//                b[x][y]->setBrush(QBrush(c));
-//                b[x][y]->setRect(x * pieceSize, y * pieceSize, pieceSize, pieceSize);
 
             }
         }
+        //Zistime nove skore
+
+        int white = 0;
+        int black = 0;
+        board.CountScore(black, white);
+        std::cout<<"Biely: "<<white<<"   Cierny: "<<black<<std::endl;
+        
+        emit(Score_Changed(black, white));
     }
 
     void  GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
