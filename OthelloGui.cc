@@ -7,6 +7,7 @@
 #include <iostream>
 #include <QResizeEvent>
 #include "OthelloGui.hh"
+#include "ui_OthelloGui.h"
 #include "PlayerSelection.hh"
 #include "GraphicsScene.hh"
 
@@ -59,7 +60,7 @@ namespace othello {
     void OthelloGui::on_ButtonNewGame_clicked(){
 
 
-        //ui->gameBoard->layout()->removeWidget(topFeature);
+        ui->gameBoard->layout()->removeWidget(topFeature);
 
         //ui->gameBoard->layout()->addWidget(startViewLight);
 //        playerScreen->setStyleSheet("QWidget { background-image: url(./img/startScreenImageLight.jpg) }");
@@ -85,7 +86,7 @@ namespace othello {
         startView  = new QGraphicsView(startScene);
         QGraphicsPixmapItem *startImage  = new QGraphicsPixmapItem(QPixmap::fromImage(image));
         startScene->addItem(startImage);
-        //ui->gameBoard->layout()->addWidget(startView);
+        ui->gameBoard->layout()->addWidget(startView);
         topFeature = startView;
 
         connect(playerScreen, SIGNAL(on_ButtonStartGame_clicked()), this, SLOT(ShowGameBoard()));

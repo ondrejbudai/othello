@@ -1,4 +1,5 @@
 #include "PlayerSelection.hh"
+#include "ui_PlayerSelection.h"
 
 PlayerSelection::PlayerSelection(QWidget *parent) :
         QFrame(parent),
