@@ -29,8 +29,8 @@ namespace othello {
         void EndOfGame();
             
     private:
-        MainGame game_;
         Ui::OthelloGui *ui;
+        MainGame game_;
         QGraphicsScene *startScene;
         QGraphicsView  *startView;
         QGraphicsScene *startSceneLight;

@@ -16,8 +16,12 @@ find_package (Qt5Widgets)
 
 set (othelloLib_src AI.cc GameBoard.cc GameLogic.cc MainGame.cc OthelloGui.cc Player.cc
     PlayerSelection.cc GraphicsScene.cc)
-set (othelloLib_hdr AI.hh GameBoard.hh GameLogic.hh MainGame.hh OthelloGui.hh Player.hh
-    PlayerSelection.hh GraphicsScene.hh)
+set (othelloLib_hdr OthelloGui.hh  PlayerSelection.hh GraphicsScene.hh)
+
+#set (othelloLib_src AI.cc GameBoard.cc GameLogic.cc MainGame.cc OthelloGui.cc Player.cc
+#    PlayerSelection.cc GraphicsScene.cc)
+#set (othelloLib_hdr AI.hh GameBoard.hh GameLogic.hh MainGame.hh OthelloGui.hh Player.hh
+#    PlayerSelection.hh GraphicsScene.hh)
 set (othelloLib_ui  OthelloGui.ui PlayerSelection.ui)
 set (othelloBin_src main-qt.cc)
 
