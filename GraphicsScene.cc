@@ -66,9 +66,9 @@ namespace othello {
         int white = 0;
         int black = 0;
         board.CountScore(black, white);
-        std::cout<<"Biely: "<<white<<"   Cierny: "<<black<<std::endl;
+
         emit(Score_Changed(black, white));
-        if (!game_->canPlay(game_->getCurrentPlayer().getColor()))     
+        if (game_->isEnd())
             emit (EndOfGame());
     }
 

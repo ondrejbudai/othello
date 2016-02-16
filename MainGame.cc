@@ -67,7 +67,8 @@ namespace othello {
     }
 
 
-    //pomocna funkcia pre pracu bez gui 
+    //pomocna funkcia pre pracu bez gui
+    //TODO: move me!
     void MainGame::printGameBoard() const {//Zobrazi hraciu plochu na terminal
         using namespace std;
 
