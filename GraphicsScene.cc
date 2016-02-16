@@ -4,19 +4,26 @@ namespace othello {
     constexpr unsigned AI_DELAY = 1000;
 
     GraphicsScene::GraphicsScene() : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE},
-                                     game_(10, PlayerType::HUMAN, PlayerType::AI),
+                                     game_(10, PlayerType::HUMAN, PlayerType::HUMAN),
                                      size{GAME_SIZE} {
 
         
         timer = new QTimer(this);
         timer->setSingleShot(true);
+        matej = new QImage("img/matej.jpg");
+        ondra = new QImage("img/ondra.jpg");
+        blank = new QImage("img/blank.jpg");
 
         const GameBoard& board = game_.getLogic().getBoard();
         const double pieceSize = getPieceSize();
         for (unsigned x = 0; x < board.getSize(); ++x) {
             b.emplace_back();
             for (unsigned y = 0; y < board.getSize(); ++y) {
-                b[x].emplace_back(addRect(x * pieceSize, y * pieceSize, pieceSize, pieceSize));
+                QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap::fromImage(*blank));
+                b[x].push_back(item);
+                item->setScale(pieceSize / item->boundingRect().width());
+                item->setPos(x * pieceSize, y * pieceSize);
+                addItem(item);
             }
         }
         repaint();
@@ -32,16 +39,24 @@ namespace othello {
         const double pieceSize = getPieceSize();
         for (unsigned x = 0; x < board.getSize(); ++x) {
             for (unsigned y = 0; y < board.getSize(); ++y) {
-                QColor c;
+                QGraphicsPixmapItem* newItem;
+                removeItem(b[x][y]);
+                delete b[x][y];
                 if (!board.isOccupied(x, y)) {
-                    c = {255, 255, 255, 0};
+                    newItem = new QGraphicsPixmapItem(QPixmap::fromImage(*blank));
                 } else if (board.GetColor(x, y) == Color::BLACK) {
-                    c = {0, 0, 0};
+                    newItem = new QGraphicsPixmapItem(QPixmap::fromImage(*matej));
                 } else {
-                    c = {200, 200, 200};
+                    newItem = new QGraphicsPixmapItem(QPixmap::fromImage(*ondra));
                 }
-                b[x][y]->setBrush(QBrush(c));
-                b[x][y]->setRect(x * pieceSize, y * pieceSize, pieceSize, pieceSize);
+                newItem->setScale(pieceSize / newItem->boundingRect().width());
+                newItem->setPos(x * pieceSize, y * pieceSize);
+                addItem(newItem);
+                b[x][y] = newItem;
+
+//                b[x][y]->setBrush(QBrush(c));
+//                b[x][y]->setRect(x * pieceSize, y * pieceSize, pieceSize, pieceSize);
+
             }
         }
     }

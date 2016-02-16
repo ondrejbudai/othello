@@ -12,11 +12,11 @@ namespace othello {
         if (white == PlayerType::HUMAN)
             players_.push_back(std::make_unique<Player>(Color::WHITE, logic_));
         else
-            players_.push_back(std::make_unique<AI>(Color::WHITE, logic_));
+            players_.push_back(std::make_unique<AI>(Color::WHITE, logic_, 0));
         if (black == PlayerType::HUMAN)
             players_.push_back(std::make_unique<Player>(Color::BLACK, logic_));
         else
-            players_.push_back(std::make_unique<AI>(Color::BLACK, logic_));
+            players_.push_back(std::make_unique<AI>(Color::BLACK, logic_, 0));
     }
 
 

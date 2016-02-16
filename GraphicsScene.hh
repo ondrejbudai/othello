@@ -25,9 +25,14 @@ namespace othello {
     
     public:
         MainGame game_;
-        std::vector<std::vector<QGraphicsRectItem*>> b;
+        std::vector<std::vector<QGraphicsPixmapItem*>> b;
         unsigned size;
         QTimer *timer;
+
+        QImage* matej;
+        QImage* ondra;
+        QImage* blank;
+
 
         GraphicsScene();
         void repaint();

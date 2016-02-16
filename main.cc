@@ -9,7 +9,7 @@ int main() {
     //vytvorime obrazovky
     //so vsetkym klikanim a pod
     //ak si vyberie novu hru a klikne start, tak sa zavola funkcia othello::MainGame(parametre)
-    othello::MainGame g(8, othello::PlayerType::HUMAN, othello::PlayerType::AI);//toto potom tu nebude
+    othello::MainGame g(8, othello::PlayerType::AI, othello::PlayerType::AI);//toto potom tu nebude
     //samotne okno pri udalosti, vyvola funkcie, ktore su implementovane v gamelogic a v maingame
     //nasledujuca cast je pre terminal a tesotvanie
     while (!g.isEnd()) {
