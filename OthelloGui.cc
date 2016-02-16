@@ -43,8 +43,24 @@ namespace othello {
 
     // reaguje na klik v lepevem sloupci, zobrazi herni desku
     void OthelloGui::ShowGameBoard(){
+
+        std::vector<QString> names = playerScreen->getNames();
+
         //inicilizujeme hraciu dosku
         game_ = std::make_unique<MainGame>(10, PlayerType::HUMAN, PlayerType::AI);
+
+        std::vector<std::string> namesStd{names[0].toStdString(), names[1].toStdString()};
+        game_->setNames(namesStd);
+
+        const static QString s1{"<font size=5>"};
+        const static QString s2{"</font>"};
+
+        names[0] = names[0].prepend(s1).append(s2);
+        names[1] = names[1].prepend(s1).append(s2);
+
+        ui->BlackName->setText(names[0]);
+        ui->WhiteName->setText(names[1]);
+
         scene = new GraphicsScene(*game_);
         view = new GraphicsView(scene);
         if (ui->ButtonNewGame->text() == QString("Reset Game"))
@@ -52,7 +68,9 @@ namespace othello {
 
         ui->gameBoard->layout()->removeWidget(playerScreen);
         ui->gameBoard->layout()->addWidget(view);
-        ui->ButtonNewGame->setText("Reset Game"); 
+        ui->ButtonNewGame->setText("Reset Game");
+
+        WriteScore(2, 2);
         
         connect(scene , SIGNAL(Score_Changed(int, int)),this, SLOT(WriteScore(int, int)));        
         connect(scene,  SIGNAL(EndOfGame()), this, SLOT(EndOfGame()));

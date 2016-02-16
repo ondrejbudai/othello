@@ -111,4 +111,9 @@ namespace othello {
 
         return false;
     }
+
+    void MainGame::setNames(const std::vector<std::string>& names) {
+        players_[0]->setName(names[0]);
+        players_[1]->setName(names[1]);
+    }
 }

@@ -43,6 +43,8 @@ namespace othello {
         bool IsRunning(){ return isRunning_;}
 
         void StopRunning(){ isRunning_ = false;}
+
+        void setNames(const std::vector<std::string>& names);
     };
 }
 

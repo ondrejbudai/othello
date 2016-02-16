@@ -13,7 +13,7 @@ namespace othello {
     class Player {
     protected:
         Color color_;
-        std::string name;
+        std::string name_;
         const GameLogic& logic_;
     public:
         Player(Color c, const GameLogic& logic) : color_{c}, logic_{logic} { }
@@ -23,6 +23,8 @@ namespace othello {
         virtual Color getColor() const { return color_; }
 
         virtual bool isAi() const { return false; }
+
+        void setName(std::string name) { name_ = name; }
     };
 }
 

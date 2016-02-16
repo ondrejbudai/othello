@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <QFrame>
+#include <QString>
+#include <vector>
+#include <string>
 
 namespace Ui {
 class PlayerSelection;
@@ -15,6 +18,8 @@ class PlayerSelection : public QFrame
 public:
     explicit PlayerSelection(QWidget *parent = 0);
     ~PlayerSelection();
+
+    std::vector<QString> getNames();
 
 signals:
     void on_ButtonStartGame_clicked();

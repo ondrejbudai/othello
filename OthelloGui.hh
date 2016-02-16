@@ -11,6 +11,7 @@
 #include <QFrame>
 #include <memory>
 #include "MainGame.hh"
+#include "PlayerSelection.hh"
 
 namespace Ui{
     class OthelloGui;
@@ -32,7 +33,7 @@ namespace othello {
         std::unique_ptr<MainGame> game_;
         QGraphicsScene *startScene;
         QGraphicsView  *startView;
-        QFrame* playerScreen;
+        PlayerSelection* playerScreen;
         QGraphicsScene* scene;
         QGraphicsView* view;
 
