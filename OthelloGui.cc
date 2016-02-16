@@ -7,8 +7,6 @@
 #include <iostream>
 #include <QResizeEvent>
 #include "OthelloGui.hh"
-#include "MainGame.hh"
-#include "ui_OthelloGui.h"
 #include "PlayerSelection.hh"
 #include "GraphicsScene.hh"
 
@@ -23,7 +21,7 @@ namespace othello {
         }
     };
 
-    //vykresli hraciu dosku
+    // reaguje na klik v lepevem sloupci, zobrazi herni desku
     void OthelloGui::ShowGameBoard(){
         //inicilizujeme hraciu dosku
         scene = new GraphicsScene(game_);
@@ -55,28 +53,22 @@ namespace othello {
         //delete scene;
         //game_.~MainGame();//sorry
         std::cout<<"SHOUDL END----------------------------\n"<<std::flush;
-    } 
-    
-    //po staceni tlacitka Start Game
+    }
+
+    // v pravem sloupci, zobrazi obrazovku s vyberem hracu
     void OthelloGui::on_ButtonNewGame_clicked(){
-       
 
-        ui->gameBoard->layout()->removeWidget(topFeature);
-       
-        //pridame pozadie 
-        startScene->addItem(startImageLight);
-        ui->gameBoard->layout()->addWidget(startViewLight);
 
-        ui->gameBoard->layout()->update();
-        //odoberieme ho
-        ui->gameBoard->layout()->removeWidget(startViewLight);
-        
+        //ui->gameBoard->layout()->removeWidget(topFeature);
+
+        //ui->gameBoard->layout()->addWidget(startViewLight);
+//        playerScreen->setStyleSheet("QWidget { background-image: url(./img/startScreenImageLight.jpg) }");
         //a pridame tabulku
         ui->gameBoard->layout()->addWidget(playerScreen);
-        topFeature = playerScreen;        
+        topFeature = playerScreen;
         //ShowGameBoard();
     }
-    
+
 
     OthelloGui::OthelloGui(QWidget *parent): QWidget(parent), ui(new Ui::OthelloGui),
                     game_{10,PlayerType::AI,PlayerType::AI} {
@@ -93,19 +85,10 @@ namespace othello {
         startView  = new QGraphicsView(startScene);
         QGraphicsPixmapItem *startImage  = new QGraphicsPixmapItem(QPixmap::fromImage(image));
         startScene->addItem(startImage);
-        ui->gameBoard->layout()->addWidget(startView);
-        topFeature = startView;        
-        
-        //iniciliazujem svetlejsiu obrazovku 
-        startSceneLight = new QGraphicsScene();
-        startViewLight  = new QGraphicsView(startSceneLight);
-        QImage imageLight("img/startScreenImageLight.jpg");
-        startImageLight  = new QGraphicsPixmapItem(QPixmap::fromImage(imageLight));
+        //ui->gameBoard->layout()->addWidget(startView);
+        topFeature = startView;
 
-        //inicialziujem hodinky
-
-
-        connect(playerScreen , SIGNAL(on_ButtonStartGame_clicked()),this, SLOT(ShowGameBoard()));        
+        connect(playerScreen, SIGNAL(on_ButtonStartGame_clicked()), this, SLOT(ShowGameBoard()));
     }
 }
 

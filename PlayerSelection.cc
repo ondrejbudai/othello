@@ -1,11 +1,11 @@
 #include "PlayerSelection.hh"
-#include "ui_PlayerSelection.h"
 
 PlayerSelection::PlayerSelection(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::PlayerSelection)
+        QFrame(parent),
+        ui(new Ui::PlayerSelection)
 {
     ui->setupUi(this);
+    setStyleSheet("background-image: url(./img/startScreenImageLight.jpg)");
 }
 
 PlayerSelection::~PlayerSelection()

@@ -19,8 +19,6 @@ namespace othello {
     class OthelloGui : public QWidget {
 
         Q_OBJECT
-    signals:
-        void on_ButtonStartGame_clicked();
 
     public slots:
         void on_ButtonNewGame_clicked();
@@ -33,11 +31,8 @@ namespace othello {
         MainGame game_;
         QGraphicsScene *startScene;
         QGraphicsView  *startView;
-        QGraphicsScene *startSceneLight;
-        QGraphicsView  *startViewLight;
         QWidget *playerScreen;
         QWidget *topFeature;
-        QGraphicsPixmapItem *startImageLight;
         QGraphicsScene* scene;
         QGraphicsView* view;
 

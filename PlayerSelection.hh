@@ -2,12 +2,13 @@
 #define PLAYERSELECTION_H
 
 #include <QWidget>
+#include <QFrame>
 
 namespace Ui {
 class PlayerSelection;
 }
 
-class PlayerSelection : public QWidget
+class PlayerSelection : public QFrame
 {
     Q_OBJECT
 
