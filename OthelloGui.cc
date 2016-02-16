@@ -48,6 +48,12 @@ namespace othello {
     }
    
     void OthelloGui::EndOfGame(){
+        game_.StopRunning();
+        disconnect(scene , SIGNAL(Score_Changed(int, int)),this, SLOT(WriteScore(int, int)));        
+        disconnect(scene,  SIGNAL(EndOfGame()), this, SLOT(EndOfGame()));
+        //delete view;
+        //delete scene;
+        //game_.~MainGame();//sorry
         std::cout<<"SHOUDL END----------------------------\n"<<std::flush;
     } 
     

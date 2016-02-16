@@ -26,7 +26,9 @@ namespace othello {
     //Ak uzivatel zada suradnice alebo staci prislusne okenko
     //vracia ukazatel na hraca ktory je na rade
     void MainGame::event(unsigned x, unsigned y) { // event funkce
-        
+        if (!IsRunning())
+            return;
+         
         Player& current_player = *players_[current_player_num];
 
         assert(canPlay(current_player.getColor()));

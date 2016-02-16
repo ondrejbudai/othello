@@ -34,6 +34,11 @@ namespace othello {
 
 
     void  GraphicsScene::repaint() {
+        if (!game_->IsRunning()){
+            disconnect(timer,SIGNAL(timeout()), this, SLOT(TickingClocks()));
+            return;
+        }
+
         const GameBoard& board = game_->getLogic().getBoard();
         const double pieceSize = getPieceSize();
         for (unsigned x = 0; x < board.getSize(); ++x) {
@@ -62,20 +67,20 @@ namespace othello {
         int black = 0;
         board.CountScore(black, white);
         std::cout<<"Biely: "<<white<<"   Cierny: "<<black<<std::endl;
+        emit(Score_Changed(black, white));
         if (!game_->canPlay(game_->getCurrentPlayer().getColor()))     
             emit (EndOfGame());
-        emit(Score_Changed(black, white));
     }
 
     void  GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
-        if (!game_->getCurrentPlayer().isAi()) {
+        if (!game_->getCurrentPlayer().isAi() && game_->IsRunning()) {
             game_->event(mouseEvent->scenePos().x() / getPieceSize(), mouseEvent->scenePos().y() / getPieceSize());
             if (game_->getCurrentPlayer().isAi()) {
                 this->timer->start(AI_DELAY);
             }
+            repaint();
         }
-        repaint();
-        QGraphicsScene::mouseReleaseEvent(mouseEvent);
+        //QGraphicsScene::mouseReleaseEvent(mouseEvent);
     }
 
     double  GraphicsScene::getPieceSize() const {
@@ -83,16 +88,18 @@ namespace othello {
         return double(double(size) / board.getSize());
     }
 
-    void  GraphicsScene::setSize(QSize s) {
+    /*void  GraphicsScene::setSize(QSize s) {
         size = s.width() > s.height() ? s.height() : s.width();
         repaint();
     }
+    */
 
 
     void GraphicsScene::TickingClocks(){
         Player p = game_->getCurrentPlayer();
         Coords c = p.play();
-        game_->event(c.GetX(), c.GetY());
+        if (game_->IsRunning())
+            game_->event(c.GetX(), c.GetY());
         repaint();
         if (game_->getCurrentPlayer().isAi()) {
             this->timer->start(AI_DELAY);

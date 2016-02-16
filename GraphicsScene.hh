@@ -28,9 +28,9 @@ namespace othello {
         void EndOfGame();
     
     public:
-        MainGame *game_;
         std::vector<std::vector<QGraphicsPixmapItem*>> b;
         unsigned size;
+        MainGame *game_;
         QTimer *timer;
 
         QImage* blackDisc;
