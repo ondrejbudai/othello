@@ -74,13 +74,17 @@ namespace othello {
 
     void  GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
         if (!game_.getCurrentPlayer().isAi() && game_.IsRunning()) {
-            game_.event(mouseEvent->scenePos().x() / getPieceSize(), mouseEvent->scenePos().y() / getPieceSize());
+            const GameBoard& board = game_.getLogic().getBoard();
+            int nX = mouseEvent->scenePos().x() / getPieceSize();
+            int nY =  mouseEvent->scenePos().y() / getPieceSize();
+            if (nX < 0 || nY < 0 || unsigned(nX) >= board.getSize() || unsigned(nY) >= board.getSize())
+                return;
+            game_.event(nX, nY);    
             if (game_.getCurrentPlayer().isAi()) {
                 this->timer->start(AI_DELAY);
             }
             repaint();
         }
-        //QGraphicsScene::mouseReleaseEvent(mouseEvent);
     }
 
     double  GraphicsScene::getPieceSize() const {
