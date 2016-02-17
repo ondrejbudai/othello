@@ -4,6 +4,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsRectItem>
 #include <QtCore>
+#include <QtGui>
 #include <iostream>
 #include <QResizeEvent>
 #include "OthelloGui.hh"
@@ -43,11 +44,33 @@ namespace othello {
 
     // reaguje na klik v lepevem sloupci, zobrazi herni desku
     void OthelloGui::ShowGameBoard(){
-
+    
+        //vektor na stiahnutie mien hracov
         std::vector<QString> names = playerScreen->getNames();
+        //vektor na stiahnutie typu hracov
+        std::vector<QString> types = playerScreen->getTypes();
 
+        //Spracujeme hracov podla ich typu
+        const static QString AI{"AI"};
+        const static QString Human{"Human"};
+        PlayerType p1;
+        PlayerType p2;
+        if (types[0] == AI)
+            p1 = PlayerType::AI;
+        else
+            p1 = PlayerType::HUMAN;
+        if (types[1] == AI)
+            p2 = PlayerType::AI;
+        else
+            p2 = PlayerType::HUMAN;
+
+        //precitame zvolenu velkost dosky a prekonvertujeme na int
+        QString boardSizeS = playerScreen->getBoardSize();
+        int boardSize = boardSizeS.toInt();
+
+        
         //inicilizujeme hraciu dosku
-        game_ = std::make_unique<MainGame>(10, PlayerType::HUMAN, PlayerType::AI);
+        game_ = std::make_unique<MainGame>(boardSize, p1, p2);
 
         std::vector<std::string> namesStd{names[0].toStdString(), names[1].toStdString()};
         game_->setNames(namesStd);
@@ -60,6 +83,9 @@ namespace othello {
 
         ui->BlackName->setText(names[0]);
         ui->WhiteName->setText(names[1]);
+
+        ui->ScoreLabel1->setText("Score: ");
+        ui->ScoreLabel2->setText("Score: ");
 
         scene = new GraphicsScene(*game_);
         view = new GraphicsView(scene);
@@ -83,6 +109,7 @@ namespace othello {
         ui->WhiteScoreLabel->setText(sw);
     }
 
+    
     void OthelloGui::EndOfGame(){
         game_->StopRunning();
         disconnect(scene , SIGNAL(Score_Changed(int, int)),this, SLOT(WriteScore(int, int)));        
@@ -98,7 +125,6 @@ namespace othello {
 
 
         ui->gameBoard->layout()->removeWidget(startView);
-
         ui->gameBoard->layout()->addWidget(playerScreen);
     }
 }

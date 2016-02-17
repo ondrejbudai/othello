@@ -20,10 +20,10 @@ public:
     ~PlayerSelection();
 
     std::vector<QString> getNames();
-
+    std::vector<QString> getTypes();
+    QString getBoardSize();
 signals:
     void on_ButtonStartGame_clicked();
-
 private:
     Ui::PlayerSelection *ui;
 };

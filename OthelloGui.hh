@@ -27,7 +27,6 @@ namespace othello {
         void ShowGameBoard();
         void WriteScore(int white, int black);
         void EndOfGame();
-            
     private:
         Ui::OthelloGui *ui;
         std::unique_ptr<MainGame> game_;
