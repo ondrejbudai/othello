@@ -22,27 +22,35 @@ namespace othello {
 
     public slots:
         void TickingClocks();
+        void WaitingOnFreezingEnded();
+        void TimeToUnfreeze();
     
     signals:
         void Score_Changed(int white, int black);
         void EndOfGame();
-    
-    public:
+   
+    private:
         std::vector<std::vector<QGraphicsPixmapItem*>> b;
         MainGame& game_;
         unsigned size;
         QTimer* timer;
+        QTimer* freezeTimer;
+        QTimer* unfreezeTimer;
 
         QImage* blackDisc;
         QImage* whiteDisc;
         QImage* blank;
+        QImage* blackDiscFrozen;
+        QImage* whiteDiscFrozen;
+       
+        bool canUnfreez = false;
 
-
-        GraphicsScene(MainGame &gm);
         void repaint();
         virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
+    
+    public:
+        GraphicsScene(MainGame &gm);
         double getPieceSize() const ;
-        void setSize(QSize s);
     };
 }
 #endif

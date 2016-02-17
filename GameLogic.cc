@@ -20,7 +20,7 @@ namespace othello {
         //zo vsetkych susednych vytriedime len tie, ktore su obsadene superom
         std::vector<Coords> oppositeFields;
         for (auto const& fld: fields) {
-            if (board_.isOccupied(fld) && board_.GetColor(fld) == oppositeColor)
+            if (board_.isOccupied(fld) && (board_.GetColor(fld) == oppositeColor) && ! board_.isFrozen(fld))
                 oppositeFields.push_back(fld);
         }
 
@@ -42,9 +42,8 @@ namespace othello {
                 if (pomX < 0 || pomX >= int(board_.getSize()) || pomY < 0 || pomY >= int(board_.getSize()))
                     break;
                 Coords candidate{unsigned(pomX), unsigned(pomY)};
-//                Field candidate = board_.GetField(pomX, pomY);
-                //ak dane poliecko nie je obsadene, nie je to kandidat
-                if (!board_.isOccupied(candidate))
+                //ak dane poliecko nie je obsadene, alebo je zmrznute => nie je to kandidat
+                if (!board_.isOccupied(candidate) || board_.isFrozen(candidate))
                     break;
                 //ak sme nasli svoju farbu a mame aspon jednu superovu medzitym
                 if (board_.GetColor(candidate) == addingColor && !possibleChanges.empty()) {

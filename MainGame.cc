@@ -25,9 +25,9 @@ namespace othello {
 
     //Ak uzivatel zada suradnice alebo staci prislusne okenko
     //vracia ukazatel na hraca ktory je na rade
-    void MainGame::event(unsigned x, unsigned y) { // event funkce
+    bool MainGame::event(unsigned x, unsigned y) { // event funkce
         if (!IsRunning())
-            return;
+            return false;
          
         Player& current_player = *players_[current_player_num];
 
@@ -49,7 +49,7 @@ namespace othello {
             assert(!current_player.isAi());
 
             std::cout << "Neplatny tah" << std::endl << std::flush;
-            return;
+            return false;
         }
 
         logic_.commitTurn(toChange, current_player.getColor());
@@ -64,6 +64,7 @@ namespace othello {
             current_player_num++;
             current_player_num = current_player_num % 2;
         }
+        return true;
     }
 
 
