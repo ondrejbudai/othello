@@ -1,11 +1,11 @@
 #ifndef PLAYERSELECTION_H
 #define PLAYERSELECTION_H
 
-#include <QWidget>
+//#include <QWidget>
 #include <QFrame>
-#include <QString>
-#include <vector>
-#include <string>
+//#include <QString>
+//#include <vector>
+//#include <string>
 
 namespace Ui {
 class PlayerSelection;

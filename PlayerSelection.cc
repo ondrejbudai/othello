@@ -34,7 +34,6 @@ QString PlayerSelection::getBoardSize(){
 
 
 std::vector<QString> PlayerSelection::getNames() {
-    //TODO kontrola ci nie je meno prazdne
     std::vector<QString> ret;
     ret.push_back(ui->name1->text());
     ret.push_back(ui->name2->text());

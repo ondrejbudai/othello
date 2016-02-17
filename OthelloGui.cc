@@ -1,16 +1,6 @@
-#include <QApplication>
-#include <QMainWindow>
-#include <QGridLayout>
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsRectItem>
-#include <QtCore>
-#include <QtGui>
-#include <iostream>
-#include <QResizeEvent>
 #include <QMessageBox>
 #include "OthelloGui.hh"
 #include "ui_OthelloGui.h"
-#include "PlayerSelection.hh"
 #include "GraphicsScene.hh"
 
 namespace othello {
