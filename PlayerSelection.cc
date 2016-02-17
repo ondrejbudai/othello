@@ -5,8 +5,15 @@ PlayerSelection::PlayerSelection(QWidget *parent) :
         QFrame(parent),
         ui(new Ui::PlayerSelection)
 {
-    //TODO nech sa nastavi hrac 2 ako AI a size na 8 (nechcem to ansilu posuvat, vyzera to blbo...
     ui->setupUi(this);
+
+    //nastavime aby prvy hrac bol defaulte Human a druhy AI
+    ui->selectPlayer1->setCurrentIndex(0);
+    ui->selectPlayer2->setCurrentIndex(1);
+
+    //nastavime defaulte velkost hracej plochy na 8
+    ui->BoardSize->setCurrentIndex(1);
+
     setStyleSheet("background-image: url(./img/startScreenImageLight.jpg)"); 
     ui->name1->setText("Player 1");
     ui->name2->setText("Player 2");
