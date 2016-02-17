@@ -6,10 +6,7 @@
 #define OTHELLO_MAINGAME_HH
 
 #include <memory>
-//#include "Player.hh"
 #include "AI.hh"
-//#include "GameBoard.hh"
-//#include "GameLogic.hh"
 
 namespace othello {
 
