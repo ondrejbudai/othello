@@ -19,7 +19,7 @@ namespace othello {
     private:
         GameLogic logic_;
         std::vector<std::unique_ptr<Player>> players_;
-        int current_player_num = 0;
+        int current_player_num = 1;
         bool isRunning_ = true;
         // frozen stuff
     public:

@@ -3,6 +3,12 @@
 #include "ui_OthelloGui.h"
 #include "GraphicsScene.hh"
 
+//TODO zacina CIERNY! nie bielu ako u nas
+//TODO zamrzanie
+//TODO ukladanie+nacitanie hry
+//TODO viac Hier sucastne
+//TODO DO DO ukoncenie hry
+
 namespace othello {
     class GraphicsView : public QGraphicsView {
     public:
@@ -72,7 +78,7 @@ namespace othello {
 
         
         //inicilizujeme hraciu dosku
-        game_ = std::make_unique<MainGame>(boardSize, p1, p2);
+        game_ = std::make_unique<MainGame>(boardSize, p2, p1);
 
         std::vector<std::string> namesStd{names[0].toStdString(), names[1].toStdString()};
         game_->setNames(namesStd);

@@ -7,19 +7,19 @@
 #include <iostream>
 #include <cassert>
 
+constexpr double StrengtOfThatBastard = 0;
+
 namespace othello {
     MainGame::MainGame(unsigned size, PlayerType white, PlayerType black) : logic_{size} {
         if (white == PlayerType::HUMAN)
             players_.push_back(std::make_unique<Player>(Color::WHITE, logic_));
         else
-            players_.push_back(std::make_unique<AI>(Color::WHITE, logic_, 0));
+            players_.push_back(std::make_unique<AI>(Color::WHITE, logic_,  StrengtOfThatBastard ));
+        
         if (black == PlayerType::HUMAN)
             players_.push_back(std::make_unique<Player>(Color::BLACK, logic_));
         else
-            players_.push_back(std::make_unique<AI>(Color::BLACK, logic_, 0));
-    
-        
-
+            players_.push_back(std::make_unique<AI>(Color::BLACK, logic_, StrengtOfThatBastard ));
     }
 
 

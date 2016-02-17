@@ -47,6 +47,19 @@ namespace othello {
             //vyjimka?
         }
 
+        for (const auto& f : validMoves) {
+            unsigned xV = f.second.GetX();
+            unsigned yV = f.second.GetY();
+            if (xV == 0){
+                if (yV == 0 || yV == board.getSize()-1)
+                    return f.second;
+            }
+            else if (xV == board.getSize()-1)
+                if (yV == 0 || yV == board.getSize()-1)
+                    return f.second;
+
+        }
+
         unsigned maxOffset = unsigned(validMoves.size() * randomness_);
         auto p = validMoves.rbegin();
         if (maxOffset > 0) {

@@ -22,6 +22,9 @@
      <height>71</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background: transparent</string>
+   </property>
    <property name="text">
     <string>Player 1</string>
    </property>
@@ -34,6 +37,9 @@
      <width>181</width>
      <height>41</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: transparent</string>
    </property>
    <property name="text">
     <string>Player 2</string>
@@ -81,6 +87,9 @@
      <height>28</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <item>
     <property name="text">
      <string>Human</string>
@@ -101,6 +110,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: transparent</string>
+   </property>
    <property name="text">
     <string>Name:</string>
    </property>
@@ -113,6 +128,9 @@
      <width>67</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: transparent</string>
    </property>
    <property name="text">
     <string>Name:</string>
@@ -147,6 +165,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: transparent</string>
+   </property>
    <property name="text">
     <string>Type of player:</string>
    </property>
@@ -159,6 +183,9 @@
      <width>111</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: transparent</string>
    </property>
    <property name="text">
     <string>Type of player:</string>
@@ -185,6 +212,9 @@
      <width>20</width>
      <height>351</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="orientation">
     <enum>Qt::Vertical</enum>
@@ -233,7 +263,7 @@
     </property>
    </item>
   </widget>
-  <widget class="QLabel" name="label_6">
+  <widget class="QLabel" name="sizeOfBoardL">
    <property name="geometry">
     <rect>
      <x>260</x>
@@ -241,6 +271,9 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background: transparent</string>
    </property>
    <property name="text">
     <string>Size of board:</string>
