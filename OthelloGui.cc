@@ -7,6 +7,7 @@
 #include <QtGui>
 #include <iostream>
 #include <QResizeEvent>
+#include <QMessageBox>
 #include "OthelloGui.hh"
 #include "ui_OthelloGui.h"
 #include "PlayerSelection.hh"
@@ -49,6 +50,17 @@ namespace othello {
         std::vector<QString> names = playerScreen->getNames();
         //vektor na stiahnutie typu hracov
         std::vector<QString> types = playerScreen->getTypes();
+
+        //Kontrola ci nie su prazdne mena
+        const static QString emptyString{""};
+        if (names[0] == emptyString || names[1] == emptyString){
+            QMessageBox emptyPlayer;
+            emptyPlayer.setText("Meno hraca nemoze byt prazdne");
+            emptyPlayer.exec();
+            return;
+        }
+
+
 
         //Spracujeme hracov podla ich typu
         const static QString AI{"AI"};
