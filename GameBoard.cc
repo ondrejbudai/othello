@@ -37,32 +37,6 @@ namespace othello {
                 }
     }
 
-    void GameBoard::UnfreezeAll() {
-        for (unsigned x = 0; x < size_; ++x)
-            for (unsigned y = 0; y < size_; ++y)
-                setFrozen(x,y,false);
-    }
-
-    void GameBoard::SetRandomToFreeze(unsigned n){
-        std::vector<Coords> setFields;
-
-        //najdem vsetky obsadene
-        for (unsigned x = 0; x < size_; ++x) {
-            for (unsigned y = 0; y < size_; ++y) {
-                if (isOccupied(x, y))
-                    setFields.emplace_back(x, y);
-            }
-        }
-        //TODO - podmienky na to, cize nieje n vacisealebo rovne ako size()...
-        //vygenerujeme n nahodych cisel a tolko zmrazime
-        for (unsigned i = 0; i < n; i++){
-            int randomFieldIndex = rand() % int(setFields.size());
-            setFrozen(setFields[randomFieldIndex], true);
-            setFields.erase(setFields.begin()+randomFieldIndex);//sorry
-        }
-    }
-
-
 
     const Field& GameBoard::GetField(unsigned x, unsigned y) const {
         assert(x < size_ && y < size_);
@@ -81,12 +55,6 @@ namespace othello {
         
     }
 
-    bool GameBoard::isFrozen(const Coords& c)const{
-        unsigned x = c.GetX();
-        unsigned y = c.GetY();
-        assert(x < size_ && y < size_);
-        return board_[x][y].frozen_;
-    }
 
     bool GameBoard::isOccupied(unsigned x, unsigned y) const {
         assert(x < size_ && y < size_);

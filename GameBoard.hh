@@ -50,10 +50,6 @@ namespace othello {
         void setPiece(unsigned x, unsigned y, Color c);
 
         void setFrozen(unsigned x, unsigned y, bool f);
-        
-        void setFrozen(const Coords&c, bool f) {return setFrozen(c.GetX(), c.GetY(), f);}
-
-        bool isFrozen(const Coords& c) const;
 
         bool isOccupied(unsigned x, unsigned y) const;
 
@@ -62,10 +58,6 @@ namespace othello {
         unsigned getSize() const { return size_; }
 
         void CountScore( int &black, int &white) const;
-
-        void SetRandomToFreeze(unsigned n);
-    
-        void UnfreezeAll() ;
 
         std::vector<Coords> getNeighbours(unsigned x, unsigned y) const;
 

@@ -20,9 +20,6 @@ namespace othello {
         void commitTurn(const std::vector<Coords>& pieces, Color player);
 
         const GameBoard& getBoard() const { return board_; }
-        
-        //len prozatim pre zamrzanie
-        GameBoard& getBoard() { return board_; }
     };
 }
 

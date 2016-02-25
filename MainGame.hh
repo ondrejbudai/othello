@@ -25,7 +25,7 @@ namespace othello {
     public:
         MainGame(unsigned size, PlayerType white, PlayerType black);
 
-        bool event(unsigned x, unsigned y); // event funkce
+        void event(unsigned x, unsigned y); // event funkce
 
         const Player& getCurrentPlayer() { return *players_[current_player_num]; }
 
@@ -36,9 +36,6 @@ namespace othello {
         bool canPlay(Color color) const;
 
         const GameLogic& getLogic() const { return logic_; }
-        
-        //prozatim pre zamrzanie
-        GameLogic& getLogic() { return logic_; }
         
         bool IsRunning(){ return isRunning_;}
 
