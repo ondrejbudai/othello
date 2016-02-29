@@ -16,10 +16,10 @@ namespace othello {
         const GameBoard& board = game_.getLogic().getBoard();
         const double pieceSize = getPieceSize();
         for (unsigned x = 0; x < board.getSize(); ++x) {
-            b.emplace_back();
+            //b.emplace_back();
             for (unsigned y = 0; y < board.getSize(); ++y) {
                 QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap::fromImage(*blank));
-                b[x].push_back(item);
+                //b[x].push_back(item);
                 item->setScale(pieceSize / item->boundingRect().width());
                 item->setPos(x * pieceSize, y * pieceSize);
                 addItem(item);
@@ -44,8 +44,8 @@ namespace othello {
         for (unsigned x = 0; x < board.getSize(); ++x) {
             for (unsigned y = 0; y < board.getSize(); ++y) {
                 QGraphicsPixmapItem* newItem;
-                removeItem(b[x][y]);
-                delete b[x][y];
+                //removeItem(b[x][y]);
+                //delete b[x][y];
                 if (!board.isOccupied(x, y)) {
                     newItem = new QGraphicsPixmapItem(QPixmap::fromImage(*blank));
                 } else if (board.GetColor(x, y) == Color::BLACK) {
@@ -56,7 +56,7 @@ namespace othello {
                 newItem->setScale(pieceSize / newItem->boundingRect().width());
                 newItem->setPos(x * pieceSize, y * pieceSize);
                 addItem(newItem);
-                b[x][y] = newItem;
+                //b[x][y] = newItem;
 
 
             }

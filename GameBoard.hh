@@ -45,6 +45,8 @@ namespace othello {
     public:
         GameBoard(unsigned size);
 
+        void copyBoard(Board &toThis);
+
         const Field& GetField(unsigned x, unsigned y) const;
 
         void setPiece(unsigned x, unsigned y, Color c);

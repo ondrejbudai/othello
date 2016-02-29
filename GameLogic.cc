@@ -71,5 +71,8 @@ namespace othello {
             board_.setPiece(fld.GetX(), fld.GetY(), player);
         }
     }
+
+
+
 }
 

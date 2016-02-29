@@ -14,7 +14,6 @@ namespace othello {
             std::vector<Field> newRow;
             for (unsigned j = 0; j < size; j++){
                 newRow.push_back(Field{Color::RED, false, false});
-            //board_.push_back(std::vector<Field>(size,{Color::BLACK,false,false}));	
             }
             board_.push_back(newRow);
         }
@@ -82,6 +81,11 @@ namespace othello {
     Color GameBoard::GetColor(unsigned x, unsigned y) const {
         assert(x < size_ && y < size_);
         return board_[x][y].piece_;
+    }
+    
+    
+    void GameBoard::copyBoard(Board &toThis){
+        toThis = board_;
     }
 }
 

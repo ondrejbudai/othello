@@ -7,6 +7,7 @@
 
 #include <memory>
 #include "AI.hh"
+#include "GameBoard.hh"
 
 namespace othello {
 
@@ -14,10 +15,18 @@ namespace othello {
         HUMAN, AI
     };
 
+    
+    struct HistoryItem{
+        std::vector<std::vector<Field>> board;
+        Color currentPlayer;
+        std::pair<unsigned, unsigned> currentMove;//nie coords lebo je to class
+    };
+
 
     class MainGame {
     private:
         GameLogic logic_;
+        std::vector<HistoryItem> history_;
         std::vector<std::unique_ptr<Player>> players_;
         int current_player_num = 1;
         bool isRunning_ = true;
@@ -42,6 +51,8 @@ namespace othello {
         void StopRunning(){ isRunning_ = false;}
 
         void setNames(const std::vector<std::string>& names);
+        
+        void printHistory() const ;
     };
 }
 

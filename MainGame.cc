@@ -13,6 +13,7 @@
 #include <cassert>
 
 //TODO event vracia bool
+//TODO GRaphics scene ma [0,0] v lavom dolnom rohu a rastie smerom hore...
 
 //Sila AI (ako velmi sa snazi vybrat najlepsie riesenie) 0 -> hlada najlepsie riesenie
 //                                                       1 -> vybera nahodne riesenie
@@ -68,7 +69,12 @@ namespace othello {
             return;
         }
         
-        //TODO save game   -aktualny stav + tah co sa ide commitnut + akrualny hrac
+        //save game   -aktualny stav + tah co sa ide commitnut + aktualny hrac
+        HistoryItem newH;
+        logic_.copyBoard(newH.board);
+        newH.currentPlayer = current_player.getColor();
+        newH.currentMove = {x,y};
+        history_.push_back(newH);
 
         //zapis tahu
         logic_.commitTurn(toChange, current_player.getColor());
@@ -80,6 +86,9 @@ namespace othello {
             current_player_num++;
             current_player_num = current_player_num % 2;
         }
+
+        //printHistory();
+        //printGameBoard();
     }
 
 
@@ -111,6 +120,43 @@ namespace othello {
         }
     }
 
+    //pomocna funkcia pre pracu bez gui vypis historie
+    //TODO: move me!
+    void MainGame::printHistory() const {
+        using namespace std;
+
+        cout<<"-------------OTHELLOS STORY-----------------------";
+            for (unsigned k = 0; k < history_.size(); k++){
+                cout<<endl;
+                cout<< "Na rade je "<<(history_[k].currentPlayer == Color::BLACK ? "black":"white")<<" a zahra "<<history_[k].currentMove.first<<" "<<history_[k].currentMove.first<<endl;
+                cout<<endl;
+
+                unsigned sz = history_[k].board.size();
+
+                cout << "   ";
+                for (unsigned i = 0; i < sz; i++) {
+                    cout << i;
+                    if (i < 10)
+                        cout << " ";
+                }
+                cout << endl;
+                for (unsigned i = 0; i < sz; i++) {
+                    if (i < 10)
+                        cout << " ";
+                    cout << i << " ";
+                    for (unsigned j = 0; j < sz; j++) {
+                        if (history_[k].board[i][j].occupied_)
+                            cout << (history_[k].board[i][j].piece_ == Color::BLACK ? "\u25CB" : "\u25CD") << " ";
+                        else
+                            cout << "  ";
+                    }
+                    cout << endl;
+                }
+            }        
+        cout<<"-------------OTHELLOS STORY ENDS------------------";
+    }
+        
+        
     //Funkcia zistuje ci moze aspon jeden hrac hrat, ak nie jedna sa o koneic hry
     bool MainGame::isEnd() const {
         return !canPlay(Color::BLACK) && !canPlay(Color::WHITE);

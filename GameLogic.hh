@@ -17,6 +17,8 @@ namespace othello {
 
         std::vector<Coords> prepareTurn(unsigned x, unsigned y, Color addingColor) const;
 
+        void copyBoard(std::vector<std::vector<Field>>& toThis) {board_.copyBoard(toThis);};
+
         void commitTurn(const std::vector<Coords>& pieces, Color player);
 
         const GameBoard& getBoard() const { return board_; }
