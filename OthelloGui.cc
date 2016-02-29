@@ -3,10 +3,7 @@
 #include "ui_OthelloGui.h"
 #include "GraphicsScene.hh"
 
-//TODO zacina CIERNY! nie bielu ako u nas
-//TODO zamrzanie
 //TODO ukladanie+nacitanie hry
-//TODO viac Hier sucastne
 //TODO DO DO ukoncenie hry
 
 namespace othello {
