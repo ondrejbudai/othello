@@ -25,15 +25,16 @@ namespace othello {
     MainGame::MainGame(unsigned size, PlayerType white, PlayerType black) : logic_{size} {
         //Inicilaizacia hracov
         //TODO je to ozaj najlepsie miesto, nie radsej v OthelloGui a main-cli ?
+        if (black == PlayerType::HUMAN)
+            players_.push_back(std::make_unique<Player>(Color::BLACK, logic_));
+        else
+            players_.push_back(std::make_unique<AI>(Color::BLACK, logic_, StrengtOfThatBastard ));
+        
         if (white == PlayerType::HUMAN)
             players_.push_back(std::make_unique<Player>(Color::WHITE, logic_));
         else
             players_.push_back(std::make_unique<AI>(Color::WHITE, logic_,  StrengtOfThatBastard ));
         
-        if (black == PlayerType::HUMAN)
-            players_.push_back(std::make_unique<Player>(Color::BLACK, logic_));
-        else
-            players_.push_back(std::make_unique<AI>(Color::BLACK, logic_, StrengtOfThatBastard ));
     }
 
 
@@ -125,6 +126,8 @@ namespace othello {
     void MainGame::printHistory() const {
         using namespace std;
 
+        //TODO PREpocitat pozicie
+
         cout<<"-------------OTHELLOS STORY-----------------------";
             for (unsigned k = 0; k < history_.size(); k++){
                 cout<<endl;
@@ -155,7 +158,30 @@ namespace othello {
             }        
         cout<<"-------------OTHELLOS STORY ENDS------------------";
     }
-        
+    
+    //Struktura subora s ulozenou hrou
+    //
+    //BlackPlayerName
+    //typ blackPlayera
+    //WhitePlayerName
+    //typ white player
+    //velkost hracej dosky
+    //farba kto je na rade
+    //
+    //Hracia doska
+    //
+    //HISTORY
+    //
+    //--medzerou oddelene historie, kde kazda ma format
+    //farba-kto-zahral x y
+    //hracia doska
+    bool MainGame::saveHistoryToFile(FILE *outF){
+        //outF<<5;
+
+
+        return true;
+    }
+
         
     //Funkcia zistuje ci moze aspon jeden hrac hrat, ak nie jedna sa o koneic hry
     bool MainGame::isEnd() const {

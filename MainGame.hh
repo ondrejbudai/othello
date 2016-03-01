@@ -28,7 +28,7 @@ namespace othello {
         GameLogic logic_;
         std::vector<HistoryItem> history_;
         std::vector<std::unique_ptr<Player>> players_;
-        int current_player_num = 1;
+        int current_player_num = 0;
         bool isRunning_ = true;
         // frozen stuff
     public:
@@ -53,6 +53,8 @@ namespace othello {
         void setNames(const std::vector<std::string>& names);
         
         void printHistory() const ;
+    
+        bool saveHistoryToFile(FILE *thisFile);
     };
 }
 
