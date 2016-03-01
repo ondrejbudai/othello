@@ -217,6 +217,13 @@ namespace othello {
         logic_.copyBoard(board);
         
         printBoardToFile(board, outF);
+        
+        outF<<"\nHISTORY\n\n";
+
+        for (auto const& hisItem:history_){
+            outF<<(hisItem.currentPlayer == Color::BLACK?"black":"white")<<" "<<hisItem.currentMove.first<<" "<<hisItem.currentMove.second<<std::endl;
+            printBoardToFile(hisItem.board, outF);
+        }
 
         
         
