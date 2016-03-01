@@ -32,7 +32,6 @@ namespace othello {
     struct Field {
         Color piece_;
         bool occupied_;
-        bool frozen_;
     };
 
     class GameBoard {
@@ -50,8 +49,6 @@ namespace othello {
         const Field& GetField(unsigned x, unsigned y) const;
 
         void setPiece(unsigned x, unsigned y, Color c);
-
-        void setFrozen(unsigned x, unsigned y, bool f);
 
         bool isOccupied(unsigned x, unsigned y) const;
 

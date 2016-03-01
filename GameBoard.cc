@@ -13,7 +13,7 @@ namespace othello {
         for (unsigned i = 0; i < size; i++){
             std::vector<Field> newRow;
             for (unsigned j = 0; j < size; j++){
-                newRow.push_back(Field{Color::RED, false, false});
+                newRow.push_back(Field{Color::RED, false});
             }
             board_.push_back(newRow);
         }
@@ -47,13 +47,6 @@ namespace othello {
         board_[x][y].occupied_ = true;
         board_[x][y].piece_ = c;
     }
-
-    void GameBoard::setFrozen(unsigned x, unsigned y, bool f) {
-        assert(x < size_ && y < size_);
-        board_[x][y].frozen_ = f;
-        
-    }
-
 
     bool GameBoard::isOccupied(unsigned x, unsigned y) const {
         assert(x < size_ && y < size_);

@@ -25,6 +25,8 @@ namespace othello {
         virtual bool isAi() const { return false; }
 
         void setName(std::string name) { name_ = name; }
+
+        std::string  getName() {return name_;}
     };
 }
 

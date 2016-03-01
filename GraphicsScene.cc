@@ -16,11 +16,12 @@ namespace othello {
         const GameBoard& board = game_.getLogic().getBoard();
         const double pieceSize = getPieceSize();
         for (unsigned x = 0; x < board.getSize(); ++x) {
-            //b.emplace_back();
+            b.emplace_back();
             for (unsigned y = 0; y < board.getSize(); ++y) {
                 QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap::fromImage(*blank));
-                //b[x].push_back(item);
+                b[x].push_back(item);
                 item->setScale(pieceSize / item->boundingRect().width());
+                item->setPos((board.getSize() - 1 - x) * pieceSize, (board.getSize() -1 - y) * pieceSize);
                 item->setPos(x * pieceSize, y * pieceSize);
                 addItem(item);
             }
@@ -44,8 +45,8 @@ namespace othello {
         for (unsigned x = 0; x < board.getSize(); ++x) {
             for (unsigned y = 0; y < board.getSize(); ++y) {
                 QGraphicsPixmapItem* newItem;
-                //removeItem(b[x][y]);
-                //delete b[x][y];
+                removeItem(b[x][y]);
+                delete b[x][y];
                 if (!board.isOccupied(x, y)) {
                     newItem = new QGraphicsPixmapItem(QPixmap::fromImage(*blank));
                 } else if (board.GetColor(x, y) == Color::BLACK) {
@@ -54,9 +55,9 @@ namespace othello {
                     newItem = new QGraphicsPixmapItem(QPixmap::fromImage(*whiteDisc));
                 }
                 newItem->setScale(pieceSize / newItem->boundingRect().width());
-                newItem->setPos(x * pieceSize, y * pieceSize);
+                newItem->setPos(y * pieceSize, x * pieceSize);
                 addItem(newItem);
-                //b[x][y] = newItem;
+                b[x][y] = newItem;
 
 
             }
@@ -77,9 +78,11 @@ namespace othello {
             const GameBoard& board = game_.getLogic().getBoard();
             int nX = mouseEvent->scenePos().x() / getPieceSize();
             int nY =  mouseEvent->scenePos().y() / getPieceSize();
+            
+
             if (nX < 0 || nY < 0 || unsigned(nX) >= board.getSize() || unsigned(nY) >= board.getSize())
                 return;
-            game_.event(nX, nY);    
+            game_.event(nY, nX);    
             if (game_.getCurrentPlayer().isAi()) {
                 this->timer->start(AI_DELAY);
             }
@@ -91,12 +94,6 @@ namespace othello {
         const GameBoard& board = game_.getLogic().getBoard();
         return double(double(size) / board.getSize());
     }
-
-    /*void  GraphicsScene::setSize(QSize s) {
-        size = s.width() > s.height() ? s.height() : s.width();
-        repaint();
-    }
-    */
 
 
     void GraphicsScene::TickingClocks(){

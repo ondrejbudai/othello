@@ -21,6 +21,28 @@ constexpr double StrengtOfThatBastard = 0;
 
 
 namespace othello {
+    
+    
+    //0 not occupied
+    //1 black
+    //2 white
+    void printBoardToFile(std::vector<std::vector<Field>> b, std::ofstream &f){
+        for (unsigned i = 0; i < b.size(); ++i){
+            for (unsigned j = 0; j < b.size(); ++j){
+                if (!b[i][j].occupied_)
+                    f<<0;
+                else {
+                    if (b[i][j].piece_ == Color::BLACK)
+                        f<<1;
+                    else
+                        f<<2;
+                }
+            }
+            f<<std::endl;
+        }
+    }
+
+
 
     MainGame::MainGame(unsigned size, PlayerType white, PlayerType black) : logic_{size} {
         //Inicilaizacia hracov
@@ -45,7 +67,7 @@ namespace othello {
         //koniec hry
         if (!IsRunning())
             return;
-         
+        std::cout<<x<<" "<<y<<"\n"; 
         Player& current_player = *players_[current_player_num];
         assert(canPlay(current_player.getColor()));
 
@@ -90,6 +112,11 @@ namespace othello {
 
         //printHistory();
         //printGameBoard();
+        std::ofstream fl;
+        fl.open("TEST.txt");
+        saveHistoryToFile(fl);
+        fl.close();
+
     }
 
 
@@ -166,7 +193,7 @@ namespace othello {
     //WhitePlayerName
     //typ white player
     //velkost hracej dosky
-    //farba kto je na rade
+    //farba kto je na rade [0 alebo 1 podla current player]
     //
     //Hracia doska
     //
@@ -175,10 +202,24 @@ namespace othello {
     //--medzerou oddelene historie, kde kazda ma format
     //farba-kto-zahral x y
     //hracia doska
-    bool MainGame::saveHistoryToFile(FILE *outF){
-        //outF<<5;
+    bool MainGame::saveHistoryToFile(std::ofstream &outF){
+        //TODO HERE
+        outF<<players_[0]->getName()<<std::endl;
+        outF<<(players_[0]->isAi() ? "AI":"HUMAN")<<std::endl;
+        outF<<players_[1]->getName()<<std::endl;
+        outF<<(players_[1]->isAi() ? "AI":"HUMAN")<<std::endl;
+        outF<<logic_.getBoard().getSize()<<std::endl;
+        outF<<current_player_num<<std::endl;
+        outF<<std::endl;
+       
+        //ziskame akutlanu hraciu dosku 
+        std::vector<std::vector<Field>> board;
+        logic_.copyBoard(board);
+        
+        printBoardToFile(board, outF);
 
-
+        
+        
         return true;
     }
 
@@ -208,4 +249,8 @@ namespace othello {
         players_[0]->setName(names[0]);
         players_[1]->setName(names[1]);
     }
+
+
+
+
 }

@@ -8,6 +8,7 @@
 #include <memory>
 #include "AI.hh"
 #include "GameBoard.hh"
+#include <fstream>
 
 namespace othello {
 
@@ -54,7 +55,7 @@ namespace othello {
         
         void printHistory() const ;
     
-        bool saveHistoryToFile(FILE *thisFile);
+        bool saveHistoryToFile(std::ofstream &thisFile);
     };
 }
 
