@@ -66,7 +66,6 @@ namespace othello {
         //koniec hry
         if (!IsRunning())
             return;
-        std::cout<<x<<" "<<y<<"\n"; 
         Player& current_player = *players_[current_player_num];
         assert(canPlay(current_player.getColor()));
 
@@ -117,10 +116,10 @@ namespace othello {
         //saveGameToFile(fl);
         //fl.close();
         
-        std::ifstream fl;
-        fl.open("TEST.txt");
-        loadGameFromFile(fl);
-        fl.close();
+        //std::ifstream fl;
+        //fl.open("TEST.txt");
+        //loadGameFromFile(fl);
+        //fl.close();
 
 
     }
@@ -268,7 +267,6 @@ namespace othello {
     //Nastvuje mena hracov
     //TODO rovnako ako v kontruktore, je to na sparvno  mieste?
     void MainGame::setNames(const std::vector<std::string>& names) {
-        std::cout<<"NASTAVUJEM MENA "<<names[0]<<" "<<names[1]<<std::endl;
         players_[0]->setName(names[0]);
         players_[1]->setName(names[1]);
     }

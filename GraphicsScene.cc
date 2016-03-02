@@ -15,8 +15,8 @@ namespace othello {
                 QGraphicsPixmapItem* item = new QGraphicsPixmapItem(blank);
                 b[x].push_back(item);
                 item->setScale(pieceSize / item->boundingRect().width());
-                item->setPos((board_.getSize() - 1 - x) * pieceSize, (board_.getSize() - 1 - y) * pieceSize);
-                item->setPos(x * pieceSize, y * pieceSize);
+                //item->setPos((board_.getSize() - 1 - x) * pieceSize, (board_.getSize() - 1 - y) * pieceSize);
+                item->setPos(y * pieceSize, x * pieceSize);
                 addItem(item);
             }
         }
@@ -49,7 +49,7 @@ namespace othello {
         unsigned x = static_cast<unsigned>(mx / getPieceSize());
         unsigned y = static_cast<unsigned>(my / getPieceSize());
 
-        emit ClickSignal(x, y);
+        emit ClickSignal(y, x);
     }
 
     double GraphicsScene::getPieceSize() const {
