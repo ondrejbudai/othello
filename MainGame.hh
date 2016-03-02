@@ -37,7 +37,7 @@ namespace othello {
 
         void event(unsigned x, unsigned y); // event funkce
 
-        const Player& getCurrentPlayer() { return *players_[current_player_num]; }
+        const Player& getCurrentPlayer() const { return *players_[current_player_num]; }
 
         void printGameBoard() const;//Zobrazi hraciu plochu na terminal
 
@@ -46,8 +46,8 @@ namespace othello {
         bool canPlay(Color color) const;
 
         const GameLogic& getLogic() const { return logic_; }
-        
-        bool IsRunning(){ return isRunning_;}
+
+        bool IsRunning() const { return isRunning_; }
 
         void StopRunning(){ isRunning_ = false;}
 

@@ -1,17 +1,16 @@
 #ifndef GRAPHICS_SCENE_HH
 #define GRAPHICS_SCENE_HH
 
-
-
 #include <QApplication>
 #include <QMainWindow>
 #include <QGridLayout>
 #include <QGraphicsSceneMouseEvent>
-#include <QGraphicsRectItem>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
 #include <QtCore>
 #include <iostream>
 #include <QResizeEvent>
-#include "OthelloGui.hh"
+#include <QPixmap>
 #include "MainGame.hh"
 
 namespace othello {
@@ -20,29 +19,27 @@ namespace othello {
     class GraphicsScene : public QGraphicsScene {
         Q_OBJECT
 
-    public slots:
-        void TickingClocks();
-    
     signals:
-        void Score_Changed(int white, int black);
-        void EndOfGame();
-    
+
+        void ClickSignal(unsigned x, unsigned y);
+
     public:
         std::vector<std::vector<QGraphicsPixmapItem*>> b;
-        MainGame& game_;
         unsigned size;
-        QTimer* timer;
 
-        QImage* blackDisc;
-        QImage* whiteDisc;
-        QImage* blank;
+        QPixmap blackDisc;
+        QPixmap whiteDisc;
+        QPixmap blank;
 
-
-        GraphicsScene(MainGame &gm);
+        GraphicsScene(const GameBoard& logic);
         void repaint();
         virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
-        double getPieceSize() const ;
-        void setSize(QSize s);
+
+
+    private:
+        const GameBoard& board_;
+
+        double getPieceSize() const;
     };
 }
 #endif

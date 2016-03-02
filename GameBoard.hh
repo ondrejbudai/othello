@@ -56,8 +56,6 @@ namespace othello {
 
         unsigned getSize() const { return size_; }
 
-        void CountScore( int &black, int &white) const;
-
         std::vector<Coords> getNeighbours(unsigned x, unsigned y) const;
 
         Color GetColor(unsigned x, unsigned y) const;

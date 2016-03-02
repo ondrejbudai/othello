@@ -22,7 +22,6 @@ constexpr double StrengtOfThatBastard = 0;
 
 namespace othello {
     
-    
     //0 not occupied
     //1 black
     //2 white

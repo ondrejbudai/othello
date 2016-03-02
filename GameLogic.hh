@@ -22,6 +22,8 @@ namespace othello {
         void commitTurn(const std::vector<Coords>& pieces, Color player);
 
         const GameBoard& getBoard() const { return board_; }
+
+        std::pair<unsigned, unsigned> getScore() const;
     };
 }
 
