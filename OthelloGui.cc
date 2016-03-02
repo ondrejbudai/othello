@@ -113,6 +113,8 @@ namespace othello {
         ui->gameBoardLayout->layout()->addWidget(view);
 
         ui->infoPanelLayout->layout()->removeWidget(startPanel);
+        startPanel->hide();
+        
         ui->infoPanelLayout->layout()->addWidget(infoPanel);
 
         repaintGame();
