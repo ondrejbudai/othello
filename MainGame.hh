@@ -55,7 +55,9 @@ namespace othello {
         
         void printHistory() const ;
     
-        bool saveHistoryToFile(std::ofstream &thisFile);
+        bool saveGameToFile(std::ofstream &thisFile);
+        
+        bool loadGameFromFile(std::ifstream &thisFile);
     };
 }
 

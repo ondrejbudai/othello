@@ -112,10 +112,17 @@ namespace othello {
 
         //printHistory();
         //printGameBoard();
-        std::ofstream fl;
+        
+        //std::ofstream fl;
+        //fl.open("TEST.txt");
+        //saveGameToFile(fl);
+        //fl.close();
+        
+        std::ifstream fl;
         fl.open("TEST.txt");
-        saveHistoryToFile(fl);
+        loadGameFromFile(fl);
         fl.close();
+
 
     }
 
@@ -202,7 +209,7 @@ namespace othello {
     //--medzerou oddelene historie, kde kazda ma format
     //farba-kto-zahral x y
     //hracia doska
-    bool MainGame::saveHistoryToFile(std::ofstream &outF){
+    bool MainGame::saveGameToFile(std::ofstream &outF){
         //TODO HERE
         outF<<players_[0]->getName()<<std::endl;
         outF<<(players_[0]->isAi() ? "AI":"HUMAN")<<std::endl;
@@ -224,11 +231,20 @@ namespace othello {
             outF<<(hisItem.currentPlayer == Color::BLACK?"black":"white")<<" "<<hisItem.currentMove.first<<" "<<hisItem.currentMove.second<<std::endl;
             printBoardToFile(hisItem.board, outF);
         }
-
-        
-        
         return true;
     }
+
+    bool MainGame::loadGameFromFile(std::ifstream &inF){
+        std::string n1;
+        std::string n2;
+        getline(inF, n1);
+        getline(inF, n2);
+        setNames({n1,n2});
+
+
+        return true;
+    }
+
 
         
     //Funkcia zistuje ci moze aspon jeden hrac hrat, ak nie jedna sa o koneic hry
@@ -253,6 +269,7 @@ namespace othello {
     //Nastvuje mena hracov
     //TODO rovnako ako v kontruktore, je to na sparvno  mieste?
     void MainGame::setNames(const std::vector<std::string>& names) {
+        std::cout<<"NASTAVUJEM MENA "<<names[0]<<" "<<names[1]<<std::endl;
         players_[0]->setName(names[0]);
         players_[1]->setName(names[1]);
     }
