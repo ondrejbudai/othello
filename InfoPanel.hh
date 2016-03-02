@@ -20,6 +20,8 @@ namespace othello {
         void WriteScore(std::pair<unsigned, unsigned> score);
 
         void setNames(std::array<QString, 2> names);
+    signals:
+        void on_ButtonSaveGame_clicked();
 
     };
 }

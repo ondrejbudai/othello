@@ -111,11 +111,6 @@ namespace othello {
         //printHistory();
         //printGameBoard();
         
-        //std::ofstream fl;
-        //fl.open("TEST.txt");
-        //saveGameToFile(fl);
-        //fl.close();
-        
         //std::ifstream fl;
         //fl.open("TEST.txt");
         //loadGameFromFile(fl);

@@ -1,4 +1,5 @@
 #include <QMessageBox>
+#include <QFileDialog>
 #include "OthelloGui.hh"
 #include "ui_OthelloGui.h"
 #include "ui_StartPanel.h"
@@ -44,7 +45,6 @@ namespace othello {
         ui->infoPanelLayout->layout()->addWidget(startPanel);
 
         connect(playerScreen, &PlayerSelection::on_ButtonStartGame_clicked, this, &OthelloGui::ShowGameBoard);
-        //connect(infoPanel, &InfoPanel::on_ButtonNewGame_clicked, this, &OthelloGui::ButtonNewGame);
 
         connect(startPanel, &StartPanel::on_ButtonNewGame_clicked, this, &OthelloGui::ButtonNewGame);
 
@@ -116,6 +116,8 @@ namespace othello {
         startPanel->hide();
         
         ui->infoPanelLayout->layout()->addWidget(infoPanel);
+        
+        connect(infoPanel, &InfoPanel::on_ButtonSaveGame_clicked, this, &OthelloGui::ButtonSaveGame);
 
         repaintGame();
     }
@@ -136,6 +138,21 @@ namespace othello {
         ui->gameBoardLayout->layout()->removeWidget(startView);
         ui->gameBoardLayout->layout()->addWidget(playerScreen);
     }
+
+    //umozni hracovi ulozit hru do suboru
+    void OthelloGui::ButtonSaveGame() {
+       
+        //this is fu**ing awesome!
+        QString fileName_ = QFileDialog::getSaveFileName(this, tr("Save File"), ".", "Text Files (*.txt)");
+        
+        std::string fileName = fileName_.toUtf8().constData();
+        
+        std::ofstream fl;
+        fl.open(fileName);
+        game_->saveGameToFile(fl);
+        fl.close();
+    }
+
 
     void OthelloGui::GameClickSlot(unsigned mx, unsigned my) {
         // AI na tahu, nedelej nic

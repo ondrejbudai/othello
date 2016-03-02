@@ -24,6 +24,8 @@ namespace othello {
 
         void ButtonNewGame();
 
+        void ButtonSaveGame();
+
         void GameClickSlot(unsigned mx, unsigned my);
 
         void TimeoutSlot();
