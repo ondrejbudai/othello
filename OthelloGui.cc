@@ -1,7 +1,10 @@
 #include <QMessageBox>
 #include "OthelloGui.hh"
 #include "ui_OthelloGui.h"
+#include "ui_StartPanel.h"
 #include "GraphicsScene.hh"
+#include "StartPanel.hh"
+#include <iostream>
 
 //TODO ukladanie+nacitanie hry
 //TODO DO DO ukoncenie hry
@@ -31,18 +34,33 @@ namespace othello {
         startView = new QGraphicsView(startScene);
         QGraphicsPixmapItem* startImage = new QGraphicsPixmapItem(QPixmap::fromImage(image));
         startScene->addItem(startImage);
-        ui->gameBoard->layout()->addWidget(startView);
+        ui->gameBoardLayout->layout()->addWidget(startView);
 
-        connect(playerScreen, SIGNAL(on_ButtonStartGame_clicked()), this, SLOT(ShowGameBoard()));
+        infoPanel = new InfoPanel();
+//        ui->infoPanelLayout->layout()->addWidget(infoPanel);
+
+
+        startPanel = new StartPanel;
+        ui->infoPanelLayout->layout()->addWidget(startPanel);
+
+        connect(playerScreen, &PlayerSelection::on_ButtonStartGame_clicked, this, &OthelloGui::ShowGameBoard);
+        //connect(infoPanel, &InfoPanel::on_ButtonNewGame_clicked, this, &OthelloGui::ButtonNewGame);
+
+        connect(startPanel, &StartPanel::on_ButtonNewGame_clicked, this, &OthelloGui::ButtonNewGame);
+
+        timer = new QTimer();
+        timer->setInterval(1000);
+        timer->setSingleShot(true);
+
+        connect(timer, &QTimer::timeout, this, &OthelloGui::TimeoutSlot);
     }
 
     // reaguje na klik v lepevem sloupci, zobrazi herni desku
     void OthelloGui::ShowGameBoard(){
-    
         //vektor na stiahnutie mien hracov
-        std::vector<QString> names = playerScreen->getNames();
+        std::array<QString, 2> names = playerScreen->getNames();
         //vektor na stiahnutie typu hracov
-        std::vector<QString> types = playerScreen->getTypes();
+        std::array<QString, 2> types = playerScreen->getTypes();
 
         //Kontrola ci nie su prazdne mena
         const static QString emptyString{""};
@@ -52,8 +70,6 @@ namespace othello {
             emptyPlayer.exec();
             return;
         }
-
-
 
         //Spracujeme hracov podla ich typu
         const static QString AI{"AI"};
@@ -86,38 +102,25 @@ namespace othello {
         names[0] = names[0].prepend(s1).append(s2);
         names[1] = names[1].prepend(s1).append(s2);
 
-        ui->BlackName->setText(names[0]);
-        ui->WhiteName->setText(names[1]);
+        infoPanel->setNames(names);
 
-        ui->ScoreLabel1->setText("Score: ");
-        ui->ScoreLabel2->setText("Score: ");
+        scene = new GraphicsScene(game_->getLogic().getBoard());
 
-        scene = new GraphicsScene(*game_);
+        connect(scene, &GraphicsScene::ClickSignal, this, &OthelloGui::GameClickSlot);
         view = new GraphicsView(scene);
-        if (ui->ButtonNewGame->text() == QString("Reset Game"))
-            std::cout<< "Sme v resete\n"<<std::endl;
 
-        ui->gameBoard->layout()->removeWidget(playerScreen);
-        ui->gameBoard->layout()->addWidget(view);
-        ui->ButtonNewGame->setText("Reset Game");
+        ui->gameBoardLayout->layout()->removeWidget(playerScreen);
+        ui->gameBoardLayout->layout()->addWidget(view);
 
-        WriteScore(2, 2);
-        
-        connect(scene , SIGNAL(Score_Changed(int, int)),this, SLOT(WriteScore(int, int)));        
-        connect(scene,  SIGNAL(EndOfGame()), this, SLOT(EndOfGame()));
+        ui->infoPanelLayout->layout()->removeWidget(startPanel);
+        ui->infoPanelLayout->layout()->addWidget(infoPanel);
+
+        repaintGame();
     }
 
-    void OthelloGui::WriteScore(int black, int white){
-        QString sb = QString::number(black);
-        ui->BlackScoreLabel->setText(sb);
-        QString sw = QString::number(white);
-        ui->WhiteScoreLabel->setText(sw);
-    }
 
-    
     void OthelloGui::EndOfGame(){
         game_->StopRunning();
-        disconnect(scene , SIGNAL(Score_Changed(int, int)),this, SLOT(WriteScore(int, int)));        
         disconnect(scene,  SIGNAL(EndOfGame()), this, SLOT(EndOfGame()));
         //delete view;
         //delete scene;
@@ -126,11 +129,33 @@ namespace othello {
     }
 
     // v pravem sloupci, zobrazi obrazovku s vyberem hracu
-    void OthelloGui::on_ButtonNewGame_clicked() {
+    void OthelloGui::ButtonNewGame() {
 
+        ui->gameBoardLayout->layout()->removeWidget(startView);
+        ui->gameBoardLayout->layout()->addWidget(playerScreen);
+    }
 
-        ui->gameBoard->layout()->removeWidget(startView);
-        ui->gameBoard->layout()->addWidget(playerScreen);
+    void OthelloGui::GameClickSlot(unsigned mx, unsigned my) {
+        // AI na tahu, nedelej nic
+        if (game_->getCurrentPlayer().isAi())
+            return;
+
+        // update a prekreslit
+        game_->event(mx, my);
+        repaintGame();
+    }
+
+    void OthelloGui::TimeoutSlot() {
+        game_->event(0, 0);
+        repaintGame();
+    }
+
+    void OthelloGui::repaintGame() {
+        scene->repaint();
+        infoPanel->WriteScore(game_->getLogic().getScore());
+
+        if (game_->getCurrentPlayer().isAi())
+            timer->start();
     }
 }
 

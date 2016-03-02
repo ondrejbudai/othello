@@ -25,18 +25,6 @@ namespace othello {
         this->setPiece(middle, middle-1, Color::WHITE);
     }
 
-    void GameBoard::CountScore(int &black, int &white) const{
-        for (unsigned i = 0; i < size_; i++)
-            for (unsigned j = 0; j < size_; j++)
-                if (isOccupied(i,j)){
-                    if (GetColor(i,j) == Color::BLACK)
-                        black++;
-                    else
-                        white++;
-                }
-    }
-
-
     const Field& GameBoard::GetField(unsigned x, unsigned y) const {
         assert(x < size_ && y < size_);
         return board_[x][y];

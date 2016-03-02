@@ -15,8 +15,9 @@ public:
     explicit PlayerSelection(QWidget *parent = 0);
     ~PlayerSelection();
 
-    std::vector<QString> getNames();
-    std::vector<QString> getTypes();
+    std::array<QString, 2> getNames();
+
+    std::array<QString, 2> getTypes();
     QString getBoardSize();
 signals:
     void on_ButtonStartGame_clicked();

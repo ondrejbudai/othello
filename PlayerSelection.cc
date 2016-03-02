@@ -33,16 +33,10 @@ QString PlayerSelection::getBoardSize(){
 }
 
 
-std::vector<QString> PlayerSelection::getNames() {
-    std::vector<QString> ret;
-    ret.push_back(ui->name1->text());
-    ret.push_back(ui->name2->text());
-    return ret;
+std::array<QString, 2> PlayerSelection::getNames() {
+    return {ui->name1->text(), ui->name2->text()};
 }
 
-std::vector<QString> PlayerSelection::getTypes() {
-    std::vector<QString> ret;
-    ret.push_back(ui->selectPlayer1->currentText());
-    ret.push_back(ui->selectPlayer2->currentText());
-    return ret;
+std::array<QString, 2> PlayerSelection::getTypes() {
+    return {ui->selectPlayer1->currentText(), ui->selectPlayer2->currentText()};
 }
