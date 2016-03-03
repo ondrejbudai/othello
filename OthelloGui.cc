@@ -5,6 +5,7 @@
 #include "GraphicsScene.hh"
 #include "StartPanel.hh"
 #include <iostream>
+#include <cassert>
 
 //TODO ukladanie+nacitanie hry
 //TODO DO DO ukoncenie hry
@@ -103,11 +104,11 @@ namespace othello {
 
         game_->setNames(names);
 
-        const static QString s1{"<font size=5>"};
-        const static QString s2{"</font>"};
+        const static std::string s1{"<font size=5>"};
+        const static std::string s2{"</font>"};
 
-        //names[0] = s1 + names[0] + s2;
-        //names[1] = s1 + names[1] + s2;
+        names[0] = s1 + names[0] + s2;
+        names[1] = s1 + names[1] + s2;
 
         infoPanel->setNames(names);
 
@@ -149,6 +150,7 @@ namespace othello {
 
     //nacita subor s ulozenou hrou a danu hru vytvori
     void OthelloGui::ButtonLoadGame() {
+        //TODO kontrola ci je subor ok
         QString fileName_ = QFileDialog::getOpenFileName(this, tr("Open File"), ".");
 
         // zkontroluj, zda hrac vybral nejaky soubor
@@ -186,12 +188,28 @@ namespace othello {
         //precitame zvolenu velkost dosky a prekonvertujeme na int
         std::string boardSizeS;
         getline(inF, boardSizeS);
-        int boardSize = std::stoi(boardSizeS);
+        unsigned boardSize = std::stoi(boardSizeS);
         
         ShowGameBoard(p1, p2, boardSize, names);
 
-        //nacitaj akruanu dosku
-        //nacitaj historiu
+        std::string oneLine; 
+        int currentPlayer;
+        getline(inF, oneLine);
+        currentPlayer = std::stoi(oneLine);
+        game_->setCurrentPlayer(currentPlayer); 
+
+        //TODO nacitaj akruanu dosku
+        getline(inF, oneLine);//precitam prazdny riadok
+        for (int i = 0; i < boardSize; i++){
+            getline(inF, oneLine);
+            assert(oneLine.length() == boardSize);
+
+
+
+        }
+
+
+        //TODO nacitaj historiu
         inF.close();
     }
 
