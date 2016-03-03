@@ -91,7 +91,7 @@ namespace othello {
 
         //precitame zvolenu velkost dosky a prekonvertujeme na int
         QString boardSizeS = playerScreen->getBoardSize();
-        int boardSize = boardSizeS.toInt();
+        unsigned boardSize = boardSizeS.toUInt();
         
         ShowGameBoard(p1, p2, boardSize, namesStd);
     }
