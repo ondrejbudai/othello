@@ -5,7 +5,7 @@
 #include "PlayerSelection.hh"
 #include "MainGame.hh"
 #include "InfoPanel.hh"
-#include "GraphicsScene.hh"
+#include "BoardGraphics.hh"
 #include "StartPanel.hh"
 #include "ui_OthelloGui.h"
 
@@ -33,7 +33,7 @@ namespace othello {
         QGraphicsScene* startScene;
         QGraphicsView* startView;
         PlayerSelection* playerScreen;
-        GraphicsScene* scene;
+        BoardGraphics* scene;
         QGraphicsView* view;
         InfoPanel* infoPanel;
         QTimer* timer;

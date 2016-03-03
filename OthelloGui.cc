@@ -7,7 +7,7 @@
 //TODO ukladanie+nacitanie hry
 //TODO DO DO ukoncenie hry
 
-constexpr unsigned AI_TIMEOUT = 0;
+constexpr unsigned AI_TIMEOUT = 1000;
 
 namespace othello {
 
@@ -23,7 +23,7 @@ namespace othello {
 
         virtual void resizeEvent(QResizeEvent*) {
             fitInView(0, 0, GAME_SIZE, GAME_SIZE, Qt::KeepAspectRatio);
-            //dynamic_cast<GraphicsScene*>(scene())->setSize(event->size());
+            //dynamic_cast<BoardGraphics*>(scene())->setSize(event->size());
         }
     };
 
@@ -108,9 +108,9 @@ namespace othello {
         infoPanel = new InfoPanel;
         infoPanel->SetNames(names);
 
-        scene = new GraphicsScene(game_->getLogic().getBoard());
+        scene = new BoardGraphics(game_->getLogic().getBoard());
 
-        connect(scene, &GraphicsScene::ClickSignal, this, &OthelloGui::GameClickSlot);
+        connect(scene, &BoardGraphics::ClickSignal, this, &OthelloGui::GameClickSlot);
         view = new GraphicsView(scene);
         clearStackedWidget(ui->gameBoardLayout);
         ui->gameBoardLayout->addWidget(view);

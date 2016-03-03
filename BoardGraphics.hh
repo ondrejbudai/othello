@@ -16,7 +16,7 @@
 namespace othello {
     constexpr unsigned GAME_SIZE = 200;
 
-    class GraphicsScene : public QGraphicsScene {
+    class BoardGraphics : public QGraphicsScene {
         Q_OBJECT
 
     signals:
@@ -31,7 +31,7 @@ namespace othello {
         QPixmap whiteDisc;
         QPixmap blank;
 
-        GraphicsScene(const GameBoard& logic);
+        BoardGraphics(const GameBoard& logic);
         void repaint();
         virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
 
