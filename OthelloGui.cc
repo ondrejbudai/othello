@@ -165,6 +165,11 @@ namespace othello {
     //nacita subor s ulozenou hrou a danu hru vytvori
     void OthelloGui::ButtonLoadGame() {
         QString fileName_ = QFileDialog::getOpenFileName(this, tr("Open File"), ".");
+
+        // zkontroluj, zda hrac vybral nejaky soubor
+        if (fileName_.isNull())
+            return;
+
         std::string fileName = fileName_.toUtf8().constData();
         
         std::ifstream inF;
