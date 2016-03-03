@@ -63,9 +63,7 @@ namespace othello {
     //Na konci tahu, ak je platny, ulozi dany tah do historie
     //Zisti ci je mozne aby dalsi hrac hral, a ak je tak ho nastavuje ako aktualneho hraca
     void MainGame::event(unsigned x, unsigned y) { // event funkce
-        //koniec hry
-        if (!IsRunning())
-            return;
+
         Player& current_player = *players_[current_player_num];
         assert(canPlay(current_player.getColor()));
 

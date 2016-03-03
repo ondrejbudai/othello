@@ -1,7 +1,6 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include "OthelloGui.hh"
-#include "ui_OthelloGui.h"
 #include "ui_StartPanel.h"
 #include "GraphicsScene.hh"
 #include "StartPanel.hh"
@@ -10,6 +9,8 @@
 
 //TODO ukladanie+nacitanie hry
 //TODO DO DO ukoncenie hry
+
+constexpr unsigned AI_TIMEOUT = 0;
 
 namespace othello {
     class GraphicsView : public QGraphicsView {
@@ -36,21 +37,19 @@ namespace othello {
         startView = new QGraphicsView(startScene);
         QGraphicsPixmapItem* startImage = new QGraphicsPixmapItem(QPixmap::fromImage(image));
         startScene->addItem(startImage);
-        ui->gameBoardLayout->layout()->addWidget(startView);
+        ui->gameBoardLayout->addWidget(startView);
 
-        infoPanel = new InfoPanel();
-//        ui->infoPanelLayout->layout()->addWidget(infoPanel);
-
-
+        //TODO: move me
+        infoPanel = new InfoPanel;
         startPanel = new StartPanel;
-        ui->infoPanelLayout->layout()->addWidget(startPanel);
+        ui->infoPanelLayout->addWidget(startPanel);
 
         connect(playerScreen, &PlayerSelection::on_ButtonStartGame_clicked, this, &OthelloGui::LoadGameConfiguration);
         connect(startPanel, &StartPanel::on_ButtonNewGame_clicked, this, &OthelloGui::ButtonNewGame);
         connect(startPanel, &StartPanel::on_ButtonLoadGame_clicked, this, &OthelloGui::ButtonLoadGame);
 
         timer = new QTimer();
-        timer->setInterval(1000);
+        timer->setInterval(AI_TIMEOUT);
         timer->setSingleShot(true);
 
         connect(timer, &QTimer::timeout, this, &OthelloGui::TimeoutSlot);
@@ -58,8 +57,7 @@ namespace othello {
 
     //Po kliknuti na zaciatok hry spracuje nastavenia hry, ktore si uziatel zvolil
     void OthelloGui::LoadGameConfiguration(){
-        
-        ui->gameBoardLayout->layout()->removeWidget(startView);
+
         //vektor na stiahnutie mien hracov
         std::array<QString, 2> names = playerScreen->getNames();
         //vektor na stiahnutie typu hracov
@@ -118,35 +116,22 @@ namespace othello {
 
         connect(scene, &GraphicsScene::ClickSignal, this, &OthelloGui::GameClickSlot);
         view = new GraphicsView(scene);
+        ui->gameBoardLayout->removeWidget(ui->gameBoardLayout->currentWidget());
+        ui->gameBoardLayout->addWidget(view);
 
-        ui->gameBoardLayout->layout()->removeWidget(playerScreen);
-        ui->gameBoardLayout->layout()->addWidget(view);
-
-        ui->infoPanelLayout->layout()->removeWidget(startPanel);
-        startPanel->hide();
-        
-        ui->infoPanelLayout->layout()->addWidget(infoPanel);
+        ui->infoPanelLayout->removeWidget(ui->infoPanelLayout->currentWidget());
+        ui->infoPanelLayout->addWidget(infoPanel);
         
         connect(infoPanel, &InfoPanel::on_ButtonSaveGame_clicked, this, &OthelloGui::ButtonSaveGame);
 
         repaintGame();
     }
 
-
-    void OthelloGui::EndOfGame(){
-        game_->StopRunning();
-        disconnect(scene,  SIGNAL(EndOfGame()), this, SLOT(EndOfGame()));
-        //delete view;
-        //delete scene;
-        //game_.~MainGame();//sorry
-        std::cout<<"SHOUDL END----------------------------\n"<<std::flush;
-    }
-
     // v pravem sloupci, zobrazi obrazovku s vyberem hracu
     void OthelloGui::ButtonNewGame() {
 
-        ui->gameBoardLayout->layout()->removeWidget(startView);
-        ui->gameBoardLayout->layout()->addWidget(playerScreen);
+        ui->gameBoardLayout->removeWidget(ui->gameBoardLayout->currentWidget());
+        ui->gameBoardLayout->addWidget(playerScreen);
     }
 
     //umozni hracovi ulozit hru do suboru
@@ -167,6 +152,11 @@ namespace othello {
     void OthelloGui::ButtonLoadGame() {
         //TODO kontrola ci je subor ok
         QString fileName_ = QFileDialog::getOpenFileName(this, tr("Open File"), ".");
+
+        // zkontroluj, zda hrac vybral nejaky soubor
+        if (fileName_.isNull())
+            return;
+
         std::string fileName = fileName_.toUtf8().constData();
         
         std::ifstream inF;
@@ -243,8 +233,14 @@ namespace othello {
         scene->repaint();
         infoPanel->WriteScore(game_->getLogic().getScore());
 
+        // zkontroluj konec
+        if (game_->isEnd()) {
+            // do a lot of funny things
+        }
+
         if (game_->getCurrentPlayer().isAi())
             timer->start();
+
     }
 }
 

@@ -30,7 +30,6 @@ namespace othello {
         std::vector<HistoryItem> history_;
         std::vector<std::unique_ptr<Player>> players_;
         int current_player_num = 0;
-        bool isRunning_ = true;
         // frozen stuff
     public:
         MainGame(unsigned size, PlayerType white, PlayerType black);
@@ -46,10 +45,6 @@ namespace othello {
         bool canPlay(Color color) const;
 
         const GameLogic& getLogic() const { return logic_; }
-
-        bool IsRunning() const { return isRunning_; }
-
-        void StopRunning(){ isRunning_ = false;}
 
         void setNames(const std::array<std::string,2>& names);
         

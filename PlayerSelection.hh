@@ -2,10 +2,7 @@
 #define PLAYERSELECTION_H
 
 #include <QFrame>
-
-namespace Ui {
-class PlayerSelection;
-}
+#include "ui_PlayerSelection.h"
 
 class PlayerSelection : public QFrame
 {
