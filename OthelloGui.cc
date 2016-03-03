@@ -36,14 +36,12 @@ namespace othello {
         startView = new QGraphicsView(startScene);
         QGraphicsPixmapItem* startImage = new QGraphicsPixmapItem(QPixmap::fromImage(image));
         startScene->addItem(startImage);
-        ui->gameBoardLayout->layout()->addWidget(startView);
+        ui->gameBoardLayout->addWidget(startView);
 
-        infoPanel = new InfoPanel();
-//        ui->infoPanelLayout->layout()->addWidget(infoPanel);
-
-
+        //TODO: move me
+        infoPanel = new InfoPanel;
         startPanel = new StartPanel;
-        ui->infoPanelLayout->layout()->addWidget(startPanel);
+        ui->infoPanelLayout->addWidget(startPanel);
 
         connect(playerScreen, &PlayerSelection::on_ButtonStartGame_clicked, this, &OthelloGui::LoadGameConfiguration);
         connect(startPanel, &StartPanel::on_ButtonNewGame_clicked, this, &OthelloGui::ButtonNewGame);
@@ -58,8 +56,7 @@ namespace othello {
 
     //Po kliknuti na zaciatok hry spracuje nastavenia hry, ktore si uziatel zvolil
     void OthelloGui::LoadGameConfiguration(){
-        
-        ui->gameBoardLayout->layout()->removeWidget(startView);
+
         //vektor na stiahnutie mien hracov
         std::array<QString, 2> names = playerScreen->getNames();
         //vektor na stiahnutie typu hracov
@@ -119,12 +116,10 @@ namespace othello {
         connect(scene, &GraphicsScene::ClickSignal, this, &OthelloGui::GameClickSlot);
         view = new GraphicsView(scene);
         ui->gameBoardLayout->removeWidget(ui->gameBoardLayout->currentWidget());
-        ui->gameBoardLayout->layout()->addWidget(view);
+        ui->gameBoardLayout->addWidget(view);
 
-        ui->infoPanelLayout->layout()->removeWidget(startPanel);
-        startPanel->hide();
-        
-        ui->infoPanelLayout->layout()->addWidget(infoPanel);
+        ui->infoPanelLayout->removeWidget(ui->infoPanelLayout->currentWidget());
+        ui->infoPanelLayout->addWidget(infoPanel);
         
         connect(infoPanel, &InfoPanel::on_ButtonSaveGame_clicked, this, &OthelloGui::ButtonSaveGame);
 
@@ -134,8 +129,8 @@ namespace othello {
     // v pravem sloupci, zobrazi obrazovku s vyberem hracu
     void OthelloGui::ButtonNewGame() {
 
-        ui->gameBoardLayout->layout()->removeWidget(startView);
-        ui->gameBoardLayout->layout()->addWidget(playerScreen);
+        ui->gameBoardLayout->removeWidget(ui->gameBoardLayout->currentWidget());
+        ui->gameBoardLayout->addWidget(playerScreen);
     }
 
     //umozni hracovi ulozit hru do suboru
