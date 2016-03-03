@@ -1,5 +1,6 @@
 #include "ui_InfoPanel.h"
 #include "InfoPanel.hh"
+#include <iostream>
 
 namespace othello {
     InfoPanel::InfoPanel(QWidget* parent) : QFrame(parent), ui(new Ui::InfoPanel) {
@@ -18,8 +19,8 @@ namespace othello {
     // v pravem sloupci, zobrazi obrazovku s vyberem hracu
 
 
-    void InfoPanel::setNames(std::array<QString, 2> names) {
-        ui->BlackName->setText(names[0]);
-        ui->WhiteName->setText(names[1]);
+    void InfoPanel::setNames(std::array<std::string, 2> names) {
+        ui->BlackName->setText(QString::fromStdString(names[0]));
+        ui->WhiteName->setText(QString::fromStdString(names[1]));
     }
 }

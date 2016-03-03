@@ -111,10 +111,6 @@ namespace othello {
         //printHistory();
         //printGameBoard();
         
-        //std::ifstream fl;
-        //fl.open("TEST.txt");
-        //loadGameFromFile(fl);
-        //fl.close();
 
 
     }
@@ -227,17 +223,6 @@ namespace othello {
         return true;
     }
 
-    bool MainGame::loadGameFromFile(std::ifstream &inF){
-        std::string n1;
-        std::string n2;
-        getline(inF, n1);
-        getline(inF, n2);
-        setNames({n1,n2});
-
-
-        return true;
-    }
-
 
         
     //Funkcia zistuje ci moze aspon jeden hrac hrat, ak nie jedna sa o koneic hry
@@ -261,7 +246,7 @@ namespace othello {
 
     //Nastvuje mena hracov
     //TODO rovnako ako v kontruktore, je to na sparvno  mieste?
-    void MainGame::setNames(const std::vector<std::string>& names) {
+    void MainGame::setNames(const std::array<std::string, 2>& names) {
         players_[0]->setName(names[0]);
         players_[1]->setName(names[1]);
     }

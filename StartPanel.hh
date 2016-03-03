@@ -19,6 +19,7 @@ namespace othello {
         explicit StartPanel(QWidget* parent = 0);
 
     signals:
+        void on_ButtonLoadGame_clicked();
 
         void on_ButtonNewGame_clicked();
     };

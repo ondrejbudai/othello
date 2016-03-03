@@ -44,9 +44,9 @@ namespace othello {
         startPanel = new StartPanel;
         ui->infoPanelLayout->layout()->addWidget(startPanel);
 
-        connect(playerScreen, &PlayerSelection::on_ButtonStartGame_clicked, this, &OthelloGui::ShowGameBoard);
-
+        connect(playerScreen, &PlayerSelection::on_ButtonStartGame_clicked, this, &OthelloGui::LoadGameConfiguration);
         connect(startPanel, &StartPanel::on_ButtonNewGame_clicked, this, &OthelloGui::ButtonNewGame);
+        connect(startPanel, &StartPanel::on_ButtonLoadGame_clicked, this, &OthelloGui::ButtonLoadGame);
 
         timer = new QTimer();
         timer->setInterval(1000);
@@ -55,12 +55,18 @@ namespace othello {
         connect(timer, &QTimer::timeout, this, &OthelloGui::TimeoutSlot);
     }
 
-    // reaguje na klik v lepevem sloupci, zobrazi herni desku
-    void OthelloGui::ShowGameBoard(){
+    //Po kliknuti na zaciatok hry spracuje nastavenia hry, ktore si uziatel zvolil
+    void OthelloGui::LoadGameConfiguration(){
+        
+        ui->gameBoardLayout->layout()->removeWidget(startView);
         //vektor na stiahnutie mien hracov
         std::array<QString, 2> names = playerScreen->getNames();
         //vektor na stiahnutie typu hracov
         std::array<QString, 2> types = playerScreen->getTypes();
+        
+        std::array<std::string, 2> namesStd;
+        namesStd[0] = names[0].toStdString();
+        namesStd[1] = names[1].toStdString();
 
         //Kontrola ci nie su prazdne mena
         const static QString emptyString{""};
@@ -88,19 +94,22 @@ namespace othello {
         //precitame zvolenu velkost dosky a prekonvertujeme na int
         QString boardSizeS = playerScreen->getBoardSize();
         int boardSize = boardSizeS.toInt();
+        
+        ShowGameBoard(p1, p2, boardSize, namesStd);
+    }
 
+    void OthelloGui::ShowGameBoard(PlayerType p1, PlayerType p2, unsigned boardSize, std::array<std::string, 2> names){
         
         //inicilizujeme hraciu dosku
         game_ = std::make_unique<MainGame>(boardSize, p2, p1);
 
-        std::vector<std::string> namesStd{names[0].toStdString(), names[1].toStdString()};
-        game_->setNames(namesStd);
+        game_->setNames(names);
 
         const static QString s1{"<font size=5>"};
         const static QString s2{"</font>"};
 
-        names[0] = names[0].prepend(s1).append(s2);
-        names[1] = names[1].prepend(s1).append(s2);
+        //names[0] = s1 + names[0] + s2;
+        //names[1] = s1 + names[1] + s2;
 
         infoPanel->setNames(names);
 
@@ -151,6 +160,49 @@ namespace othello {
         fl.open(fileName);
         game_->saveGameToFile(fl);
         fl.close();
+    }
+
+    //nacita subor s ulozenou hrou a danu hru vytvori
+    void OthelloGui::ButtonLoadGame() {
+        QString fileName_ = QFileDialog::getOpenFileName(this, tr("Open File"), ".");
+        std::string fileName = fileName_.toUtf8().constData();
+        
+        std::ifstream inF;
+        inF.open(fileName);
+        //nacitaj hlavicku 
+
+        //vektor na stiahnutie mien hracov
+        std::array<std::string, 2> names;
+        //vektor na stiahnutie typu hracov
+        std::array<std::string, 2> types;
+        
+        getline(inF, names[0]);
+        getline(inF, types[0]);
+        getline(inF, names[1]);
+        getline(inF, types[1]);
+
+        //Spracujeme hracov podla ich typu
+        PlayerType p1;
+        PlayerType p2;
+        if (types[0] == "AI")
+            p1 = PlayerType::AI;
+        else
+            p1 = PlayerType::HUMAN;
+        if (types[1] == "AI")
+            p2 = PlayerType::AI;
+        else
+            p2 = PlayerType::HUMAN;
+
+        //precitame zvolenu velkost dosky a prekonvertujeme na int
+        std::string boardSizeS;
+        getline(inF, boardSizeS);
+        int boardSize = std::stoi(boardSizeS);
+        
+        ShowGameBoard(p1, p2, boardSize, names);
+
+        //nacitaj akruanu dosku
+        //nacitaj historiu
+        inF.close();
     }
 
 

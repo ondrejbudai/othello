@@ -18,13 +18,15 @@ namespace othello {
 
     public slots:
 
-        void ShowGameBoard();
+        void LoadGameConfiguration();    
 
         void EndOfGame();
 
         void ButtonNewGame();
 
         void ButtonSaveGame();
+
+        void ButtonLoadGame();
 
         void GameClickSlot(unsigned mx, unsigned my);
 
@@ -41,7 +43,8 @@ namespace othello {
         InfoPanel* infoPanel;
         QTimer* timer;
         StartPanel* startPanel;
-
+        
+        void ShowGameBoard(PlayerType p1, PlayerType p2, unsigned boardSize, std::array<std::string, 2> names);
         void repaintGame();
 
     public:

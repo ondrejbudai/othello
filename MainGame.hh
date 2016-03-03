@@ -51,13 +51,12 @@ namespace othello {
 
         void StopRunning(){ isRunning_ = false;}
 
-        void setNames(const std::vector<std::string>& names);
+        void setNames(const std::array<std::string,2>& names);
         
         void printHistory() const ;
     
         bool saveGameToFile(std::ofstream &thisFile);
         
-        bool loadGameFromFile(std::ifstream &thisFile);
     };
 }
 
