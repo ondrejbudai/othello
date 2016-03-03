@@ -27,4 +27,19 @@ namespace othello {
         ui->BlackName->setText(black);
         ui->WhiteName->setText(white);
     }
+    
+    //zvyraznenie kto prave hra - je to najtrivilanejsie riesenie, caka sa ze sa prerobi
+    //+ ak sa nezmeni hrac nejake oknieko aby bolo jasne ze sa nezmenil hrac!
+    void InfoPanel::HighlightPlayer(Color c){
+
+        if (c == Color::BLACK){
+            ui->BlackName->setStyleSheet("QLabel { background-color : red}");
+            ui->WhiteName->setStyleSheet("QLabel { background-color : transparent}");
+        } else {
+            ui->WhiteName->setStyleSheet("QLabel { background-color : red}");
+            ui->BlackName->setStyleSheet("QLabel { background-color : transparent}");
+
+
+        }    
+    }
 }

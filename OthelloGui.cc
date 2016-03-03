@@ -230,6 +230,7 @@ namespace othello {
     void OthelloGui::repaintGame() {
         scene->repaint();
         infoPanel->WriteScore(game_->getLogic().getScore());
+        infoPanel->HighlightPlayer(game_->getCurrentPlayer().getColor());
 
         // zkontroluj konec
         if (game_->isEnd()) {

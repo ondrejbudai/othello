@@ -5,6 +5,7 @@
 #include <QFrame>
 #include <string>
 #include "ui_InfoPanel.h"
+#include "GameBoard.hh" 
 
 namespace othello {
     class InfoPanel : public QFrame {
@@ -20,6 +21,8 @@ namespace othello {
         void WriteScore(std::pair<unsigned, unsigned> score);
 
         void SetNames(const std::pair<std::string, std::string>& names);
+
+        void HighlightPlayer(Color c);
     signals:
         void on_ButtonSaveGame_clicked();
         
