@@ -56,6 +56,8 @@ namespace othello {
         void printHistory() const ;
     
         bool saveGameToFile(std::ofstream &thisFile);
+
+        void setCurrentPlayer(int n) {current_player_num = n;}
         
     };
 }
