@@ -38,8 +38,9 @@ namespace othello {
         InfoPanel* infoPanel;
         QTimer* timer;
         StartPanel* startPanel;
-        
-        void ShowGameBoard(PlayerType p1, PlayerType p2, unsigned boardSize, std::array<std::string, 2> names);
+
+        void ShowGameBoard(PlayerType p1, PlayerType p2, unsigned boardSize,
+                           const std::pair<std::string, std::string>& names);
         void repaintGame();
 
         void endGame();

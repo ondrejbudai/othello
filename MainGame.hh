@@ -46,7 +46,9 @@ namespace othello {
 
         const GameLogic& getLogic() const { return logic_; }
 
-        void setNames(const std::array<std::string,2>& names);
+        void SetNames(const std::pair<std::string, std::string>& names);
+
+        std::pair<std::string, std::string> GetNames();
         
         void printHistory() const ;
     

@@ -18,8 +18,13 @@ namespace othello {
     // v pravem sloupci, zobrazi obrazovku s vyberem hracu
 
 
-    void InfoPanel::setNames(std::array<std::string, 2> names) {
-        ui->BlackName->setText(QString::fromStdString(names[0]));
-        ui->WhiteName->setText(QString::fromStdString(names[1]));
+    void InfoPanel::SetNames(const std::pair<std::string, std::string>& names) {
+        QString black{names.first.c_str()};
+        QString white{names.second.c_str()};
+
+        black.prepend("<span style=\" font-size:14pt;\">").append("<\\span>");
+        white.prepend("<span style=\" font-size:14pt;\">").append("<\\span>");
+        ui->BlackName->setText(black);
+        ui->WhiteName->setText(white);
     }
 }

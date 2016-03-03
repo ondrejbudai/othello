@@ -9,10 +9,10 @@ namespace othello {
     class StartPanel : public QFrame {
     Q_OBJECT
 
-
-    public:
+    private:
         Ui::StartPanel* ui;
 
+    public:
         explicit StartPanel(QWidget* parent = 0);
 
     signals:

@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-image: url(./img/startScreenImageLight.jpg)</string>
+  </property>
   <widget class="QLabel" name="player1L">
    <property name="geometry">
     <rect>
@@ -54,6 +57,9 @@
      <height>32</height>
     </rect>
    </property>
+   <property name="text">
+    <string>Player 1</string>
+   </property>
   </widget>
   <widget class="QLineEdit" name="name2">
    <property name="geometry">
@@ -63,6 +69,9 @@
      <width>191</width>
      <height>32</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>Player 2</string>
    </property>
   </widget>
   <widget class="QPushButton" name="ButtonStartGame">
@@ -144,6 +153,9 @@
      <width>191</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
    </property>
    <item>
     <property name="text">
@@ -241,6 +253,9 @@
      <width>111</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
    </property>
    <item>
     <property name="text">

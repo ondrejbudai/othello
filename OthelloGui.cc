@@ -1,6 +1,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include "OthelloGui.hh"
+#include "EndScreen.hh"
 #include <cassert>
 
 //TODO ukladanie+nacitanie hry
@@ -12,9 +13,9 @@ namespace othello {
 
     void clearStackedWidget(QStackedWidget* widget) {
         QWidget* w = widget->currentWidget();
-        assert(w);
+        if (!w)
+            return;
         widget->removeWidget(w);
-        delete w;
     }
     class GraphicsView : public QGraphicsView {
     public:
@@ -63,10 +64,8 @@ namespace othello {
         std::array<QString, 2> names = playerScreen->getNames();
         //vektor na stiahnutie typu hracov
         std::array<QString, 2> types = playerScreen->getTypes();
-        
-        std::array<std::string, 2> namesStd;
-        namesStd[0] = names[0].toStdString();
-        namesStd[1] = names[1].toStdString();
+
+        std::pair<std::string, std::string> namesStd{names[0].toStdString(), names[1].toStdString()};
 
         //Kontrola ci nie su prazdne mena
         const static QString emptyString{""};
@@ -98,21 +97,16 @@ namespace othello {
         ShowGameBoard(p1, p2, boardSize, namesStd);
     }
 
-    void OthelloGui::ShowGameBoard(PlayerType p1, PlayerType p2, unsigned boardSize, std::array<std::string, 2> names){
+    void OthelloGui::ShowGameBoard(PlayerType p1, PlayerType p2, unsigned boardSize,
+                                   const std::pair<std::string, std::string>& names) {
         
         //inicilizujeme hraciu dosku
         game_ = std::make_unique<MainGame>(boardSize, p2, p1);
 
-        game_->setNames(names);
-
-        const static std::string s1{"<font size=5>"};
-        const static std::string s2{"</font>"};
-
-        names[0] = s1 + names[0] + s2;
-        names[1] = s1 + names[1] + s2;
+        game_->SetNames(names);
 
         infoPanel = new InfoPanel;
-        infoPanel->setNames(names);
+        infoPanel->SetNames(names);
 
         scene = new GraphicsScene(game_->getLogic().getBoard());
 
@@ -166,23 +160,23 @@ namespace othello {
         //nacitaj hlavicku 
 
         //vektor na stiahnutie mien hracov
-        std::array<std::string, 2> names;
+        std::pair<std::string, std::string> names;
         //vektor na stiahnutie typu hracov
-        std::array<std::string, 2> types;
-        
-        getline(inF, names[0]);
-        getline(inF, types[0]);
-        getline(inF, names[1]);
-        getline(inF, types[1]);
+        std::pair<std::string, std::string> types;
+
+        getline(inF, names.first);
+        getline(inF, types.first);
+        getline(inF, names.second);
+        getline(inF, types.second);
 
         //Spracujeme hracov podla ich typu
         PlayerType p1;
         PlayerType p2;
-        if (types[0] == "AI")
+        if (types.first == "AI")
             p1 = PlayerType::AI;
         else
             p1 = PlayerType::HUMAN;
-        if (types[1] == "AI")
+        if (types.second == "AI")
             p2 = PlayerType::AI;
         else
             p2 = PlayerType::HUMAN;
@@ -190,7 +184,7 @@ namespace othello {
         //precitame zvolenu velkost dosky a prekonvertujeme na int
         std::string boardSizeS;
         getline(inF, boardSizeS);
-        unsigned boardSize = std::stoi(boardSizeS);
+        unsigned boardSize = static_cast<unsigned>(std::stoi(boardSizeS));
         
         ShowGameBoard(p1, p2, boardSize, names);
 
@@ -238,8 +232,10 @@ namespace othello {
         infoPanel->WriteScore(game_->getLogic().getScore());
 
         // zkontroluj konec
-        if (game_->isEnd())
+        if (game_->isEnd()) {
             endGame();
+            return;
+        }
 
         if (game_->getCurrentPlayer().isAi())
             timer->start();
@@ -249,6 +245,16 @@ namespace othello {
     void OthelloGui::endGame() {
         clearStackedWidget(ui->gameBoardLayout);
         clearStackedWidget(ui->infoPanelLayout);
+
+        EndScreen* end = new EndScreen;
+        end->SetNames(game_->GetNames());
+        end->SetScores(game_->getLogic().getScore());
+
+        ui->infoPanelLayout->addWidget(startPanel);
+        ui->gameBoardLayout->addWidget(end);
+
+        game_ = nullptr;
+
     }
 }
 

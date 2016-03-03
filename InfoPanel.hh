@@ -10,15 +10,16 @@ namespace othello {
     class InfoPanel : public QFrame {
     Q_OBJECT
 
+    private:
+        Ui::InfoPanel* ui;
 
     public:
-        Ui::InfoPanel* ui;
 
         explicit InfoPanel(QWidget* parent = 0);
 
         void WriteScore(std::pair<unsigned, unsigned> score);
 
-        void setNames(std::array<std::string, 2> names);
+        void SetNames(const std::pair<std::string, std::string>& names);
     signals:
         void on_ButtonSaveGame_clicked();
         

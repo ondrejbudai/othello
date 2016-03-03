@@ -15,10 +15,10 @@ add_executable(othello-cli ${SOURCE_FILES_CLI})
 find_package (Qt5Widgets)
 
 set (othelloLib_src AI.cc GameBoard.cc GameLogic.cc MainGame.cc OthelloGui.cc Player.cc
-        PlayerSelection.cc GraphicsScene.cc InfoPanel.cc StartPanel.cc)
-set(othelloLib_hdr OthelloGui.hh PlayerSelection.hh GraphicsScene.hh InfoPanel.hh StartPanel.hh)
+        PlayerSelection.cc GraphicsScene.cc InfoPanel.cc StartPanel.cc EndScreen.cc)
+set(othelloLib_hdr OthelloGui.hh PlayerSelection.hh GraphicsScene.hh InfoPanel.hh StartPanel.hh EndScreen.hh)
 
-set(othelloLib_ui OthelloGui.ui PlayerSelection.ui InfoPanel.ui StartPanel.ui)
+set(othelloLib_ui OthelloGui.ui PlayerSelection.ui InfoPanel.ui StartPanel.ui EndScreen.ui)
 set (othelloBin_src main-qt.cc)
 
 qt5_wrap_cpp(othelloLib_hdr_moc ${othelloLib_hdr})

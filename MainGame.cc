@@ -244,12 +244,13 @@ namespace othello {
 
     //Nastvuje mena hracov
     //TODO rovnako ako v kontruktore, je to na sparvno  mieste?
-    void MainGame::setNames(const std::array<std::string, 2>& names) {
-        players_[0]->setName(names[0]);
-        players_[1]->setName(names[1]);
+    void MainGame::SetNames(const std::pair<std::string, std::string>& names) {
+        players_[0]->setName(names.first);
+        players_[1]->setName(names.second);
     }
 
 
-
-
+    std::pair<std::string, std::string> MainGame::GetNames() {
+        return std::make_pair(players_[0]->getName(), players_[1]->getName());
+    }
 }
