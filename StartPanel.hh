@@ -3,10 +3,7 @@
 
 #include <QWidget>
 #include <QFrame>
-
-namespace Ui {
-    class StartPanel;
-}
+#include "ui_StartPanel.h"
 
 namespace othello {
     class StartPanel : public QFrame {

@@ -4,10 +4,8 @@
 #include <QWidget>
 #include <QFrame>
 #include <string>
+#include "ui_InfoPanel.h"
 
-namespace Ui {
-    class InfoPanel;
-}
 namespace othello {
     class InfoPanel : public QFrame {
     Q_OBJECT

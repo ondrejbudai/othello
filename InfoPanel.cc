@@ -1,4 +1,3 @@
-#include "ui_InfoPanel.h"
 #include "InfoPanel.hh"
 #include <iostream>
 

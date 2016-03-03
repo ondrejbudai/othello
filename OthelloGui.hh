@@ -7,10 +7,7 @@
 #include "InfoPanel.hh"
 #include "GraphicsScene.hh"
 #include "StartPanel.hh"
-
-namespace Ui {
-    class OthelloGui;
-}
+#include "ui_OthelloGui.h"
 
 namespace othello {
     class OthelloGui : public QWidget {
@@ -18,9 +15,7 @@ namespace othello {
 
     public slots:
 
-        void LoadGameConfiguration();    
-
-        void EndOfGame();
+        void LoadGameConfiguration();
 
         void ButtonNewGame();
 

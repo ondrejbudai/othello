@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>OthelloGui</string>
   </property>
-  <widget class="QWidget" name="gridLayoutWidget">
+  <widget class="QStackedWidget" name="gameBoardLayout">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -22,7 +22,6 @@
      <height>621</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gameBoardLayout"/>
   </widget>
   <widget class="QWidget" name="gridLayoutWidget_2">
    <property name="geometry">

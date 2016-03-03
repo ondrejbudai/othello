@@ -1,7 +1,6 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include "OthelloGui.hh"
-#include "ui_OthelloGui.h"
 #include "ui_StartPanel.h"
 #include "GraphicsScene.hh"
 #include "StartPanel.hh"
@@ -9,6 +8,8 @@
 
 //TODO ukladanie+nacitanie hry
 //TODO DO DO ukoncenie hry
+
+constexpr unsigned AI_TIMEOUT = 0;
 
 namespace othello {
     class GraphicsView : public QGraphicsView {
@@ -49,7 +50,7 @@ namespace othello {
         connect(startPanel, &StartPanel::on_ButtonLoadGame_clicked, this, &OthelloGui::ButtonLoadGame);
 
         timer = new QTimer();
-        timer->setInterval(1000);
+        timer->setInterval(AI_TIMEOUT);
         timer->setSingleShot(true);
 
         connect(timer, &QTimer::timeout, this, &OthelloGui::TimeoutSlot);
@@ -117,8 +118,7 @@ namespace othello {
 
         connect(scene, &GraphicsScene::ClickSignal, this, &OthelloGui::GameClickSlot);
         view = new GraphicsView(scene);
-
-        ui->gameBoardLayout->layout()->removeWidget(playerScreen);
+        ui->gameBoardLayout->removeWidget(ui->gameBoardLayout->currentWidget());
         ui->gameBoardLayout->layout()->addWidget(view);
 
         ui->infoPanelLayout->layout()->removeWidget(startPanel);
@@ -129,16 +129,6 @@ namespace othello {
         connect(infoPanel, &InfoPanel::on_ButtonSaveGame_clicked, this, &OthelloGui::ButtonSaveGame);
 
         repaintGame();
-    }
-
-
-    void OthelloGui::EndOfGame(){
-        game_->StopRunning();
-        disconnect(scene,  SIGNAL(EndOfGame()), this, SLOT(EndOfGame()));
-        //delete view;
-        //delete scene;
-        //game_.~MainGame();//sorry
-        std::cout<<"SHOUDL END----------------------------\n"<<std::flush;
     }
 
     // v pravem sloupci, zobrazi obrazovku s vyberem hracu
@@ -230,8 +220,14 @@ namespace othello {
         scene->repaint();
         infoPanel->WriteScore(game_->getLogic().getScore());
 
+        // zkontroluj konec
+        if (game_->isEnd()) {
+            // do a lot of funny things
+        }
+
         if (game_->getCurrentPlayer().isAi())
             timer->start();
+
     }
 }
 
