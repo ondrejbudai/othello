@@ -42,6 +42,8 @@ namespace othello {
         void ShowGameBoard(PlayerType p1, PlayerType p2, unsigned boardSize, std::array<std::string, 2> names);
         void repaintGame();
 
+        void endGame();
+
     public:
 
         explicit OthelloGui(QWidget* parent = 0);

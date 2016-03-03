@@ -1,10 +1,6 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include "OthelloGui.hh"
-#include "ui_StartPanel.h"
-#include "GraphicsScene.hh"
-#include "StartPanel.hh"
-#include <iostream>
 #include <cassert>
 
 //TODO ukladanie+nacitanie hry
@@ -13,6 +9,13 @@
 constexpr unsigned AI_TIMEOUT = 0;
 
 namespace othello {
+
+    void clearStackedWidget(QStackedWidget* widget) {
+        QWidget* w = widget->currentWidget();
+        assert(w);
+        widget->removeWidget(w);
+        delete w;
+    }
     class GraphicsView : public QGraphicsView {
     public:
         GraphicsView(QGraphicsScene* s) : QGraphicsView(s) { }
@@ -39,8 +42,6 @@ namespace othello {
         startScene->addItem(startImage);
         ui->gameBoardLayout->addWidget(startView);
 
-        //TODO: move me
-        infoPanel = new InfoPanel;
         startPanel = new StartPanel;
         ui->infoPanelLayout->addWidget(startPanel);
 
@@ -110,16 +111,17 @@ namespace othello {
         names[0] = s1 + names[0] + s2;
         names[1] = s1 + names[1] + s2;
 
+        infoPanel = new InfoPanel;
         infoPanel->setNames(names);
 
         scene = new GraphicsScene(game_->getLogic().getBoard());
 
         connect(scene, &GraphicsScene::ClickSignal, this, &OthelloGui::GameClickSlot);
         view = new GraphicsView(scene);
-        ui->gameBoardLayout->removeWidget(ui->gameBoardLayout->currentWidget());
+        clearStackedWidget(ui->gameBoardLayout);
         ui->gameBoardLayout->addWidget(view);
 
-        ui->infoPanelLayout->removeWidget(ui->infoPanelLayout->currentWidget());
+        clearStackedWidget(ui->infoPanelLayout);
         ui->infoPanelLayout->addWidget(infoPanel);
         
         connect(infoPanel, &InfoPanel::on_ButtonSaveGame_clicked, this, &OthelloGui::ButtonSaveGame);
@@ -130,7 +132,7 @@ namespace othello {
     // v pravem sloupci, zobrazi obrazovku s vyberem hracu
     void OthelloGui::ButtonNewGame() {
 
-        ui->gameBoardLayout->removeWidget(ui->gameBoardLayout->currentWidget());
+        clearStackedWidget(ui->gameBoardLayout);
         ui->gameBoardLayout->addWidget(playerScreen);
     }
 
@@ -200,7 +202,7 @@ namespace othello {
 
         //TODO nacitaj akruanu dosku
         getline(inF, oneLine);//precitam prazdny riadok
-        for (int i = 0; i < boardSize; i++){
+        for (unsigned i = 0; i < boardSize; i++) {
             getline(inF, oneLine);
             assert(oneLine.length() == boardSize);
 
@@ -234,13 +236,17 @@ namespace othello {
         infoPanel->WriteScore(game_->getLogic().getScore());
 
         // zkontroluj konec
-        if (game_->isEnd()) {
-            // do a lot of funny things
-        }
+        if (game_->isEnd())
+            endGame();
 
         if (game_->getCurrentPlayer().isAi())
             timer->start();
 
+    }
+
+    void OthelloGui::endGame() {
+        clearStackedWidget(ui->gameBoardLayout);
+        clearStackedWidget(ui->infoPanelLayout);
     }
 }
 
