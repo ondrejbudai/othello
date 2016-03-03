@@ -6,7 +6,7 @@
 #define OTHELLO_GAMELOGIC_HH
 
 #include "GameBoard.hh"
-
+#include <string>
 
 namespace othello {
     class GameLogic {
@@ -24,6 +24,8 @@ namespace othello {
         const GameBoard& getBoard() const { return board_; }
 
         std::pair<unsigned, unsigned> getScore() const;
+
+        void setGameBoard(const std::vector<std::string>& GB);
     };
 }
 

@@ -1,5 +1,6 @@
 #include "GameLogic.hh"
 #include "MainGame.hh"
+#include <cassert>
 
 namespace othello {
 
@@ -72,6 +73,21 @@ namespace othello {
         }
     }
 
+
+    void GameLogic::setGameBoard(const std::vector<std::string>& GB){
+        for (unsigned i = 0; i < GB.size(); i++){
+            for (unsigned j = 0; j < GB[i].length(); j++){
+                if (GB[i][j] == '0')
+                    continue;
+                else if (GB[i][j] == '1')
+                    board_.setPiece(i, j, Color::BLACK);
+                else if (GB[i][j] == '2')
+                    board_.setPiece(i, j, Color::WHITE);
+                else
+                    assert(false);
+            }
+        }
+    }
 
     std::pair<unsigned, unsigned> GameLogic::getScore() const {
         std::pair<unsigned, unsigned> score{0, 0};

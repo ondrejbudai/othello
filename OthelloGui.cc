@@ -198,19 +198,21 @@ namespace othello {
         currentPlayer = std::stoi(oneLine);
         game_->setCurrentPlayer(currentPlayer); 
 
-        //TODO nacitaj akruanu dosku
+        //nacitaj aktualnu dosku
         getline(inF, oneLine);//precitam prazdny riadok
+        std::vector<std::string> gameB;
         for (int i = 0; i < boardSize; i++){
             getline(inF, oneLine);
             assert(oneLine.length() == boardSize);
-
-
-
+            gameB.push_back(oneLine);
         }
+        assert(gameB.size() == boardSize);
+        game_->setGameBoard(gameB);
 
 
         //TODO nacitaj historiu
         inF.close();
+        repaintGame();
     }
 
 
