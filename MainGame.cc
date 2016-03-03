@@ -104,6 +104,10 @@ namespace othello {
         if(canPlay(GetOppositeColor(current_player.getColor()))){
             current_player_num++;
             current_player_num = current_player_num % 2;
+        } else if (canPlay(current_player.getColor())){
+            //TODO nemoze hrat super, ale mozme hrat my
+            //nejaka hlasa na obrazovku
+            std::cout<<"Opposite player has no valid moves\n";
         }
 
         //printHistory();
