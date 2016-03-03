@@ -1,7 +1,7 @@
-#include "GraphicsScene.hh"
+#include "BoardGraphics.hh"
 
 namespace othello {
-    GraphicsScene::GraphicsScene(const GameBoard& board) : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE},
+    BoardGraphics::BoardGraphics(const GameBoard& board) : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE},
                                                            size{GAME_SIZE}, board_{board} {
 
         blackDisc = QPixmap::fromImage(QImage("img/blackDisc.jpg"));
@@ -24,7 +24,7 @@ namespace othello {
     }
 
 
-    void GraphicsScene::repaint() {
+    void BoardGraphics::repaint() {
         for (unsigned x = 0; x < board_.getSize(); ++x) {
             for (unsigned y = 0; y < board_.getSize(); ++y) {
                 auto& piece = b[x][y];
@@ -38,7 +38,7 @@ namespace othello {
         }
     }
 
-    void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
+    void BoardGraphics::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
         double mx = mouseEvent->scenePos().x();
         double my = mouseEvent->scenePos().y();
 
@@ -52,7 +52,7 @@ namespace othello {
         emit ClickSignal(y, x);
     }
 
-    double GraphicsScene::getPieceSize() const {
+    double BoardGraphics::getPieceSize() const {
         return static_cast<double>(size) / board_.getSize();
     }
 }
