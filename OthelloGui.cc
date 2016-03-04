@@ -49,7 +49,7 @@ namespace othello {
         connect(playerScreen, &PlayerSelection::on_ButtonStartGame_clicked, this, &OthelloGui::LoadGameConfiguration);
         connect(startPanel, &StartPanel::on_ButtonNewGame_clicked, this, &OthelloGui::ButtonNewGame);
         connect(startPanel, &StartPanel::on_ButtonLoadGame_clicked, this, &OthelloGui::ButtonLoadGame);
-
+        
         timer = new QTimer();
         timer->setInterval(AI_TIMEOUT);
         timer->setSingleShot(true);
@@ -119,9 +119,19 @@ namespace othello {
         ui->infoPanelLayout->addWidget(infoPanel);
         
         connect(infoPanel, &InfoPanel::on_ButtonSaveGame_clicked, this, &OthelloGui::ButtonSaveGame);
-
+        connect(infoPanel, &InfoPanel::on_ButtonShowHistory_clicked, this, &OthelloGui::ButtonShowHistory);
+        
         repaintGame();
     }
+
+    void OthelloGui::ButtonShowHistory(){
+        history = new HistoryPanel();
+        clearStackedWidget(ui->infoPanelLayout);
+        ui->infoPanelLayout->addWidget(history);
+        history->AddHistoryItem();
+        //zavolaj nacitanie historie
+    }
+
 
     // v pravem sloupci, zobrazi obrazovku s vyberem hracu
     void OthelloGui::ButtonNewGame() {

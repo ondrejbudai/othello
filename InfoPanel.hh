@@ -25,6 +25,8 @@ namespace othello {
         void HighlightPlayer(Color c);
     signals:
         void on_ButtonSaveGame_clicked();
+
+        void on_ButtonShowHistory_clicked();
         
     };
 }

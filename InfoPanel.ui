@@ -156,6 +156,19 @@
     <string>Save Game</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="ButtonShowHistory">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>290</y>
+     <width>201</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Show History</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

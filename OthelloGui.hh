@@ -7,6 +7,7 @@
 #include "InfoPanel.hh"
 #include "BoardGraphics.hh"
 #include "StartPanel.hh"
+#include "HistoryPanel.hh"
 #include "ui_OthelloGui.h"
 
 namespace othello {
@@ -23,6 +24,8 @@ namespace othello {
 
         void ButtonLoadGame();
 
+        void ButtonShowHistory();
+
         void GameClickSlot(unsigned mx, unsigned my);
 
         void TimeoutSlot();
@@ -36,6 +39,7 @@ namespace othello {
         BoardGraphics* scene;
         QGraphicsView* view;
         InfoPanel* infoPanel;
+        HistoryPanel *history;
         QTimer* timer;
         StartPanel* startPanel;
 
