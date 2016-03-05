@@ -1,7 +1,6 @@
 #include "HistoryPanel.hh"
 #include "ui_HistoryPanel.h"
-#include <QLayout>
-#include <QScrollArea>
+#include <iostream>
 
 HistoryPanel::HistoryPanel(QWidget *parent) :
     QWidget(parent),
@@ -18,7 +17,21 @@ HistoryPanel::HistoryPanel(QWidget *parent) :
         ui->TheList->setItemWidget(item, hit);
     }
 
+
+    connect(ui->TheList, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(HistoryItemSelected(QListWidgetItem*)));
+
+
 }
+
+void HistoryPanel::HistoryItemSelected(QListWidgetItem* item){
+    QWidget *selected_  = ui->TheList->itemWidget(item);
+    HistoryItem *selected = (HistoryItem *) selected_;
+    
+    std::cout<<selected->getText()<<std::endl;
+
+}
+
 
 void HistoryPanel::AddHistoryItem(){
 

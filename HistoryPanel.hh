@@ -3,7 +3,9 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QLayout>
 #include <QScrollArea>
+#include <QListWidgetItem>
 #include "HistoryItem.hh"
 
 namespace Ui {
@@ -22,6 +24,10 @@ public:
 private:
     Ui::HistoryPanel *ui;
     QVBoxLayout *lay;
+
+public slots:
+    void HistoryItemSelected(QListWidgetItem* item);
+
 };
 
 #endif // HISTORYPANEL_HH

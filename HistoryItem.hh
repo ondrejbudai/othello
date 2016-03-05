@@ -15,6 +15,7 @@ public:
     explicit HistoryItem(QWidget *parent = 0);
     ~HistoryItem();
     void setText(int i);
+    std::string getText();
 
 private:
     Ui::HistoryItem *ui;
