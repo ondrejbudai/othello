@@ -25,6 +25,10 @@ namespace othello{
         ~HistoryPanel();
         
         void AddHistory(std::vector<HistoryItem> H)const;
+    
+    signals:
+        void on_ButtonCancle_clicked();
+
 
     private:
         Ui::HistoryPanel *ui;

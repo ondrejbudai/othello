@@ -116,11 +116,17 @@ namespace othello {
     }
 
     void OthelloGui::ButtonShowHistory(){
-        history = new HistoryPanel();
+        historyPanel = new HistoryPanel();
         clearStackedWidget(ui->infoPanelLayout);
-        ui->infoPanelLayout->addWidget(history);
-        history->AddHistory(game_->getHistory());
+        ui->infoPanelLayout->addWidget(historyPanel);
+        historyPanel->AddHistory(game_->getHistory());
+        connect(historyPanel, &HistoryPanel::on_ButtonCancle_clicked, this, &OthelloGui::ShowInfoPanel);
         //zavolaj nacitanie historie
+    }
+
+    void OthelloGui::ShowInfoPanel(){
+        clearStackedWidget(ui->infoPanelLayout);
+        ui->infoPanelLayout->addWidget(infoPanel);
     }
 
 

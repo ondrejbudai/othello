@@ -26,6 +26,8 @@ namespace othello {
 
         void ButtonShowHistory();
 
+        void ShowInfoPanel();
+
         void GameClickSlot(unsigned mx, unsigned my);
 
         void TimeoutSlot();
@@ -39,7 +41,7 @@ namespace othello {
         BoardGraphics* scene;
         QGraphicsView* view;
         InfoPanel* infoPanel;
-        HistoryPanel *history;
+        HistoryPanel *historyPanel;
         QTimer* timer;
         StartPanel* startPanel;
 
