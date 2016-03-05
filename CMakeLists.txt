@@ -16,12 +16,12 @@ find_package (Qt5Widgets)
 
 set (othelloLib_src AI.cc GameBoard.cc GameLogic.cc MainGame.cc OthelloGui.cc Player.cc
     PlayerSelection.cc BoardGraphics.cc InfoPanel.cc StartPanel.cc EndScreen.cc HistoryItemGui.cc
-    HistoryPanel.cc)
+    HistoryPanel.cc MainWindow.cc)
 set(othelloLib_hdr OthelloGui.hh PlayerSelection.hh BoardGraphics.hh InfoPanel.hh StartPanel.hh
-    EndScreen.hh HistoryItemGui.hh HistoryPanel.hh)
+    EndScreen.hh HistoryItemGui.hh HistoryPanel.hh MainWindow.hh)
 
 set(othelloLib_ui OthelloGui.ui PlayerSelection.ui InfoPanel.ui StartPanel.ui EndScreen.ui
-    HistoryItemGui.ui HistoryPanel.ui)
+    HistoryItemGui.ui HistoryPanel.ui MainWindow.ui)
 set (othelloBin_src main-qt.cc)
 
 qt5_wrap_cpp(othelloLib_hdr_moc ${othelloLib_hdr})
