@@ -59,6 +59,8 @@ namespace othello {
         void setGameBoard(const std::vector<std::string> &GB){logic_.setGameBoard(GB);}
 
         std::vector<HistoryItem> getHistory()const { return history_;}
+
+        void addToHistory(HistoryItem n);
     };
 }
 
