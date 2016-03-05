@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>HistoryItem</class>
- <widget class="QWidget" name="HistoryItem">
+ <class>HistoryItemGui</class>
+ <widget class="QWidget" name="HistoryItemGui">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="color">
    <property name="geometry">
     <rect>
      <x>170</x>
@@ -26,7 +26,7 @@
     <string>FARBA</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="x">
    <property name="geometry">
     <rect>
      <x>170</x>
@@ -39,7 +39,7 @@
     <string>X</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="y">
    <property name="geometry">
     <rect>
      <x>170</x>
@@ -61,7 +61,7 @@
      <height>141</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout"/>
+   <layout class="QGridLayout" name="BoardLayout"/>
   </widget>
   <widget class="Line" name="line">
    <property name="geometry">

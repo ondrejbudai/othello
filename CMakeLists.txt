@@ -15,13 +15,13 @@ add_executable(othello-cli ${SOURCE_FILES_CLI})
 find_package (Qt5Widgets)
 
 set (othelloLib_src AI.cc GameBoard.cc GameLogic.cc MainGame.cc OthelloGui.cc Player.cc
-    PlayerSelection.cc BoardGraphics.cc InfoPanel.cc StartPanel.cc EndScreen.cc HistoryItem.cc
+    PlayerSelection.cc BoardGraphics.cc InfoPanel.cc StartPanel.cc EndScreen.cc HistoryItemGui.cc
     HistoryPanel.cc)
 set(othelloLib_hdr OthelloGui.hh PlayerSelection.hh BoardGraphics.hh InfoPanel.hh StartPanel.hh
-    EndScreen.hh HistoryItem.hh HistoryPanel.hh)
+    EndScreen.hh HistoryItemGui.hh HistoryPanel.hh)
 
 set(othelloLib_ui OthelloGui.ui PlayerSelection.ui InfoPanel.ui StartPanel.ui EndScreen.ui
-    HistoryItem.ui HistoryPanel.ui)
+    HistoryItemGui.ui HistoryPanel.ui)
 set (othelloBin_src main-qt.cc)
 
 qt5_wrap_cpp(othelloLib_hdr_moc ${othelloLib_hdr})

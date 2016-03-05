@@ -17,15 +17,6 @@ namespace othello {
             return;
         widget->removeWidget(w);
     }
-    class GraphicsView : public QGraphicsView {
-    public:
-        GraphicsView(QGraphicsScene* s) : QGraphicsView(s) { }
-
-        virtual void resizeEvent(QResizeEvent*) {
-            fitInView(0, 0, GAME_SIZE, GAME_SIZE, Qt::KeepAspectRatio);
-            //dynamic_cast<BoardGraphics*>(scene())->setSize(event->size());
-        }
-    };
 
     OthelloGui::OthelloGui(QWidget* parent) : QWidget(parent), ui(new Ui::OthelloGui) {
 
@@ -108,7 +99,7 @@ namespace othello {
         infoPanel = new InfoPanel;
         infoPanel->SetNames(names);
 
-        scene = new BoardGraphics(game_->getLogic().getBoard());
+        scene = new BoardGraphics(game_->getLogic().getBoard().GetBoard());
 
         connect(scene, &BoardGraphics::ClickSignal, this, &OthelloGui::GameClickSlot);
         view = new GraphicsView(scene);
@@ -128,7 +119,7 @@ namespace othello {
         history = new HistoryPanel();
         clearStackedWidget(ui->infoPanelLayout);
         ui->infoPanelLayout->addWidget(history);
-        history->AddHistoryItem();
+        history->AddHistory(game_->getHistory());
         //zavolaj nacitanie historie
     }
 

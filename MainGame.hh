@@ -57,6 +57,8 @@ namespace othello {
         void setCurrentPlayer(int n) {current_player_num = n;}
         
         void setGameBoard(const std::vector<std::string> &GB){logic_.setGameBoard(GB);}
+
+        std::vector<HistoryItem> getHistory()const { return history_;}
     };
 }
 

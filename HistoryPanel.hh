@@ -6,28 +6,34 @@
 #include <QLayout>
 #include <QScrollArea>
 #include <QListWidgetItem>
-#include "HistoryItem.hh"
+#include "HistoryItemGui.hh"
+#include "MainGame.hh"
+#include "ui_HistoryPanel.h"
 
-namespace Ui {
-class HistoryPanel;
+namespace othello{
+
+    //namespace Ui {
+    //class HistoryPanel;
+    //}
+
+    class HistoryPanel : public QWidget
+    {
+        Q_OBJECT
+
+    public:
+        explicit HistoryPanel(QWidget *parent = 0);
+        ~HistoryPanel();
+        
+        void AddHistory(std::vector<HistoryItem> H)const;
+
+    private:
+        Ui::HistoryPanel *ui;
+        QVBoxLayout *lay;
+
+    public slots:
+        void HistoryItemSelected(QListWidgetItem* item);
+
+    };
+
 }
-
-class HistoryPanel : public QWidget
-{
-    Q_OBJECT
-
-public:
-    explicit HistoryPanel(QWidget *parent = 0);
-    ~HistoryPanel();
-    void AddHistoryItem();
-
-private:
-    Ui::HistoryPanel *ui;
-    QVBoxLayout *lay;
-
-public slots:
-    void HistoryItemSelected(QListWidgetItem* item);
-
-};
-
 #endif // HISTORYPANEL_HH

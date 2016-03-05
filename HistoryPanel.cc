@@ -2,44 +2,47 @@
 #include "ui_HistoryPanel.h"
 #include <iostream>
 
-HistoryPanel::HistoryPanel(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::HistoryPanel)
-{
-    ui->setupUi(this);
-    
-    for (int i = 0; i < 10; ++i){
-        HistoryItem *hit = new HistoryItem();
-        hit->setText(i);
-        QListWidgetItem *item = new QListWidgetItem;    
-        item->setSizeHint(QSize(238,169));
-        ui->TheList->addItem(item);
-        ui->TheList->setItemWidget(item, hit);
+namespace othello{
+    HistoryPanel::HistoryPanel(QWidget *parent) :
+        QWidget(parent),
+        ui(new Ui::HistoryPanel)
+    {
+        ui->setupUi(this);
+        
+
+        connect(ui->TheList, SIGNAL(itemClicked(QListWidgetItem*)),
+                this, SLOT(HistoryItemSelected(QListWidgetItem*)));
+
+
+    }
+
+    void HistoryPanel::HistoryItemSelected(QListWidgetItem* item){
+        QWidget *selected_  = ui->TheList->itemWidget(item);
+        HistoryItemGui *selected = (HistoryItemGui *) selected_;
+        //TODO po kliknuti zobrazi vo velkom okne? 
+        //std::cout<<selected->getText()<<std::endl;
+
     }
 
 
-    connect(ui->TheList, SIGNAL(itemClicked(QListWidgetItem*)),
-            this, SLOT(HistoryItemSelected(QListWidgetItem*)));
+    void HistoryPanel::AddHistory(std::vector<HistoryItem> H)const{
+        for (unsigned i = 0; i < H.size(); i++){
+            HistoryItemGui *hit = new HistoryItemGui();
+            hit->setColor(H[i].currentPlayer); 
+            hit->setMove(H[i].currentMove);
+            hit->setBoard(H[i].board);
+            
+
+            QListWidgetItem *item = new QListWidgetItem;    
+            item->setSizeHint(QSize(238,169));
+            ui->TheList->addItem(item);
+            ui->TheList->setItemWidget(item, hit);
+        }
+    }
 
 
-}
-
-void HistoryPanel::HistoryItemSelected(QListWidgetItem* item){
-    QWidget *selected_  = ui->TheList->itemWidget(item);
-    HistoryItem *selected = (HistoryItem *) selected_;
-    
-    std::cout<<selected->getText()<<std::endl;
-
-}
-
-
-void HistoryPanel::AddHistoryItem(){
-
-
-}
-
-
-HistoryPanel::~HistoryPanel()
-{
-    delete ui;
+    HistoryPanel::~HistoryPanel()
+    {
+        delete ui;
+    }
 }

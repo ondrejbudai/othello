@@ -6,6 +6,7 @@
 #include <QGridLayout>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsScene>
+#include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QtCore>
 #include <iostream>
@@ -14,6 +15,14 @@
 #include "MainGame.hh"
 
 namespace othello {
+    
+    class GraphicsView : public QGraphicsView {
+    public:
+        GraphicsView(QGraphicsScene* s);   
+        virtual void resizeEvent(QResizeEvent*);
+    }; 
+    
+        
     constexpr unsigned GAME_SIZE = 200;
 
     class BoardGraphics : public QGraphicsScene {
@@ -31,13 +40,13 @@ namespace othello {
         QPixmap whiteDisc;
         QPixmap blank;
 
-        BoardGraphics(const GameBoard& logic);
+        BoardGraphics(const std::vector<std::vector<Field>>& logic);
         void repaint();
         virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
 
 
     private:
-        const GameBoard& board_;
+        const std::vector<std::vector<Field>>& board_;
 
         double getPieceSize() const;
     };

@@ -1,7 +1,16 @@
 #include "BoardGraphics.hh"
 
+
 namespace othello {
-    BoardGraphics::BoardGraphics(const GameBoard& board) : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE},
+    GraphicsView::GraphicsView(QGraphicsScene* s) : QGraphicsView(s) { }
+
+    void GraphicsView::resizeEvent(QResizeEvent*) {
+            fitInView(0, 0, GAME_SIZE, GAME_SIZE, Qt::KeepAspectRatio);
+            //dynamic_cast<BoardGraphics*>(scene())->setSize(event->size());
+    }
+    
+    
+    BoardGraphics::BoardGraphics(const std::vector<std::vector<Field>>& board) : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE},
                                                            size{GAME_SIZE}, board_{board} {
 
         blackDisc = QPixmap::fromImage(QImage("img/blackDisc.jpg"));
@@ -9,13 +18,13 @@ namespace othello {
         blank = QPixmap::fromImage(QImage("img/blank.jpg"));
 
         const double pieceSize = getPieceSize();
-        for (unsigned x = 0; x < board_.getSize(); ++x) {
+        for (unsigned x = 0; x < board_.size(); ++x) {
             b.emplace_back();
-            for (unsigned y = 0; y < board_.getSize(); ++y) {
+            for (unsigned y = 0; y < board_.size(); ++y) {
                 QGraphicsPixmapItem* item = new QGraphicsPixmapItem(blank);
                 b[x].push_back(item);
                 item->setScale(pieceSize / item->boundingRect().width());
-                //item->setPos((board_.getSize() - 1 - x) * pieceSize, (board_.getSize() - 1 - y) * pieceSize);
+                //item->setPos((board_.size() - 1 - x) * pieceSize, (board_.size() - 1 - y) * pieceSize);
                 item->setPos(y * pieceSize, x * pieceSize);
                 addItem(item);
             }
@@ -25,12 +34,12 @@ namespace othello {
 
 
     void BoardGraphics::repaint() {
-        for (unsigned x = 0; x < board_.getSize(); ++x) {
-            for (unsigned y = 0; y < board_.getSize(); ++y) {
+        for (unsigned x = 0; x < board_.size(); ++x) {
+            for (unsigned y = 0; y < board_.size(); ++y) {
                 auto& piece = b[x][y];
-                if (!board_.isOccupied(x, y))
+                if (!board_[x][y].occupied_)
                     piece->setPixmap(blank);
-                else if (board_.GetColor(x, y) == Color::BLACK)
+                else if (board_[x][y].piece_ == Color::BLACK)
                     piece->setPixmap(blackDisc);
                 else
                     piece->setPixmap(whiteDisc);
@@ -53,7 +62,7 @@ namespace othello {
     }
 
     double BoardGraphics::getPieceSize() const {
-        return static_cast<double>(size) / board_.getSize();
+        return static_cast<double>(size) / board_.size();
     }
 }
 
