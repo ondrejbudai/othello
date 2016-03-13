@@ -18,10 +18,10 @@ namespace othello {
         widget->removeWidget(w);
     }
 
-    OthelloGui::OthelloGui(QWidget* parent) : QWidget(parent), ui(new Ui::OthelloGui) {
+    OthelloGui::OthelloGui(QWidget* parent) : QWidget(parent) {
 
         //iniciaizujeme UI
-        ui->setupUi(this);
+        ui.setupUi(this);
 
         //inicializujem si okno pre vyber hracov
         playerScreen = new PlayerSelection();
@@ -32,10 +32,10 @@ namespace othello {
         startView = new QGraphicsView(startScene);
         QGraphicsPixmapItem* startImage = new QGraphicsPixmapItem(QPixmap::fromImage(image));
         startScene->addItem(startImage);
-        ui->gameBoardLayout->addWidget(startView);
+        ui.gameBoardLayout->addWidget(startView);
 
         startPanel = new StartPanel;
-        ui->infoPanelLayout->addWidget(startPanel);
+        ui.infoPanelLayout->addWidget(startPanel);
 
         connect(playerScreen, &PlayerSelection::on_ButtonStartGame_clicked, this, &OthelloGui::LoadGameConfiguration);
         connect(startPanel, &StartPanel::on_ButtonNewGame_clicked, this, &OthelloGui::ButtonNewGame);
@@ -103,11 +103,11 @@ namespace othello {
 
         connect(scene, &BoardGraphics::ClickSignal, this, &OthelloGui::GameClickSlot);
         view = new GraphicsView(scene);
-        clearStackedWidget(ui->gameBoardLayout);
-        ui->gameBoardLayout->addWidget(view);
+        clearStackedWidget(ui.gameBoardLayout);
+        ui.gameBoardLayout->addWidget(view);
 
-        clearStackedWidget(ui->infoPanelLayout);
-        ui->infoPanelLayout->addWidget(infoPanel);
+        clearStackedWidget(ui.infoPanelLayout);
+        ui.infoPanelLayout->addWidget(infoPanel);
         
         connect(infoPanel, &InfoPanel::on_ButtonSaveGame_clicked, this, &OthelloGui::ButtonSaveGame);
         connect(infoPanel, &InfoPanel::on_ButtonShowHistory_clicked, this, &OthelloGui::ButtonShowHistory);
@@ -117,24 +117,24 @@ namespace othello {
 
     void OthelloGui::ButtonShowHistory(){
         historyPanel = new HistoryPanel();
-        clearStackedWidget(ui->infoPanelLayout);
-        ui->infoPanelLayout->addWidget(historyPanel);
+        clearStackedWidget(ui.infoPanelLayout);
+        ui.infoPanelLayout->addWidget(historyPanel);
         historyPanel->AddHistory(game_->getHistory());
         connect(historyPanel, &HistoryPanel::on_ButtonCancle_clicked, this, &OthelloGui::ShowInfoPanel);
         //zavolaj nacitanie historie
     }
 
     void OthelloGui::ShowInfoPanel(){
-        clearStackedWidget(ui->infoPanelLayout);
-        ui->infoPanelLayout->addWidget(infoPanel);
+        clearStackedWidget(ui.infoPanelLayout);
+        ui.infoPanelLayout->addWidget(infoPanel);
     }
 
 
     // v pravem sloupci, zobrazi obrazovku s vyberem hracu
     void OthelloGui::ButtonNewGame() {
 
-        clearStackedWidget(ui->gameBoardLayout);
-        ui->gameBoardLayout->addWidget(playerScreen);
+        clearStackedWidget(ui.gameBoardLayout);
+        ui.gameBoardLayout->addWidget(playerScreen);
     }
 
     //umozni hracovi ulozit hru do suboru
@@ -251,15 +251,15 @@ namespace othello {
     }
 
     void OthelloGui::endGame() {
-        clearStackedWidget(ui->gameBoardLayout);
-        clearStackedWidget(ui->infoPanelLayout);
+        clearStackedWidget(ui.gameBoardLayout);
+        clearStackedWidget(ui.infoPanelLayout);
 
         EndScreen* end = new EndScreen;
         end->SetNames(game_->GetNames());
         end->SetScores(game_->getLogic().getScore());
 
-        ui->infoPanelLayout->addWidget(startPanel);
-        ui->gameBoardLayout->addWidget(end);
+        ui.infoPanelLayout->addWidget(startPanel);
+        ui.gameBoardLayout->addWidget(end);
 
         game_ = nullptr;
 

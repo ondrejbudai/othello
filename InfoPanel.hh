@@ -12,7 +12,7 @@ namespace othello {
     Q_OBJECT
 
     private:
-        Ui::InfoPanel* ui;
+        Ui::InfoPanel ui;
 
     public:
 

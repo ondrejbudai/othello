@@ -27,11 +27,13 @@ namespace othello{
         void AddHistory(std::vector<HistoryItem> H)const;
     
     signals:
+
+        // todo: opravit preklep
         void on_ButtonCancle_clicked();
 
 
     private:
-        Ui::HistoryPanel *ui;
+        Ui::HistoryPanel ui;
         QVBoxLayout *lay;
 
     public slots:

@@ -2,18 +2,18 @@
 #include <iostream>
 
 namespace othello {
-    InfoPanel::InfoPanel(QWidget* parent) : QFrame(parent), ui(new Ui::InfoPanel) {
+    InfoPanel::InfoPanel(QWidget* parent) : QFrame(parent) {
 
         //iniciaizujeme UI
-        ui->setupUi(this);
+        ui.setupUi(this);
 
     }
 
     void InfoPanel::WriteScore(std::pair<unsigned, unsigned> score) {
         QString sb = QString::number(score.first);
-        ui->BlackScoreLabel->setText(sb);
+        ui.BlackScoreLabel->setText(sb);
         QString sw = QString::number(score.second);
-        ui->WhiteScoreLabel->setText(sw);
+        ui.WhiteScoreLabel->setText(sw);
     }
     // v pravem sloupci, zobrazi obrazovku s vyberem hracu
 
@@ -24,8 +24,8 @@ namespace othello {
 
         black.prepend("<span style=\" font-size:14pt;\">").append("<\\span>");
         white.prepend("<span style=\" font-size:14pt;\">").append("<\\span>");
-        ui->BlackName->setText(black);
-        ui->WhiteName->setText(white);
+        ui.BlackName->setText(black);
+        ui.WhiteName->setText(white);
     }
     
     //zvyraznenie kto prave hra - je to najtrivilanejsie riesenie, caka sa ze sa prerobi
@@ -33,11 +33,11 @@ namespace othello {
     void InfoPanel::HighlightPlayer(Color c){
 
         if (c == Color::BLACK){
-            ui->BlackName->setStyleSheet("QLabel { background-color : red}");
-            ui->WhiteName->setStyleSheet("QLabel { background-color : transparent}");
+            ui.BlackName->setStyleSheet("QLabel { background-color : red}");
+            ui.WhiteName->setStyleSheet("QLabel { background-color : transparent}");
         } else {
-            ui->WhiteName->setStyleSheet("QLabel { background-color : red}");
-            ui->BlackName->setStyleSheet("QLabel { background-color : transparent}");
+            ui.WhiteName->setStyleSheet("QLabel { background-color : red}");
+            ui.BlackName->setStyleSheet("QLabel { background-color : transparent}");
 
 
         }    

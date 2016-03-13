@@ -22,7 +22,7 @@ namespace othello{
         void setBoard(std::vector<std::vector<Field>> &B); 
 
     private:
-        Ui::HistoryItemGui *ui;
+        Ui::HistoryItemGui ui;
     };
 }
 #endif // HISTORYITEMGUI_HH

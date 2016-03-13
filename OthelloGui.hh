@@ -33,7 +33,7 @@ namespace othello {
         void TimeoutSlot();
 
     private:
-        Ui::OthelloGui* ui;
+        Ui::OthelloGui ui;
         std::unique_ptr<MainGame> game_;
         QGraphicsScene* startScene;
         QGraphicsView* startView;

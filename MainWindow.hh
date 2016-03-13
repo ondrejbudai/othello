@@ -9,7 +9,7 @@ namespace othello {
     class MainWindow : public QTabWidget {
     Q_OBJECT
     private:
-        Ui::MainWindow* ui;
+        Ui::MainWindow ui;
 
         void addGame();
 
