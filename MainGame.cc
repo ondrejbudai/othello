@@ -117,6 +117,9 @@ namespace othello {
 
     }
 
+    void MainGame::addToHistory(HistoryItem n){
+        history_.push_back(n);
+    }
 
     //pomocna funkcia pre pracu bez gui
     //TODO: move me!
@@ -219,7 +222,9 @@ namespace othello {
         outF<<"\nHISTORY\n\n";
 
         for (auto const& hisItem:history_){
-            outF<<(hisItem.currentPlayer == Color::BLACK?"black":"white")<<" "<<hisItem.currentMove.first<<" "<<hisItem.currentMove.second<<std::endl;
+            outF<<(hisItem.currentPlayer == Color::BLACK?"black":"white")<<std::endl;
+            outF<<hisItem.currentMove.first<<std::endl;
+            outF<<hisItem.currentMove.second<<std::endl;
             printBoardToFile(hisItem.board, outF);
         }
         return true;
