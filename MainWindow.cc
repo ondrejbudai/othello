@@ -2,8 +2,8 @@
 #include "OthelloGui.hh"
 
 namespace othello {
-    MainWindow::MainWindow(QWidget* parent) : QTabWidget{parent}, ui{new Ui::MainWindow} {
-        ui->setupUi(this);
+    MainWindow::MainWindow(QWidget* parent) : QTabWidget{parent} {
+        ui.setupUi(this);
 
         addGame();
         connect(this, &MainWindow::tabBarClicked, this, &MainWindow::tabChangedSlot);

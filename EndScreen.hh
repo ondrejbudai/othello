@@ -10,7 +10,7 @@ namespace othello {
     Q_OBJECT
 
     private:
-        Ui::EndScreen* ui;
+        Ui::EndScreen ui;
 
     public:
         explicit EndScreen(QWidget* parent = 0);

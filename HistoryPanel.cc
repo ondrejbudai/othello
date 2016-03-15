@@ -4,20 +4,19 @@
 
 namespace othello{
     HistoryPanel::HistoryPanel(QWidget *parent) :
-        QWidget(parent),
-        ui(new Ui::HistoryPanel)
+            QWidget(parent)
     {
-        ui->setupUi(this);
-        
+        ui.setupUi(this);
 
-        connect(ui->TheList, SIGNAL(itemClicked(QListWidgetItem*)),
+
+        connect(ui.TheList, SIGNAL(itemClicked(QListWidgetItem * )),
                 this, SLOT(HistoryItemSelected(QListWidgetItem*)));
 
 
     }
 
     void HistoryPanel::HistoryItemSelected(QListWidgetItem* item){
-        QWidget *selected_  = ui->TheList->itemWidget(item);
+        QWidget* selected_ = ui.TheList->itemWidget(item);
         HistoryItemGui *selected = (HistoryItemGui *) selected_;
         //TODO po kliknuti zobrazi vo velkom okne? 
         //std::cout<<selected->getText()<<std::endl;
@@ -35,14 +34,13 @@ namespace othello{
 
             QListWidgetItem *item = new QListWidgetItem;    
             item->setSizeHint(QSize(238,169));
-            ui->TheList->addItem(item);
-            ui->TheList->setItemWidget(item, hit);
+            ui.TheList->addItem(item);
+            ui.TheList->setItemWidget(item, hit);
         }
     }
 
 
     HistoryPanel::~HistoryPanel()
     {
-        delete ui;
     }
 }
