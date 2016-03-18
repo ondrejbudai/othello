@@ -42,4 +42,20 @@ target_link_libraries (othelloLib Qt5::Widgets)
 add_executable(othello ${othelloBin_src})
 target_link_libraries (othello othelloLib)
 
+# Gomothello
+
+set (gomothelloLib_src AI.cc GameBoard.cc GameLogicGomoku.cc MainGame.cc OthelloGui.cc Player.cc
+        PlayerSelection.cc BoardGraphics.cc InfoPanel.cc StartPanel.cc EndScreen.cc HistoryItemGui.cc
+        HistoryPanel.cc MainWindow.cc)
+
+add_library (gomothelloLib SHARED
+        ${gomothelloLib_src}
+        ${othelloLib_hdr_moc}
+        ${othelloLib_ui_moc}
+        )
+target_link_libraries (gomothelloLib Qt5::Widgets)
+
+add_executable(gomothello ${othelloBin_src})
+target_link_libraries (gomothello gomothelloLib)
+
 
