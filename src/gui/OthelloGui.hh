@@ -3,7 +3,7 @@
 
 #include <QGraphicsView>
 #include "PlayerSelection.hh"
-#include "MainGame.hh"
+#include "../logic/MainGame.hh"
 #include "InfoPanel.hh"
 #include "BoardGraphics.hh"
 #include "StartPanel.hh"
@@ -39,7 +39,7 @@ namespace othello {
         QGraphicsView* startView;
         PlayerSelection* playerScreen;
         BoardGraphics* scene;
-        QGraphicsView* view;
+        GraphicsView* view;
         InfoPanel* infoPanel;
         HistoryPanel *historyPanel;
         QTimer* timer;

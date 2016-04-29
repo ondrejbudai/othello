@@ -106,4 +106,3 @@ namespace othello {
         return score;
     }
 }
-

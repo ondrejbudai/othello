@@ -2,7 +2,7 @@
 // Created by ondra on 11.2.16.
 //
 
-#include "MainGame.hh"
+#include "logic/MainGame.hh"
 #include <iostream>
 
 int main() {

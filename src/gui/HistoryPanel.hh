@@ -7,7 +7,7 @@
 #include <QScrollArea>
 #include <QListWidgetItem>
 #include "HistoryItemGui.hh"
-#include "MainGame.hh"
+#include "../logic/MainGame.hh"
 #include "ui_HistoryPanel.h"
 
 namespace othello{
@@ -23,9 +23,9 @@ namespace othello{
     public:
         explicit HistoryPanel(QWidget *parent = 0);
         ~HistoryPanel();
-        
+
         void AddHistory(std::vector<HistoryItem> H)const;
-    
+
     signals:
 
         // todo: opravit preklep

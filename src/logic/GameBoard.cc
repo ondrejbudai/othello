@@ -20,7 +20,7 @@ namespace othello {
         unsigned middle = size / 2;
         this->setPiece(middle, middle, Color::BLACK);
         this->setPiece(middle-1, middle-1, Color::BLACK);
-            
+
         this->setPiece(middle-1, middle, Color::WHITE);
         this->setPiece(middle, middle-1, Color::WHITE);
     }
@@ -63,10 +63,9 @@ namespace othello {
         assert(x < size_ && y < size_);
         return board_[x][y].piece_;
     }
-    
-    
+
+
     void GameBoard::copyBoard(Board &toThis){
         toThis = board_;
     }
 }
-

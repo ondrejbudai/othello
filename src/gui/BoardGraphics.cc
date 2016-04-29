@@ -2,16 +2,22 @@
 
 
 namespace othello {
-    GraphicsView::GraphicsView(QGraphicsScene* s) : QGraphicsView(s) { }
+    GraphicsView::GraphicsView(QGraphicsScene* s) : QGraphicsView(s) {
+        setMouseTracking(true);
+    }
 
     void GraphicsView::resizeEvent(QResizeEvent*) {
-            fitInView(0, 0, GAME_SIZE, GAME_SIZE, Qt::KeepAspectRatio);
-            //dynamic_cast<BoardGraphics*>(scene())->setSize(event->size());
+        fitInView(0, 0, GAME_SIZE, GAME_SIZE, Qt::KeepAspectRatio);
+        //dynamic_cast<BoardGraphics*>(scene())->setSize(event->size());
     }
-    
-    
-    BoardGraphics::BoardGraphics(const std::vector<std::vector<Field>>& board) : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE},
-                                                           size{GAME_SIZE}, board_{board} {
+
+    void GraphicsView::mouseMoveEvent(QMouseEvent* mouseEvent) {
+        emit mouseMoveSignal(mapToScene(mouseEvent->pos()));
+    }
+
+    BoardGraphics::BoardGraphics(const std::vector<std::vector<Field>>& board) : QGraphicsScene{0, 0, GAME_SIZE,
+                                                                                                GAME_SIZE},
+                                                                                 size{GAME_SIZE}, board_{board} {
 
         blackDisc = QPixmap::fromImage(QImage("img/blackDisc.jpg"));
         whiteDisc = QPixmap::fromImage(QImage("img/whiteDisc.jpg"));
@@ -45,6 +51,10 @@ namespace othello {
                     piece->setPixmap(whiteDisc);
             }
         }
+
+//        if(mouseOver){
+//            b[mouseX][mouseY]->setPixmap(blackDisc);
+//        }
     }
 
     void BoardGraphics::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) {
@@ -59,6 +69,25 @@ namespace othello {
         unsigned y = static_cast<unsigned>(my / getPieceSize());
 
         emit ClickSignal(y, x);
+    }
+
+    void BoardGraphics::mouseMoveSlot(QPointF coords) {
+        double mx = coords.x();
+        double my = coords.y();
+
+        // TODO: otestuj, jestli je tato podminka dostatecne silna!
+        if (mx < 0 || mx > width() || my < 0 || my > height())
+            return;
+
+        unsigned x = static_cast<unsigned>(mx / getPieceSize());
+        unsigned y = static_cast<unsigned>(my / getPieceSize());
+
+        if (x != mouseX || y != mouseY) {
+            mouseOver = true;
+            mouseX = y;
+            mouseY = x;
+            repaint();
+        }
     }
 
     double BoardGraphics::getPieceSize() const {
