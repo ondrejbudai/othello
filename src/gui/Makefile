@@ -9,10 +9,10 @@ OBJECTS += $(MOC_FILES:.cc=.o)
 
 UI_HEADERS := $(UI:%.ui=ui_%.h)
 
-GUI_INCLUDES :=	-I$(QT_INCLUDE)/QtCore -I$(QT_INCLUDE)/QtGui -I$(QT_INCLUDE)/QtWidgets -I$(QT_INCLUDE) -fPIC
+GUI_INCLUDES :=	-I$(QT_INC)/QtCore -I$(QT_INC)/QtGui -I$(QT_INC)/QtWidgets -I$(QT_INC) -fPIC
 
-MOC:=$(QT_PATH)/bin/moc
-UIC:=$(QT_PATH)/bin/uic
+MOC:=$(QT_PATH)/moc
+UIC:=$(QT_PATH)/uic
 
 
 all: $(UI_HEADERS) $(MOC_FILES) ../libgui.a
