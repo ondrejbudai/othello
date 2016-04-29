@@ -5,7 +5,7 @@
 #include <QFrame>
 #include <string>
 #include "ui_InfoPanel.h"
-#include "GameBoard.hh" 
+#include "../logic/GameBoard.hh" 
 
 namespace othello {
     class InfoPanel : public QFrame {
@@ -27,7 +27,7 @@ namespace othello {
         void on_ButtonSaveGame_clicked();
 
         void on_ButtonShowHistory_clicked();
-        
+
     };
 }
 

@@ -12,21 +12,28 @@
 #include <iostream>
 #include <QResizeEvent>
 #include <QPixmap>
-#include "MainGame.hh"
+#include "../logic/MainGame.hh"
 
 namespace othello {
-    
+
     class GraphicsView : public QGraphicsView {
+    Q_OBJECT
     public:
-        GraphicsView(QGraphicsScene* s);   
+        GraphicsView(QGraphicsScene* s);
+
         virtual void resizeEvent(QResizeEvent*);
-    }; 
-    
-        
+
+        virtual void mouseMoveEvent(QMouseEvent* mouseEvent);
+
+    signals:
+        void mouseMoveSignal(QPointF coords);
+    };
+
+
     constexpr unsigned GAME_SIZE = 200;
 
     class BoardGraphics : public QGraphicsScene {
-        Q_OBJECT
+    Q_OBJECT
 
     signals:
 
@@ -41,14 +48,22 @@ namespace othello {
         QPixmap blank;
 
         BoardGraphics(const std::vector<std::vector<Field>>& logic);
+
         void repaint();
+
         virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent);
 
+    public slots:
+        void mouseMoveSlot(QPointF coords);
 
     private:
         const std::vector<std::vector<Field>>& board_;
 
         double getPieceSize() const;
+
+        unsigned int mouseX;
+        unsigned int mouseY;
+        bool mouseOver = false;
     };
 }
 #endif

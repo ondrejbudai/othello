@@ -37,7 +37,7 @@ namespace othello {
         connect(playerScreen, &PlayerSelection::on_ButtonStartGame_clicked, this, &OthelloGui::LoadGameConfiguration);
         connect(startPanel, &StartPanel::on_ButtonNewGame_clicked, this, &OthelloGui::ButtonNewGame);
         connect(startPanel, &StartPanel::on_ButtonLoadGame_clicked, this, &OthelloGui::ButtonLoadGame);
-        
+
         timer = new QTimer();
         timer->setInterval(AI_TIMEOUT);
         timer->setSingleShot(true);
@@ -81,13 +81,13 @@ namespace othello {
         //precitame zvolenu velkost dosky a prekonvertujeme na int
         QString boardSizeS = playerScreen->getBoardSize();
         unsigned boardSize = boardSizeS.toUInt();
-        
+
         ShowGameBoard(p1, p2, boardSize, namesStd);
     }
 
     void OthelloGui::ShowGameBoard(PlayerType p1, PlayerType p2, unsigned boardSize,
                                    const std::pair<std::string, std::string>& names) {
-        
+
         //inicilizujeme hraciu dosku
         game_ = std::make_unique<MainGame>(boardSize, p2, p1);
 
@@ -100,15 +100,17 @@ namespace othello {
 
         connect(scene, &BoardGraphics::ClickSignal, this, &OthelloGui::GameClickSlot);
         view = new GraphicsView(scene);
+        connect(view, &GraphicsView::mouseMoveSignal, scene, &BoardGraphics::mouseMoveSlot);
+
         clearStackedWidget(ui.gameBoardLayout);
         ui.gameBoardLayout->addWidget(view);
 
         clearStackedWidget(ui.infoPanelLayout);
         ui.infoPanelLayout->addWidget(infoPanel);
-        
+
         connect(infoPanel, &InfoPanel::on_ButtonSaveGame_clicked, this, &OthelloGui::ButtonSaveGame);
         connect(infoPanel, &InfoPanel::on_ButtonShowHistory_clicked, this, &OthelloGui::ButtonShowHistory);
-        
+
         repaintGame();
     }
 
@@ -136,18 +138,18 @@ namespace othello {
 
     //umozni hracovi ulozit hru do suboru
     void OthelloGui::ButtonSaveGame() {
-       
+
         //this is fu**ing awesome!
         QString fileName_ = QFileDialog::getSaveFileName(this, tr("Save File"), ".", "Text Files (*.txt)");
-        
+
         std::string fileName = fileName_.toUtf8().constData();
-        
+
         std::ofstream fl;
         fl.open(fileName);
         game_->saveGameToFile(fl);
         fl.close();
     }
-    
+
     //TODO vsetko s histroiou do samotneho bloku!
     //nacita subor s ulozenou hrou a danu hru vytvori
     void OthelloGui::ButtonLoadGame() {
@@ -159,10 +161,10 @@ namespace othello {
             return;
 
         std::string fileName = fileName_.toUtf8().constData();
-        
+
         std::ifstream inF;
         inF.open(fileName);
-        //nacitaj hlavicku 
+        //nacitaj hlavicku
 
         //vektor na stiahnutie mien hracov
         std::pair<std::string, std::string> names;
@@ -190,14 +192,14 @@ namespace othello {
         std::string boardSizeS;
         getline(inF, boardSizeS);
         unsigned boardSize = static_cast<unsigned>(std::stoi(boardSizeS));
-        
+
         ShowGameBoard(p1, p2, boardSize, names);
 
-        std::string oneLine; 
+        std::string oneLine;
         int currentPlayer;
         getline(inF, oneLine);
         currentPlayer = std::stoi(oneLine);
-        game_->setCurrentPlayer(currentPlayer); 
+        game_->setCurrentPlayer(currentPlayer);
 
         //nacitaj aktualnu dosku
         getline(inF, oneLine);//precitam prazdny riadok
@@ -213,7 +215,7 @@ namespace othello {
         getline(inF, oneLine);//empty
         getline(inF, oneLine);//HISTORY
         getline(inF, oneLine);//empty
-        
+
         //a nacitame celu historiu
         while (!inF.eof()){
             gameB.clear();
@@ -221,12 +223,12 @@ namespace othello {
             getline(inF, oneLine);//nacitam kto hra
             if (oneLine == "")
                 break;
-            newItem.currentPlayer = (oneLine == "black" ? Color::BLACK : Color::WHITE);    
+            newItem.currentPlayer = (oneLine == "black" ? Color::BLACK : Color::WHITE);
             getline(inF, oneLine);//nacitam x
             newItem.currentMove.first = stoi(oneLine);
             getline(inF, oneLine);//nacitam y
             newItem.currentMove.second = stoi(oneLine);
-            
+
             for (unsigned i = 0; i < boardSize; i++) {
                 assert(!inF.eof());
                 getline(inF, oneLine);
@@ -248,7 +250,7 @@ namespace othello {
                 }
             }
             game_->addToHistory(newItem);
-            
+
             //TODO pridaj board a vloz do hitorie
             //TODO vloz do historie
         }
@@ -304,4 +306,3 @@ namespace othello {
 
     }
 }
-
