@@ -19,10 +19,10 @@ export LD_LIBRARY_PATH
 
 all: $(OTHELLO) $(OTHELLO_CLI)
 
-$(OTHELLO): $(OBJECTS_GUI) $(LIBS)
+$(OTHELLO): $(LIBS) $(OBJECTS_GUI)
 	$(CXX) -o $@ $^ $(GUI_LIBS) -L. -lgui -llogic
 
-$(OTHELLO_CLI): $(OBJECTS_CLI) $(LIBS)
+$(OTHELLO_CLI): $(LIBS) $(OBJECTS_CLI)
 	$(CXX) -o $@ $^ -L. -llogic
 
 lib%.a: %
@@ -35,6 +35,7 @@ $(OBJECTS_CLI): %.o: %.cc
 	$(CXX) -c -std=c++14 -o $@ $<
 
 clean: $(SUB_CLEAN)
+	rm $(OBJECTS_CLI) $(OBJECTS_GUI) 2>/dev/null || true
 
 $(SUB_CLEAN): %clean: %
 	$(MAKE) -C $^ clean
