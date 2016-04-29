@@ -3,3 +3,4 @@ othello-cli
 *.o
 moc_*.cc
 ui*.h
+*.a
