@@ -4,7 +4,7 @@
 # - Build directory (hard?)
 
 all:
-	$(MAKE) -C src QT_PATH=`./findqt.sh -f` QT_LIB=`./findqt.sh -l` QT_INCLUDE=`./findqt.sh -i`
+	$(MAKE) -C src `./findqt.sh`
 
 clean:
 	$(MAKE) -C src clean
