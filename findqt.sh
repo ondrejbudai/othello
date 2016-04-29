@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-LOCATIONS=("/usr/local/share/Qt/5.5/gcc_64")
+LOCATIONS=("/usr/local/share/Qt/5.5/gcc_64/bin")
 LIBS=("/usr/local/share/Qt/5.5/gcc_64/lib")
 INCLUDES=("/usr/local/share/Qt/5.5/gcc_64/include")
 
