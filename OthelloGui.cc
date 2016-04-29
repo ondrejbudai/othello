@@ -4,9 +4,6 @@
 #include "EndScreen.hh"
 #include <cassert>
 
-//TODO ukladanie+nacitanie hry
-//TODO DO DO ukoncenie hry
-
 constexpr unsigned AI_TIMEOUT = 1000;
 
 namespace othello {
