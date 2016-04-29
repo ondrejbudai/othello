@@ -1,5 +1,4 @@
 # TODO:
-# - Fallback to use pkg_config
 # - Run target
 # - Build directory (hard?)
 
