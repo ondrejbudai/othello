@@ -25,8 +25,11 @@ $(OTHELLO): $(LIBS) $(OBJECTS_GUI)
 $(OTHELLO_CLI): $(LIBS) $(OBJECTS_CLI)
 	$(CXX) -o $@ $^ -L. -llogic
 
-lib%.a: %
-	make -C $^
+lib%.a: % force
+	make -C $<
+
+force:
+	true
 
 $(OBJECTS_GUI): %.o: %.cc
 	$(CXX) -c -std=c++14 $(GUI_INCLUDES) -o $@ $<
