@@ -27,13 +27,13 @@ $(OTHELLO_CLI): $(LIBS) $(OBJECTS_CLI)
 	$(CXX) -o $@ $^ -L. -llogic
 
 $(LIBS_GEN): gen_%: %
-	$(MAKE) -C $^ dep
+	@$(MAKE) --no-print-directory -C $^ dep
 
 lib%.a: % force
-	make -C $<
+	$(MAKE) -C $<
 
 force:
-	true
+	@true
 
 $(OBJECTS_GUI): %.o: %.cc
 	$(CXX) -c -std=c++14 $(GUI_INCLUDES) -o $@ $<

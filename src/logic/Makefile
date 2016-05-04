@@ -12,8 +12,7 @@ all: ../liblogic.a
 	$(CXX) -c -std=c++14 -o $@ $<
 
 dep:
-	echo $(SOURCES)
-	$(CXX) -MM -std=c++14 $(SOURCES) >deps
+	@$(CXX) -MM -std=c++14 $(SOURCES) >deps
 
 -include deps
 

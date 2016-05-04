@@ -25,7 +25,7 @@ all: $(UI_HEADERS) $(MOC_FILES) ../libgui.a
 	$(CXX) -c -std=c++14 $(GUI_INCLUDES) -o $@ $<
 
 dep: $(UI_HEADERS)
-	$(CXX) -MM -std=c++14 $(SOURCES) >deps
+	@$(CXX) -MM -std=c++14 $(SOURCES) >deps
 
 -include deps
 
