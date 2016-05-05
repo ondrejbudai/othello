@@ -7,7 +7,6 @@
 #include "InfoPanel.hh"
 #include "BoardGraphics.hh"
 #include "StartPanel.hh"
-#include "HistoryPanel.hh"
 #include "ui_OthelloGui.h"
 #include "../logic/commandManager.hh"
 
@@ -25,8 +24,6 @@ namespace othello {
 
         void ButtonLoadGame();
 
-        void ButtonShowHistory();
-
         void PlayPause();
 
         void ButtonREDO();
@@ -40,7 +37,7 @@ namespace othello {
         void TimeoutSlot();
 
     signals:
-      void changeIcon(); 
+      void changeIcon();
 
     private:
         Ui::OthelloGui ui;
@@ -52,7 +49,6 @@ namespace othello {
         BoardGraphics* scene;
         GraphicsView* view;
         InfoPanel* infoPanel;
-        HistoryPanel *historyPanel;
         QTimer* timer;
         StartPanel* startPanel;
         bool playAi = true;

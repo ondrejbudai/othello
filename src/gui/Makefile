@@ -1,5 +1,5 @@
-SOURCES := BoardGraphics.cc EndScreen.cc HistoryItemGui.cc HistoryPanel.cc InfoPanel.cc MainWindow.cc OthelloGui.cc PlayerSelection.cc StartPanel.cc
-UI := EndScreen.ui HistoryItemGui.ui HistoryPanel.ui InfoPanel.ui MainWindow.ui OthelloGui.ui PlayerSelection.ui StartPanel.ui
+SOURCES := BoardGraphics.cc EndScreen.cc InfoPanel.cc MainWindow.cc OthelloGui.cc PlayerSelection.cc StartPanel.cc
+UI := EndScreen.ui InfoPanel.ui MainWindow.ui OthelloGui.ui PlayerSelection.ui StartPanel.ui
 
 OBJECTS :=	$(SOURCES:.cc=.o)
 HEADERS := $(SOURCES:.cc=.hh)

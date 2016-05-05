@@ -115,55 +115,8 @@ namespace othello {
             //nejaka hlasa na obrazovku
             std::cout<<"Opposite player has no valid moves\n";
         }
-
-        //printHistory();
-        //printGameBoard();
         return true;
-
-
     }
-
-    // void MainGame::addToHistory(HistoryItem n){
-    //     history_.push_back(n);
-    // }
-
-    //pomocna funkcia pre pracu bez gui vypis historie
-    //TODO: move me!
-    void MainGame::PrintHistory() const {
-    //     using namespace std;
-    //
-    //     //TODO PREpocitat pozicie
-    //
-    //     cout<<"-------------OTHELLOS STORY-----------------------";
-    //         for (unsigned k = 0; k < history_.size(); k++){
-    //             cout<<endl;
-    //             cout<< "Na rade je "<<(history_[k].currentPlayer == Color::BLACK ? "black":"white")<<" a zahra "<<history_[k].currentMove.first<<" "<<history_[k].currentMove.first<<endl;
-    //             cout<<endl;
-    //
-    //             unsigned sz = history_[k].board.size();
-    //
-    //             cout << "   ";
-    //             for (unsigned i = 0; i < sz; i++) {
-    //                 cout << i;
-    //                 if (i < 10)
-    //                     cout << " ";
-    //             }
-    //             cout << endl;
-    //             for (unsigned i = 0; i < sz; i++) {
-    //                 if (i < 10)
-    //                     cout << " ";
-    //                 cout << i << " ";
-    //                 for (unsigned j = 0; j < sz; j++) {
-    //                     if (history_[k].board[i][j].occupied_)
-    //                         cout << (history_[k].board[i][j].piece_ == Color::BLACK ? "\u25CB" : "\u25CD") << " ";
-    //                     else
-    //                         cout << "  ";
-    //                 }
-    //                 cout << endl;
-    //             }
-    //         }
-    //     cout<<"-------------OTHELLOS STORY ENDS------------------";
-     }
 
     //Struktura subora s ulozenou hrou
     //

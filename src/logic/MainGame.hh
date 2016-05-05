@@ -44,18 +44,12 @@ namespace othello {
 
         std::pair<std::string, std::string> GetNames();
 
-        void PrintHistory() const ;
-
         bool SaveGameToFile(std::ofstream &thisFile);
 
         void SetCurrentPlayer(int n) {current_player_num_ = n;}
 
         //void setGameBoard(const std::vector<std::string> &GB){logic_.setGameBoard(GB);}
         void SetGameBoard(const std::vector<std::string> &){}
-
-        //std::vector<HistoryItem> getHistory()const { return history_;}
-
-        //void addToHistory(HistoryItem n);
 
         int GetCurrentPlayerNum(){ return current_player_num_;}
 
