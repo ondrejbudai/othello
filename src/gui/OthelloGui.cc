@@ -149,18 +149,18 @@ namespace othello {
 
         std::ofstream fl;
         fl.open(fileName);
-        game_->saveGameToFile(fl);
+        game_->SaveGameToFile(fl);
         fl.close();
     }
 
 
     void OthelloGui::ButtonUNDO() {
-      cmd_.undo();
+      cmd_.Undo();
       repaintGame();
     }
 
     void OthelloGui::ButtonREDO() {
-      cmd_.redo();
+      cmd_.Redo();
       repaintGame();
     }
     //TODO vsetko s histroiou do samotneho bloku!
@@ -212,7 +212,7 @@ namespace othello {
         int currentPlayer;
         getline(inF, oneLine);
         currentPlayer = std::stoi(oneLine);
-        game_->setCurrentPlayer(currentPlayer);
+        game_->SetCurrentPlayer(currentPlayer);
 
         //nacitaj aktualnu dosku
         getline(inF, oneLine);//precitam prazdny riadok
@@ -275,12 +275,12 @@ namespace othello {
 
     void OthelloGui::GameClickSlot(unsigned mx, unsigned my) {
         // AI na tahu, nedelej nic
-        if (game_->getCurrentPlayer().isAi())
+        if (game_->GetCurrentPlayer().IsAi())
             return;
 
         // update a prekreslit
         std::shared_ptr<ICommand> c(new PlayMove(&game_, mx, my));
-        cmd_.execute(c);
+        cmd_.Execute(c);
         //game_->event(mx, my);
         repaintGame();
     }
@@ -288,23 +288,23 @@ namespace othello {
     void OthelloGui::TimeoutSlot() {
         Coords coor = game_->TellAIToPlay();
         std::shared_ptr<ICommand> c(new PlayMove(&game_, coor.GetX(), coor.GetY()));
-        cmd_.execute(c);
+        cmd_.Execute(c);
         //game_->event(0, 0);
         repaintGame();
     }
 
     void OthelloGui::repaintGame() {
         scene->repaint();
-        infoPanel->WriteScore(game_->getLogic().getScore());
-        infoPanel->HighlightPlayer(game_->getCurrentPlayer().getColor());
+        infoPanel->WriteScore(game_->GetLogic().GetScore());
+        infoPanel->HighlightPlayer(game_->GetCurrentPlayer().GetColor());
 
         // zkontroluj konec
-        if (game_->isEnd()) {
+        if (game_->IsEnd()) {
             endGame();
             return;
         }
 
-        if (game_->getCurrentPlayer().isAi())
+        if (game_->GetCurrentPlayer().IsAi())
             timer->start();
 
     }
@@ -315,7 +315,7 @@ namespace othello {
 
         EndScreen* end = new EndScreen;
         end->SetNames(game_->GetNames());
-        end->SetScores(game_->getLogic().getScore());
+        end->SetScores(game_->GetLogic().GetScore());
 
         ui.infoPanelLayout->addWidget(startPanel);
         ui.gameBoardLayout->addWidget(end);

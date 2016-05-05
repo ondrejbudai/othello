@@ -18,15 +18,15 @@ namespace othello {
     public:
         Player(Color c, const GameLogic& logic) : color_{c}, logic_{logic} { }
 
-        virtual Coords play() { return {0, 0}; }
+        virtual Coords Play() { return {0, 0}; }
 
-        virtual Color getColor() const { return color_; }
+        virtual Color GetColor() const { return color_; }
 
-        virtual bool isAi() const { return false; }
+        virtual bool IsAi() const { return false; }
 
-        void setName(std::string name) { name_ = name; }
+        void SetName(std::string name) { name_ = name; }
 
-        std::string  getName() {return name_;}
+        std::string GetName() {return name_;}
     };
 }
 

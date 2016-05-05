@@ -26,13 +26,15 @@ namespace othello {
     //0 not occupied
     //1 black
     //2 white
-    void printBoardToFile(std::vector<std::vector<Field>> b, std::ofstream &f){
-        for (unsigned i = 0; i < b.size(); ++i){
-            for (unsigned j = 0; j < b.size(); ++j){
-                if (!b[i][j].occupied_)
+    void printBoardToFile(const GameBoard& b, std::ofstream &f){
+        for (unsigned i = 0; i < b.GetSize(); ++i){
+            for (unsigned j = 0; j < b.GetSize(); ++j){
+                Color col;
+                bool occupied = b.GetField(i, j).GetStatus(col);
+                if (!occupied)
                     f<<0;
                 else {
-                    if (b[i][j].piece_ == Color::BLACK)
+                    if (col == Color::BLACK)
                         f<<1;
                     else
                         f<<2;
@@ -60,11 +62,11 @@ namespace othello {
     }
 
     Coords MainGame::TellAIToPlay(){
-        Player& current_player = *players_[current_player_num];
-        assert(canPlay(current_player.getColor()));
-        assert(current_player.isAi());
+        Player& current_player = *players_[current_player_num_];
+        assert(CanPlay(current_player.GetColor()));
+        assert(current_player.IsAi());
 
-        Coords c = current_player.play();
+        Coords c = current_player.Play();
         return c;
 
     }
@@ -73,10 +75,10 @@ namespace othello {
     //Funkcia spracuva zadany tah
     //Na konci tahu, ak je platny, ulozi dany tah do historie
     //Zisti ci je mozne aby dalsi hrac hral, a ak je tak ho nastavuje ako aktualneho hraca
-    void MainGame::event(unsigned x, unsigned y) { // event funkce
+    void MainGame::Event(unsigned x, unsigned y) { // event funkce
 
-        Player& current_player = *players_[current_player_num];
-        assert(canPlay(current_player.getColor()));
+        Player& current_player = *players_[current_player_num_];
+        assert(CanPlay(current_player.GetColor()));
 
 
         // pokud je aktualne na tahu AI, ziskame tah
@@ -87,12 +89,12 @@ namespace othello {
         // }
 
         // priprava tahu
-        std::vector<Coords> toChange = logic_.prepareTurn(x, y, current_player.getColor());
+        std::vector<Coords> toChange = logic_.PrepareTurn(x, y, current_player.GetColor());
 
         //kontrola ci sa jedna o validny tah od uzivatela
         if (toChange.empty()) {
             // aktualni hrac nemuze byt AI (pokud je, AI selhala!)
-            assert(!current_player.isAi());
+            assert(!current_player.IsAi());
 
             //TODO von vypis a vracat false
             std::cout << "Neplatny tah" << std::endl << std::flush;
@@ -102,20 +104,20 @@ namespace othello {
         //save game   -aktualny stav + tah co sa ide commitnut + aktualny hrac
         // HistoryItem newH;
         // logic_.copyBoard(newH.board);
-        // newH.currentPlayer = current_player.getColor();
+        // newH.currentPlayer = current_player.GetColor();
         // newH.currentMove = {x,y};
         // history_.push_back(newH);
 
         //zapis tahu
-        logic_.commitTurn(toChange, current_player.getColor());
+        logic_.CommitTurn(toChange, current_player.GetColor());
 
 
         // zmen hrace, jen pokud ma ten druhy co hrat
         // pokud nema nikdo co hrat, GUI to zjisti
-        if(canPlay(GetOppositeColor(current_player.getColor()))){
-            current_player_num++;
-            current_player_num = current_player_num % 2;
-        } else if (canPlay(current_player.getColor())){
+        if(CanPlay(GetOppositeColor(current_player.GetColor()))){
+            current_player_num_++;
+            current_player_num_ = current_player_num_ % 2;
+        } else if (CanPlay(current_player.GetColor())){
             //TODO nemoze hrat super, ale mozme hrat my
             //nejaka hlasa na obrazovku
             std::cout<<"Opposite player has no valid moves\n";
@@ -132,37 +134,9 @@ namespace othello {
     //     history_.push_back(n);
     // }
 
-    //pomocna funkcia pre pracu bez gui
-    //TODO: move me!
-    void MainGame::printGameBoard() const {//Zobrazi hraciu plochu na terminal
-        using namespace std;
-
-        const GameBoard& board = logic_.getBoard();
-
-        cout << "   ";
-        for (unsigned i = 0; i < board.getSize(); i++) {
-            cout << i;
-            if (i < 10)
-                cout << " ";
-        }
-        cout << endl;
-        for (unsigned i = 0; i < board.getSize(); i++) {
-            if (i < 10)
-                cout << " ";
-            cout << i << " ";
-            for (unsigned j = 0; j < board.getSize(); j++) {
-                if (board.isOccupied(i, j))
-                    cout << (board.GetField(i, j).piece_ == Color::BLACK ? "\u25CB" : "\u25CD") << " ";
-                else
-                    cout << "  ";
-            }
-            cout << endl;
-        }
-    }
-
     //pomocna funkcia pre pracu bez gui vypis historie
     //TODO: move me!
-    void MainGame::printHistory() const {
+    void MainGame::PrintHistory() const {
     //     using namespace std;
     //
     //     //TODO PREpocitat pozicie
@@ -214,14 +188,14 @@ namespace othello {
     //--medzerou oddelene historie, kde kazda ma format
     //farba-kto-zahral x y
     //hracia doska
-     bool MainGame::saveGameToFile(std::ofstream &outF){
+     bool MainGame::SaveGameToFile(std::ofstream &outF){
     //     //TODO HERE
     //     outF<<players_[0]->getName()<<std::endl;
     //     outF<<(players_[0]->isAi() ? "AI":"HUMAN")<<std::endl;
     //     outF<<players_[1]->getName()<<std::endl;
     //     outF<<(players_[1]->isAi() ? "AI":"HUMAN")<<std::endl;
-    //     outF<<logic_.getBoard().getSize()<<std::endl;
-    //     outF<<current_player_num<<std::endl;
+    //     outF<<logic_.GetBoard().GetSize()<<std::endl;
+    //     outF<<current_player_num_<<std::endl;
     //     outF<<std::endl;
     //
     //     //ziskame akutlanu hraciu dosku
@@ -244,17 +218,17 @@ namespace othello {
 
 
     //Funkcia zistuje ci moze aspon jeden hrac hrat, ak nie jedna sa o koneic hry
-    bool MainGame::isEnd() const {
-        return !canPlay(Color::BLACK) && !canPlay(Color::WHITE);
+    bool MainGame::IsEnd() const {
+        return !CanPlay(Color::BLACK) && !CanPlay(Color::WHITE);
     }
 
     //Urcuje ci moze hrat hrac zadany parametrom
-    bool MainGame::canPlay(Color color) const {
-        const GameBoard& board = logic_.getBoard();
+    bool MainGame::CanPlay(Color color) const {
+        const GameBoard& board = logic_.GetBoard();
 
-        for (unsigned x = 0; x < board.getSize(); ++x) {
-            for (unsigned y = 0; y < board.getSize(); ++y) {
-                if (!logic_.prepareTurn(x, y, color).empty())
+        for (unsigned x = 0; x < board.GetSize(); ++x) {
+            for (unsigned y = 0; y < board.GetSize(); ++y) {
+                if (!logic_.PrepareTurn(x, y, color).empty())
                     return true;
             }
         }
@@ -265,12 +239,12 @@ namespace othello {
     //Nastvuje mena hracov
     //TODO rovnako ako v kontruktore, je to na sparvno  mieste?
     void MainGame::SetNames(const std::pair<std::string, std::string>& names) {
-        players_[0]->setName(names.first);
-        players_[1]->setName(names.second);
+        players_[0]->SetName(names.first);
+        players_[1]->SetName(names.second);
     }
 
 
     std::pair<std::string, std::string> MainGame::GetNames() {
-        return std::make_pair(players_[0]->getName(), players_[1]->getName());
+        return std::make_pair(players_[0]->GetName(), players_[1]->GetName());
     }
 }

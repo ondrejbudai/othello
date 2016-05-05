@@ -9,6 +9,8 @@
 #include<memory>
 #include<iostream>
 
+#include "Field.hh"
+
 namespace othello {
 
     class Coords {
@@ -17,24 +19,13 @@ namespace othello {
         unsigned y_;
     public:
         Coords(unsigned x, unsigned y) : x_{x}, y_{y} { }
-
         unsigned GetX() const { return x_; }
-
         unsigned GetY() const { return y_; }
-    };
-
-    enum class Color {
-        BLACK, WHITE, RED
     };
 
     inline Color GetOppositeColor(Color myColor) {
         return myColor == Color::BLACK ? Color::WHITE : Color::BLACK;
     }
-
-    struct Field {
-        Color piece_;
-        bool occupied_;
-    };
 
     class GameBoard {
     private:
@@ -70,27 +61,16 @@ namespace othello {
     public:
         GameBoard(unsigned size);
 
-        void copyBoard(Board &toThis);
-
         const Board& GetBoard() const {return board_;}
-
+        Field& GetField(unsigned x, unsigned y);
         const Field& GetField(unsigned x, unsigned y) const;
+        Field& GetField(Coords c);
+        const Field& GetField(Coords c) const;
+        unsigned GetSize() const { return size_; }
+        std::vector<Coords> GetNeighbours(unsigned x, unsigned y) const;
 
-        void setPiece(unsigned x, unsigned y, Color c);
+        void Print(std::ostream& os) const;//Zobrazi hraciu plochu na terminal
 
-        bool isOccupied(unsigned x, unsigned y) const;
-
-        bool isOccupied(const Coords& c) const { return isOccupied(c.GetX(), c.GetY()); }
-
-        unsigned getSize() const { return size_; }
-
-        std::vector<Coords> getNeighbours(unsigned x, unsigned y) const;
-
-        Color GetColor(unsigned x, unsigned y) const;
-
-        Color GetColor(const Coords& c) const { return GetColor(c.GetX(), c.GetY()); }
-
-        void setBoard(std::vector<std::vector<Field>> t){ board_ = t;}
         iterator begin(){return iterator{&board_};};
         const_iterator begin() const {return const_iterator{&board_, true};};
         iterator end(){return iterator{&board_};};

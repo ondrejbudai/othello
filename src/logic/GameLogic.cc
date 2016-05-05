@@ -9,20 +9,22 @@ namespace othello {
     //adding color je farba kamena, ktory chceme pridat
     //toChange je referencia na vektor parov, ktory naplnime vsetkymi poziciami, ktore sa maju
     //zmenit
-    std::vector<Coords> GameLogic::prepareTurn(unsigned x, unsigned y, Color addingColor) const {
+    std::vector<Coords> GameLogic::PrepareTurn(unsigned x, unsigned y, Color addingColor) const {
 
         Color oppositeColor = GetOppositeColor(addingColor);
         std::vector<Coords> toChange;
 
         //zistime ci dava na volne policko
-        if (board_.isOccupied(x, y))
+        if (board_.GetField(x, y).IsOccupied())
             return toChange;
-        std::vector<Coords> fields = board_.getNeighbours(x, y);
+        std::vector<Coords> fields = board_.GetNeighbours(x, y);
 
         //zo vsetkych susednych vytriedime len tie, ktore su obsadene superom
         std::vector<Coords> oppositeFields;
         for (auto const& fld: fields) {
-            if (board_.isOccupied(fld) && board_.GetColor(fld) == oppositeColor)
+            Color c;
+            bool occupied = board_.GetField(fld).GetStatus(c);
+            if (occupied && c == oppositeColor)
                 oppositeFields.push_back(fld);
         }
 
@@ -41,24 +43,25 @@ namespace othello {
                 pomX += deltaX;
                 pomY += deltaY;
                 //ak sme sa dostali mimo pole
-                if (pomX < 0 || pomX >= int(board_.getSize()) || pomY < 0 || pomY >= int(board_.getSize()))
+                if (pomX < 0 || pomX >= int(board_.GetSize()) || pomY < 0 || pomY >= int(board_.GetSize()))
                     break;
-                Coords candidate{unsigned(pomX), unsigned(pomY)};
 //                Field candidate = board_.GetField(pomX, pomY);
                 //ak dane poliecko nie je obsadene, nie je to kandidat
-                if (!board_.isOccupied(candidate))
+                Color col;
+                bool occupied = board_.GetField(pomX, pomY).GetStatus(col);
+                if (!occupied)
                     break;
                 //ak sme nasli svoju farbu a mame aspon jednu superovu medzitym
-                if (board_.GetColor(candidate) == addingColor && !possibleChanges.empty()) {
+                if (col == addingColor && !possibleChanges.empty()) {
                     toChange.insert(end(toChange), begin(possibleChanges), end(possibleChanges));
                     break;
                 }
                 //ak sme nasli nas kamen, ale nic medzi nim
-                if (board_.GetColor(candidate) == addingColor && possibleChanges.empty())
+                if (col == addingColor && possibleChanges.empty())
                     break;
                 //ak patri field superovy
-                if (board_.GetColor(candidate) == oppositeColor)
-                    possibleChanges.push_back(candidate);
+                if (col == oppositeColor)
+                    possibleChanges.push_back({static_cast<unsigned>(pomX), static_cast<unsigned>(pomY)});
             }
 
         }
@@ -68,38 +71,25 @@ namespace othello {
         return toChange;
     }
 
-    void GameLogic::commitTurn(const std::vector<Coords>& pieces, Color player) {
+    void GameLogic::CommitTurn(const std::vector<Coords>& pieces, Color player) {
         for (auto const& fld: pieces) {
-            board_.setPiece(fld.GetX(), fld.GetY(), player);
+            board_.GetField(fld).SetColor(player);
         }
     }
 
-
-    // void GameLogic::setGameBoard(const std::vector<std::string>& GB){
-    //     for (unsigned i = 0; i < GB.size(); i++){
-    //         for (unsigned j = 0; j < GB[i].length(); j++){
-    //             if (GB[i][j] == '0')
-    //                 continue;
-    //             else if (GB[i][j] == '1')
-    //                 board_.setPiece(i, j, Color::BLACK);
-    //             else if (GB[i][j] == '2')
-    //                 board_.setPiece(i, j, Color::WHITE);
-    //             else
-    //                 assert(false);
-    //         }
-    //     }
+    // void GameLogic::setGameBoard(const GameBoard& t){
+    //   board_.setBoard(t.GetBoard());
     // }
-    void GameLogic::setGameBoard(const GameBoard& t){
-      board_.setBoard(t.GetBoard());
-    }
 
-    std::pair<unsigned, unsigned> GameLogic::getScore() const {
+    std::pair<unsigned, unsigned> GameLogic::GetScore() const {
         std::pair<unsigned, unsigned> score{0, 0};
 
         for(const auto& f: board_){
-            if(!f.occupied_)
+            Color col;
+            bool occupied = f.GetStatus(col);
+            if(!occupied)
                 continue;
-            if(f.piece_ == Color::BLACK){
+            if(col == Color::BLACK){
                 score.first++;
             } else {
                 score.second++;

@@ -25,7 +25,7 @@ namespace othello{
         ui.y->setText(QString::number(M.second));
     }
 
-    void HistoryItemGui::setBoard(std::vector<std::vector<Field>> &B){
+    void HistoryItemGui::setBoard(GameBoard& B){
         BoardGraphics* scene;
         // scene = new BoardGraphics(B);
         GraphicsView *view = new GraphicsView(scene);

@@ -20,45 +20,44 @@ namespace othello {
     private:
         GameLogic logic_;
         std::vector<std::unique_ptr<Player>> players_;
-        int current_player_num = 0;
+        int current_player_num_ = 0;
         // frozen stuff
     public:
         MainGame(unsigned size, PlayerType white, PlayerType black);
 
-        void event(unsigned x, unsigned y); // event funkce
+        void Event(unsigned x, unsigned y); // event funkce
 
-        const Player& getCurrentPlayer() const { return *players_[current_player_num]; }
+        const Player& GetCurrentPlayer() const { return *players_[current_player_num_]; }
 
-        void printGameBoard() const;//Zobrazi hraciu plochu na terminal
-
-        bool isEnd() const;
+        bool IsEnd() const;
 
         //void setLogic(GameLogic oldLogic) {logic_ = oldLogic;}
 
-        bool canPlay(Color color) const;
+        bool CanPlay(Color color) const;
 
-        const GameLogic& getLogic() const { return logic_; }
+        const GameLogic& GetLogic() const { return logic_; }
+        GameLogic& GetLogic() { return logic_; }
 
-        GameLogic& getLogicRef() { return logic_; }
+        const GameBoard& GetBoard() const {return logic_.GetBoard();}
 
         void SetNames(const std::pair<std::string, std::string>& names);
 
         std::pair<std::string, std::string> GetNames();
 
-        void printHistory() const ;
+        void PrintHistory() const ;
 
-        bool saveGameToFile(std::ofstream &thisFile);
+        bool SaveGameToFile(std::ofstream &thisFile);
 
-        void setCurrentPlayer(int n) {current_player_num = n;}
+        void SetCurrentPlayer(int n) {current_player_num_ = n;}
 
         //void setGameBoard(const std::vector<std::string> &GB){logic_.setGameBoard(GB);}
-        void setGameBoard(const std::vector<std::string> &GB){}
+        void SetGameBoard(const std::vector<std::string> &GB){}
 
         //std::vector<HistoryItem> getHistory()const { return history_;}
 
         //void addToHistory(HistoryItem n);
 
-        int getCurrentPlayerNum(){ return current_player_num;}
+        int getCurrentPlayerNum(){ return current_player_num_;}
 
         Coords TellAIToPlay();
 

@@ -16,20 +16,20 @@ int main() {
     othello::CommandManager cmd_ = othello::CommandManager();
     //samotne okno pri udalosti, vyvola funkcie, ktore su implementovane v gamelogic a v maingame
     //nasledujuca cast je pre terminal a tesotvanie
-    while (!g->isEnd()) {
-        g->printGameBoard();
-        std::cout << "Na tahu je " << (g->getCurrentPlayer().getColor() == othello::Color::BLACK ? "BLACK" : "WHITE") <<
+    while (!g->IsEnd()) {
+        g->GetBoard().Print(std::cout);
+        std::cout << "Na tahu je " << (g->GetCurrentPlayer().GetColor() == othello::Color::BLACK ? "BLACK" : "WHITE") <<
         std::endl;
 
         // zjisti souradnice (pokud nehraje AI)
         int x = 0, y = 0;
-        if (!g->getCurrentPlayer().isAi()) {
+        if (!g->GetCurrentPlayer().IsAi()) {
             std::cout << "Zadaj suradnice: " << std::flush;
             std::cin >> x >> y;
         }
 
         //g.event(x, y);
         std::shared_ptr<othello::ICommand> c(new othello::PlayMove(&g, x, y));
-        cmd_.execute(c);
+        cmd_.Execute(c);
     }
 }

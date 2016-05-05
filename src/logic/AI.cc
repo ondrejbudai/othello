@@ -11,17 +11,17 @@ namespace othello {
 
     AI::AI(Color c, const GameLogic& logic, double randomness) : Player(c, logic), randomness_{randomness} {
         std::random_device rd;
-        random = std::mt19937(rd());
+        random_ = std::mt19937(rd());
     }
 
-    Coords AI::play() {
+    Coords AI::Play() {
         std::vector<Coords> emptyFields;
-        const GameBoard& board = logic_.getBoard();
+        const GameBoard& board = logic_.GetBoard();
 
         // najdi vsechna volna policka
-        for (unsigned x = 0; x < board.getSize(); ++x) {
-            for (unsigned y = 0; y < board.getSize(); ++y) {
-                if (!board.isOccupied(x, y))
+        for (unsigned x = 0; x < board.GetSize(); ++x) {
+            for (unsigned y = 0; y < board.GetSize(); ++y) {
+                if (!board.GetField(x, y).IsOccupied())
                     emptyFields.emplace_back(x, y);
             }
         }
@@ -31,7 +31,7 @@ namespace othello {
         // projdi vsechny, uloz do validMoves s indexem pocet upravenych kamenu
         std::multimap<unsigned, Coords> validMoves;
         for (const auto& f : emptyFields) {
-            unsigned changedPieces = unsigned(logic_.prepareTurn(f.GetX(), f.GetY(), color_).size());
+            unsigned changedPieces = unsigned(logic_.PrepareTurn(f.GetX(), f.GetY(), color_).size());
             if (changedPieces > 0)
                 validMoves.insert({changedPieces, f});
         }
@@ -42,10 +42,10 @@ namespace othello {
             unsigned xV = f.second.GetX();
             unsigned yV = f.second.GetY();
             if (xV == 0) {
-                if (yV == 0 || yV == board.getSize() - 1)
+                if (yV == 0 || yV == board.GetSize() - 1)
                     return f.second;
             }
-            else if (xV == board.getSize() - 1) if (yV == 0 || yV == board.getSize() - 1)
+            else if (xV == board.GetSize() - 1) if (yV == 0 || yV == board.GetSize() - 1)
                 return f.second;
         }
 
