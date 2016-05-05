@@ -109,7 +109,8 @@ namespace othello {
         ui.infoPanelLayout->addWidget(infoPanel);
 
         connect(infoPanel, &InfoPanel::on_ButtonSaveGame_clicked, this, &OthelloGui::ButtonSaveGame);
-        connect(infoPanel, &InfoPanel::on_ButtonShowHistory_clicked, this, &OthelloGui::ButtonShowHistory);
+        connect(infoPanel, &InfoPanel::on_ButtonREDO_clicked, this, &OthelloGui::ButtonREDO);
+        connect(infoPanel, &InfoPanel::on_ButtonUNDO_clicked, this, &OthelloGui::ButtonUNDO);
 
         repaintGame();
     }
@@ -118,7 +119,7 @@ namespace othello {
         historyPanel = new HistoryPanel();
         clearStackedWidget(ui.infoPanelLayout);
         ui.infoPanelLayout->addWidget(historyPanel);
-        historyPanel->AddHistory(game_->getHistory());
+        //historyPanel->AddHistory(game_->getHistory());
         connect(historyPanel, &HistoryPanel::on_ButtonCancle_clicked, this, &OthelloGui::ShowInfoPanel);
         //zavolaj nacitanie historie
     }
@@ -150,6 +151,16 @@ namespace othello {
         fl.close();
     }
 
+
+    void OthelloGui::ButtonUNDO() {
+      cmd_.undo();
+      repaintGame();
+    }
+
+    void OthelloGui::ButtonREDO() {
+      cmd_.redo();
+      repaintGame();
+    }
     //TODO vsetko s histroiou do samotneho bloku!
     //nacita subor s ulozenou hrou a danu hru vytvori
     void OthelloGui::ButtonLoadGame() {
@@ -211,49 +222,49 @@ namespace othello {
             gameB.push_back(oneLine);
         }
         assert(gameB.size() == boardSize);
-        game_->setGameBoard(gameB);
+        //game_->setGameBoard(gameB);
         getline(inF, oneLine);//empty
         getline(inF, oneLine);//HISTORY
         getline(inF, oneLine);//empty
 
         //a nacitame celu historiu
-        while (!inF.eof()){
-            gameB.clear();
-            HistoryItem newItem;
-            getline(inF, oneLine);//nacitam kto hra
-            if (oneLine == "")
-                break;
-            newItem.currentPlayer = (oneLine == "black" ? Color::BLACK : Color::WHITE);
-            getline(inF, oneLine);//nacitam x
-            newItem.currentMove.first = stoi(oneLine);
-            getline(inF, oneLine);//nacitam y
-            newItem.currentMove.second = stoi(oneLine);
-
-            for (unsigned i = 0; i < boardSize; i++) {
-                assert(!inF.eof());
-                getline(inF, oneLine);
-                assert(oneLine.length() == boardSize);
-                newItem.board.emplace_back();
-                for (unsigned i = 0; i < oneLine.length(); ++i){
-                    Field n;
-                    if (oneLine[i] == '0')
-                        n.occupied_ = false;
-                    else if (oneLine[i] == '1'){
-                        n.occupied_ = true;
-                        n.piece_ = Color::BLACK;
-                    } else if (oneLine[i] == '2'){
-                        n.occupied_ = true;
-                        n.piece_ = Color::WHITE;
-                    } else
-                        assert(false);
-                    newItem.board.back().push_back(n);
-                }
-            }
-            game_->addToHistory(newItem);
+        // while (!inF.eof()){
+        //     gameB.clear();
+        //     HistoryItem newItem;
+        //     getline(inF, oneLine);//nacitam kto hra
+        //     if (oneLine == "")
+        //         break;
+        //     newItem.currentPlayer = (oneLine == "black" ? Color::BLACK : Color::WHITE);
+        //     getline(inF, oneLine);//nacitam x
+        //     newItem.currentMove.first = stoi(oneLine);
+        //     getline(inF, oneLine);//nacitam y
+        //     newItem.currentMove.second = stoi(oneLine);
+        //
+        //     for (unsigned i = 0; i < boardSize; i++) {
+        //         assert(!inF.eof());
+        //         getline(inF, oneLine);
+        //         assert(oneLine.length() == boardSize);
+        //         newItem.board.emplace_back();
+        //         for (unsigned i = 0; i < oneLine.length(); ++i){
+        //             Field n;
+        //             if (oneLine[i] == '0')
+        //                 n.occupied_ = false;
+        //             else if (oneLine[i] == '1'){
+        //                 n.occupied_ = true;
+        //                 n.piece_ = Color::BLACK;
+        //             } else if (oneLine[i] == '2'){
+        //                 n.occupied_ = true;
+        //                 n.piece_ = Color::WHITE;
+        //             } else
+        //                 assert(false);
+        //             newItem.board.back().push_back(n);
+        //         }
+        //     }
+            //game_->addToHistory(newItem);
 
             //TODO pridaj board a vloz do hitorie
             //TODO vloz do historie
-        }
+        //}
 
         inF.close();
         repaintGame();
@@ -266,12 +277,17 @@ namespace othello {
             return;
 
         // update a prekreslit
-        game_->event(mx, my);
+        std::shared_ptr<ICommand> c(new PlayMove(&game_, mx, my));
+        cmd_.execute(c);
+        //game_->event(mx, my);
         repaintGame();
     }
 
     void OthelloGui::TimeoutSlot() {
-        game_->event(0, 0);
+        Coords coor = game_->TellAIToPlay();
+        std::shared_ptr<ICommand> c(new PlayMove(&game_, coor.GetX(), coor.GetY()));
+        cmd_.execute(c);
+        //game_->event(0, 0);
         repaintGame();
     }
 

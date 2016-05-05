@@ -9,6 +9,7 @@
 #include "StartPanel.hh"
 #include "HistoryPanel.hh"
 #include "ui_OthelloGui.h"
+#include "../logic/commandManager.hh"
 
 namespace othello {
     class OthelloGui : public QWidget {
@@ -26,6 +27,10 @@ namespace othello {
 
         void ButtonShowHistory();
 
+        void ButtonREDO();
+
+        void ButtonUNDO();
+
         void ShowInfoPanel();
 
         void GameClickSlot(unsigned mx, unsigned my);
@@ -35,6 +40,7 @@ namespace othello {
     private:
         Ui::OthelloGui ui;
         std::unique_ptr<MainGame> game_;
+        CommandManager cmd_;
         QGraphicsScene* startScene;
         QGraphicsView* startView;
         PlayerSelection* playerScreen;

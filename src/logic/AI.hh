@@ -17,7 +17,7 @@ namespace othello {
         double randomness_;
     public:
         AI(Color c, const GameLogic& logic, double randomness = 1);
-        
+
         virtual bool isAi() const override { return true; }
 
         virtual Coords play() override;

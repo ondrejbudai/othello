@@ -15,6 +15,7 @@ namespace othello {
     public:
         GameLogic(unsigned size) : board_{size} { }
 
+
         std::vector<Coords> prepareTurn(unsigned x, unsigned y, Color addingColor) const;
 
         void copyBoard(std::vector<std::vector<Field>>& toThis) {board_.copyBoard(toThis);};
@@ -25,7 +26,10 @@ namespace othello {
 
         std::pair<unsigned, unsigned> getScore() const;
 
-        void setGameBoard(const std::vector<std::string>& GB);
+        void setGameBoard(const GameBoard& t);
+
+        void setGameBoard(std::vector<std::vector<Field>> y){ board_.setBoard(y);}
+
     };
 }
 

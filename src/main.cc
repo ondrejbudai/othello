@@ -4,26 +4,32 @@
 
 #include "logic/MainGame.hh"
 #include <iostream>
+#include "logic/commandManager.hh"
+#include <memory>
 
 int main() {
     //vytvorime obrazovky
     //so vsetkym klikanim a pod
     //ak si vyberie novu hru a klikne start, tak sa zavola funkcia othello::MainGame(parametre)
-    othello::MainGame g(8, othello::PlayerType::HUMAN, othello::PlayerType::AI);//toto potom tu nebude
+    std::unique_ptr<othello::MainGame> g = std::make_unique<othello::MainGame>(8, othello::PlayerType::HUMAN, othello::PlayerType::AI);
+    //othello::MainGame g(8, othello::PlayerType::HUMAN, othello::PlayerType::AI);//toto potom tu nebude
+    othello::CommandManager cmd_ = othello::CommandManager();
     //samotne okno pri udalosti, vyvola funkcie, ktore su implementovane v gamelogic a v maingame
     //nasledujuca cast je pre terminal a tesotvanie
-    while (!g.isEnd()) {
-        g.printGameBoard();
-        std::cout << "Na tahu je " << (g.getCurrentPlayer().getColor() == othello::Color::BLACK ? "BLACK" : "WHITE") <<
+    while (!g->isEnd()) {
+        g->printGameBoard();
+        std::cout << "Na tahu je " << (g->getCurrentPlayer().getColor() == othello::Color::BLACK ? "BLACK" : "WHITE") <<
         std::endl;
 
         // zjisti souradnice (pokud nehraje AI)
         int x = 0, y = 0;
-        if (!g.getCurrentPlayer().isAi()) {
+        if (!g->getCurrentPlayer().isAi()) {
             std::cout << "Zadaj suradnice: " << std::flush;
             std::cin >> x >> y;
         }
 
-        g.event(x, y);
+        //g.event(x, y);
+        std::shared_ptr<othello::ICommand> c(new othello::PlayMove(&g, x, y));
+        cmd_.execute(c);
     }
 }

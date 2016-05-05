@@ -24,7 +24,7 @@ namespace othello{
         explicit HistoryPanel(QWidget *parent = 0);
         ~HistoryPanel();
 
-        void AddHistory(std::vector<HistoryItem> H)const;
+    //    void AddHistory(std::vector<HistoryItem> H)const;
 
     signals:
 

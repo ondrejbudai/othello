@@ -11,6 +11,7 @@
 #include "MainGame.hh"
 #include <iostream>
 #include <cassert>
+#include <memory>
 
 //TODO event vracia bool
 //TODO GRaphics scene ma [0,0] v lavom dolnom rohu a rastie smerom hore...
@@ -19,9 +20,9 @@
 //                                                       1 -> vybera nahodne riesenie
 constexpr double StrengtOfThatBastard = 0;
 
-
 namespace othello {
-    
+
+
     //0 not occupied
     //1 black
     //2 white
@@ -50,12 +51,22 @@ namespace othello {
             players_.push_back(std::make_unique<Player>(Color::BLACK, logic_));
         else
             players_.push_back(std::make_unique<AI>(Color::BLACK, logic_, StrengtOfThatBastard ));
-        
+
         if (white == PlayerType::HUMAN)
             players_.push_back(std::make_unique<Player>(Color::WHITE, logic_));
         else
             players_.push_back(std::make_unique<AI>(Color::WHITE, logic_,  StrengtOfThatBastard ));
-        
+
+    }
+
+    Coords MainGame::TellAIToPlay(){
+        Player& current_player = *players_[current_player_num];
+        assert(canPlay(current_player.getColor()));
+        assert(current_player.isAi());
+
+        Coords c = current_player.play();
+        return c;
+
     }
 
 
@@ -69,11 +80,11 @@ namespace othello {
 
 
         // pokud je aktualne na tahu AI, ziskame tah
-        if(current_player.isAi()){
-            Coords c = current_player.play();
-            x = c.GetX();
-            y = c.GetY();
-        }
+        // if(current_player.isAi()){
+        //     Coords c = current_player.play();
+        //     x = c.GetX();
+        //     y = c.GetY();
+        // }
 
         // priprava tahu
         std::vector<Coords> toChange = logic_.prepareTurn(x, y, current_player.getColor());
@@ -87,18 +98,18 @@ namespace othello {
             std::cout << "Neplatny tah" << std::endl << std::flush;
             return;
         }
-        
+
         //save game   -aktualny stav + tah co sa ide commitnut + aktualny hrac
-        HistoryItem newH;
-        logic_.copyBoard(newH.board);
-        newH.currentPlayer = current_player.getColor();
-        newH.currentMove = {x,y};
-        history_.push_back(newH);
+        // HistoryItem newH;
+        // logic_.copyBoard(newH.board);
+        // newH.currentPlayer = current_player.getColor();
+        // newH.currentMove = {x,y};
+        // history_.push_back(newH);
 
         //zapis tahu
         logic_.commitTurn(toChange, current_player.getColor());
-        
-        
+
+
         // zmen hrace, jen pokud ma ten druhy co hrat
         // pokud nema nikdo co hrat, GUI to zjisti
         if(canPlay(GetOppositeColor(current_player.getColor()))){
@@ -112,14 +123,14 @@ namespace othello {
 
         //printHistory();
         //printGameBoard();
-        
+
 
 
     }
 
-    void MainGame::addToHistory(HistoryItem n){
-        history_.push_back(n);
-    }
+    // void MainGame::addToHistory(HistoryItem n){
+    //     history_.push_back(n);
+    // }
 
     //pomocna funkcia pre pracu bez gui
     //TODO: move me!
@@ -152,41 +163,41 @@ namespace othello {
     //pomocna funkcia pre pracu bez gui vypis historie
     //TODO: move me!
     void MainGame::printHistory() const {
-        using namespace std;
+    //     using namespace std;
+    //
+    //     //TODO PREpocitat pozicie
+    //
+    //     cout<<"-------------OTHELLOS STORY-----------------------";
+    //         for (unsigned k = 0; k < history_.size(); k++){
+    //             cout<<endl;
+    //             cout<< "Na rade je "<<(history_[k].currentPlayer == Color::BLACK ? "black":"white")<<" a zahra "<<history_[k].currentMove.first<<" "<<history_[k].currentMove.first<<endl;
+    //             cout<<endl;
+    //
+    //             unsigned sz = history_[k].board.size();
+    //
+    //             cout << "   ";
+    //             for (unsigned i = 0; i < sz; i++) {
+    //                 cout << i;
+    //                 if (i < 10)
+    //                     cout << " ";
+    //             }
+    //             cout << endl;
+    //             for (unsigned i = 0; i < sz; i++) {
+    //                 if (i < 10)
+    //                     cout << " ";
+    //                 cout << i << " ";
+    //                 for (unsigned j = 0; j < sz; j++) {
+    //                     if (history_[k].board[i][j].occupied_)
+    //                         cout << (history_[k].board[i][j].piece_ == Color::BLACK ? "\u25CB" : "\u25CD") << " ";
+    //                     else
+    //                         cout << "  ";
+    //                 }
+    //                 cout << endl;
+    //             }
+    //         }
+    //     cout<<"-------------OTHELLOS STORY ENDS------------------";
+     }
 
-        //TODO PREpocitat pozicie
-
-        cout<<"-------------OTHELLOS STORY-----------------------";
-            for (unsigned k = 0; k < history_.size(); k++){
-                cout<<endl;
-                cout<< "Na rade je "<<(history_[k].currentPlayer == Color::BLACK ? "black":"white")<<" a zahra "<<history_[k].currentMove.first<<" "<<history_[k].currentMove.first<<endl;
-                cout<<endl;
-
-                unsigned sz = history_[k].board.size();
-
-                cout << "   ";
-                for (unsigned i = 0; i < sz; i++) {
-                    cout << i;
-                    if (i < 10)
-                        cout << " ";
-                }
-                cout << endl;
-                for (unsigned i = 0; i < sz; i++) {
-                    if (i < 10)
-                        cout << " ";
-                    cout << i << " ";
-                    for (unsigned j = 0; j < sz; j++) {
-                        if (history_[k].board[i][j].occupied_)
-                            cout << (history_[k].board[i][j].piece_ == Color::BLACK ? "\u25CB" : "\u25CD") << " ";
-                        else
-                            cout << "  ";
-                    }
-                    cout << endl;
-                }
-            }        
-        cout<<"-------------OTHELLOS STORY ENDS------------------";
-    }
-    
     //Struktura subora s ulozenou hrou
     //
     //BlackPlayerName
@@ -203,35 +214,35 @@ namespace othello {
     //--medzerou oddelene historie, kde kazda ma format
     //farba-kto-zahral x y
     //hracia doska
-    bool MainGame::saveGameToFile(std::ofstream &outF){
-        //TODO HERE
-        outF<<players_[0]->getName()<<std::endl;
-        outF<<(players_[0]->isAi() ? "AI":"HUMAN")<<std::endl;
-        outF<<players_[1]->getName()<<std::endl;
-        outF<<(players_[1]->isAi() ? "AI":"HUMAN")<<std::endl;
-        outF<<logic_.getBoard().getSize()<<std::endl;
-        outF<<current_player_num<<std::endl;
-        outF<<std::endl;
-       
-        //ziskame akutlanu hraciu dosku 
-        std::vector<std::vector<Field>> board;
-        logic_.copyBoard(board);
-        
-        printBoardToFile(board, outF);
-        
-        outF<<"\nHISTORY\n\n";
+     bool MainGame::saveGameToFile(std::ofstream &outF){
+    //     //TODO HERE
+    //     outF<<players_[0]->getName()<<std::endl;
+    //     outF<<(players_[0]->isAi() ? "AI":"HUMAN")<<std::endl;
+    //     outF<<players_[1]->getName()<<std::endl;
+    //     outF<<(players_[1]->isAi() ? "AI":"HUMAN")<<std::endl;
+    //     outF<<logic_.getBoard().getSize()<<std::endl;
+    //     outF<<current_player_num<<std::endl;
+    //     outF<<std::endl;
+    //
+    //     //ziskame akutlanu hraciu dosku
+    //     std::vector<std::vector<Field>> board;
+    //     logic_.copyBoard(board);
+    //
+    //     printBoardToFile(board, outF);
+    //
+    //     outF<<"\nHISTORY\n\n";
+    //
+    //     for (auto const& hisItem:history_){
+    //         outF<<(hisItem.currentPlayer == Color::BLACK?"black":"white")<<std::endl;
+    //         outF<<hisItem.currentMove.first<<std::endl;
+    //         outF<<hisItem.currentMove.second<<std::endl;
+    //         printBoardToFile(hisItem.board, outF);
+    //     }
+    //     return true;
+     }
+    //
 
-        for (auto const& hisItem:history_){
-            outF<<(hisItem.currentPlayer == Color::BLACK?"black":"white")<<std::endl;
-            outF<<hisItem.currentMove.first<<std::endl;
-            outF<<hisItem.currentMove.second<<std::endl;
-            printBoardToFile(hisItem.board, outF);
-        }
-        return true;
-    }
 
-
-        
     //Funkcia zistuje ci moze aspon jeden hrac hrat, ak nie jedna sa o koneic hry
     bool MainGame::isEnd() const {
         return !canPlay(Color::BLACK) && !canPlay(Color::WHITE);

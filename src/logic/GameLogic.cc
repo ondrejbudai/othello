@@ -74,19 +74,22 @@ namespace othello {
     }
 
 
-    void GameLogic::setGameBoard(const std::vector<std::string>& GB){
-        for (unsigned i = 0; i < GB.size(); i++){
-            for (unsigned j = 0; j < GB[i].length(); j++){
-                if (GB[i][j] == '0')
-                    continue;
-                else if (GB[i][j] == '1')
-                    board_.setPiece(i, j, Color::BLACK);
-                else if (GB[i][j] == '2')
-                    board_.setPiece(i, j, Color::WHITE);
-                else
-                    assert(false);
-            }
-        }
+    // void GameLogic::setGameBoard(const std::vector<std::string>& GB){
+    //     for (unsigned i = 0; i < GB.size(); i++){
+    //         for (unsigned j = 0; j < GB[i].length(); j++){
+    //             if (GB[i][j] == '0')
+    //                 continue;
+    //             else if (GB[i][j] == '1')
+    //                 board_.setPiece(i, j, Color::BLACK);
+    //             else if (GB[i][j] == '2')
+    //                 board_.setPiece(i, j, Color::WHITE);
+    //             else
+    //                 assert(false);
+    //         }
+    //     }
+    // }
+    void GameLogic::setGameBoard(const GameBoard& t){
+      board_.setBoard(t.GetBoard());
     }
 
     std::pair<unsigned, unsigned> GameLogic::getScore() const {

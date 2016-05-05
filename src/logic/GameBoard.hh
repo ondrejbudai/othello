@@ -63,6 +63,8 @@ namespace othello {
         Color GetColor(unsigned x, unsigned y) const;
 
         Color GetColor(const Coords& c) const { return GetColor(c.GetX(), c.GetY()); }
+
+        void setBoard(std::vector<std::vector<Field>> t){ board_ = t;}
     };
 }
 

@@ -16,18 +16,10 @@ namespace othello {
         HUMAN, AI
     };
 
-    
-    struct HistoryItem{
-        std::vector<std::vector<Field>> board;
-        Color currentPlayer;
-        std::pair<unsigned, unsigned> currentMove;//nie coords lebo je to class
-    };
-
 
     class MainGame {
     private:
         GameLogic logic_;
-        std::vector<HistoryItem> history_;
         std::vector<std::unique_ptr<Player>> players_;
         int current_player_num = 0;
         // frozen stuff
@@ -42,25 +34,35 @@ namespace othello {
 
         bool isEnd() const;
 
+        //void setLogic(GameLogic oldLogic) {logic_ = oldLogic;}
+
         bool canPlay(Color color) const;
 
-        const GameLogic& getLogic() const { return logic_; }
+        const GameLogic& getLogic() { return logic_; }
+
+        GameLogic& getLogicRef() { return logic_; }
 
         void SetNames(const std::pair<std::string, std::string>& names);
 
         std::pair<std::string, std::string> GetNames();
-        
+
         void printHistory() const ;
-    
+
         bool saveGameToFile(std::ofstream &thisFile);
 
         void setCurrentPlayer(int n) {current_player_num = n;}
-        
-        void setGameBoard(const std::vector<std::string> &GB){logic_.setGameBoard(GB);}
 
-        std::vector<HistoryItem> getHistory()const { return history_;}
+        //void setGameBoard(const std::vector<std::string> &GB){logic_.setGameBoard(GB);}
+        void setGameBoard(const std::vector<std::string> &GB){}
 
-        void addToHistory(HistoryItem n);
+        //std::vector<HistoryItem> getHistory()const { return history_;}
+
+        //void addToHistory(HistoryItem n);
+
+        int getCurrentPlayerNum(){ return current_player_num;}
+
+        Coords TellAIToPlay();
+
     };
 }
 

@@ -161,17 +161,30 @@
     <string>Save Game</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="ButtonShowHistory">
+  <widget class="QPushButton" name="ButtonUNDO">
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>370</y>
-     <width>201</width>
-     <height>91</height>
+     <y>410</y>
+     <width>71</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="text">
-    <string>Show History</string>
+    <string>UNDO</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ButtonREDO">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>410</y>
+     <width>71</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>REDO</string>
    </property>
   </widget>
  </widget>
