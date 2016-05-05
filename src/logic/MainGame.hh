@@ -25,7 +25,7 @@ namespace othello {
     public:
         MainGame(unsigned size, PlayerType white, PlayerType black);
 
-        void Event(unsigned x, unsigned y); // event funkce
+        bool Event(unsigned x, unsigned y); // event funkce
 
         const Player& GetCurrentPlayer() const { return *players_[current_player_num_]; }
 

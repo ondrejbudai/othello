@@ -18,12 +18,14 @@ namespace othello {
         oldCurrentMove_ = std::make_pair(x, y);
       }
 
-  void PlayMove::Execute(){
+  bool PlayMove::Execute(){
         oldBoard_ = (*game_)->GetBoard().GetBoard();
         oldCurrentPlayer_ = (*game_)->GetCurrentPlayerNum();
-        (*game_)->Event(oldCurrentMove_.first, oldCurrentMove_.second);
+        if (!(*game_)->Event(oldCurrentMove_.first, oldCurrentMove_.second))
+          return false;
         newBoard_ = (*game_)->GetBoard().GetBoard();
         newCurrentPlayer_ = (*game_)->GetCurrentPlayerNum();
+        return true;
       }
 
       void PlayMove::Undo(){
@@ -37,9 +39,10 @@ namespace othello {
       }
 
     void CommandManager::Execute(std::shared_ptr<ICommand> command){
-      redoStack_ = commandStack_t();
-      command->Execute();
-      undoStack_.push(command);
+      if (command->Execute()){
+        redoStack_ = commandStack_t();
+        undoStack_.push(command);
+      }
     }
 
     void CommandManager::Undo(){

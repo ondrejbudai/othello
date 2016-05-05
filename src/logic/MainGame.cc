@@ -75,20 +75,13 @@ namespace othello {
     //Funkcia spracuva zadany tah
     //Na konci tahu, ak je platny, ulozi dany tah do historie
     //Zisti ci je mozne aby dalsi hrac hral, a ak je tak ho nastavuje ako aktualneho hraca
-    void MainGame::Event(unsigned x, unsigned y) { // event funkce
+    bool MainGame::Event(unsigned x, unsigned y) { // event funkce
 
         Player& current_player = *players_[current_player_num_];
         assert(CanPlay(current_player.GetColor()));
 
 
-        // pokud je aktualne na tahu AI, ziskame tah
-        // if(current_player.isAi()){
-        //     Coords c = current_player.play();
-        //     x = c.GetX();
-        //     y = c.GetY();
-        // }
-
-        // priprava tahu
+      // priprava tahu
         std::vector<Coords> toChange = logic_.PrepareTurn(x, y, current_player.GetColor());
 
         //kontrola ci sa jedna o validny tah od uzivatela
@@ -98,7 +91,7 @@ namespace othello {
 
             //TODO von vypis a vracat false
             std::cout << "Neplatny tah" << std::endl << std::flush;
-            return;
+            return false;
         }
 
         //save game   -aktualny stav + tah co sa ide commitnut + aktualny hrac
@@ -125,7 +118,7 @@ namespace othello {
 
         //printHistory();
         //printGameBoard();
-
+        return true;
 
 
     }

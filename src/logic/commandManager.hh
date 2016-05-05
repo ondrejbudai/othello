@@ -14,7 +14,7 @@ namespace othello {
 
   class ICommand {
     public:
-      virtual void Execute() = 0;
+      virtual bool Execute() = 0;
       virtual void Undo() = 0;
       virtual void Redo() = 0;
   };
@@ -35,7 +35,7 @@ namespace othello {
 
       PlayMove(std::unique_ptr<MainGame> *g, unsigned x, unsigned y);
 
-      void Execute();
+      bool Execute() override;
 
       void Undo() override;
 
