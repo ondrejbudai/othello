@@ -1,3 +1,4 @@
+
 # TODO:
 # - Run target
 # - Build directory (hard?)
@@ -7,3 +8,9 @@ all:
 
 clean:
 	$(MAKE) -C src clean
+
+doxygen:
+	doxygen
+
+run: all
+	./othello

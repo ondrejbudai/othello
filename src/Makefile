@@ -6,6 +6,7 @@ OBJECTS_CLI := $(SOURCES_CLI:.cc=.o)
 
 SUBDIRECTORIES := gui logic
 LIBS := $(SUBDIRECTORIES:%=lib%.a)
+LIBS_GEN := $(SUBDIRECTORIES:%=gen_%)
 SUB_CLEAN := $(SUBDIRECTORIES:%=%clean)
 
 GUI_LIBS:= -L$(QT_LIB) -lQt5Widgets -lQt5Gui -lQt5Core -fPIC
@@ -17,7 +18,7 @@ OTHELLO_CLI := ../othello-cli
 LD_LIBRARY_PATH += /usr/local/share/Qt-5.5.1/5.5/gcc_64/lib
 export LD_LIBRARY_PATH
 
-all: $(OTHELLO) $(OTHELLO_CLI)
+all: $(LIBS_GEN) $(OTHELLO) $(OTHELLO_CLI)
 
 $(OTHELLO): $(LIBS) $(OBJECTS_GUI)
 	$(CXX) -o $@ $^ $(GUI_LIBS) -L. -lgui -llogic
@@ -25,11 +26,14 @@ $(OTHELLO): $(LIBS) $(OBJECTS_GUI)
 $(OTHELLO_CLI): $(LIBS) $(OBJECTS_CLI)
 	$(CXX) -o $@ $^ -L. -llogic
 
+$(LIBS_GEN): gen_%: %
+	@$(MAKE) --no-print-directory -C $^ dep
+
 lib%.a: % force
-	make -C $<
+	$(MAKE) -C $<
 
 force:
-	true
+	@true
 
 $(OBJECTS_GUI): %.o: %.cc
 	$(CXX) -c -std=c++14 $(GUI_INCLUDES) -o $@ $<

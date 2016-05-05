@@ -1,6 +1,7 @@
 #include "GameLogic.hh"
 #include "MainGame.hh"
 #include <cassert>
+#include <algorithm>
 
 namespace othello {
 
@@ -95,16 +96,15 @@ namespace othello {
     std::pair<unsigned, unsigned> GameLogic::getScore() const {
         std::pair<unsigned, unsigned> score{0, 0};
 
-        for (unsigned i = 0; i < board_.getSize(); i++) {
-            for (unsigned j = 0; j < board_.getSize(); j++) {
-                if (!board_.isOccupied(i, j)) continue;
-                if (board_.GetColor(i, j) == Color::BLACK)
-                    score.first++;
-                else
-                    score.second++;
+        for(const auto& f: board_){
+            if(!f.occupied_)
+                continue;
+            if(f.piece_ == Color::BLACK){
+                score.first++;
+            } else {
+                score.second++;
             }
         }
-
 
         return score;
     }

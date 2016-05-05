@@ -1,4 +1,4 @@
-SOURCES := AI.cc GameBoard.cc GameLogic.cc GameLogicGomoku.cc MainGame.cc Player.cc commandManager.cc
+SOURCES := AI.cc GameBoard.cc GameLogic.cc MainGame.cc Player.cc commandManager.cc
 
 OBJECTS :=	$(SOURCES:.cc=.o)
 
@@ -11,5 +11,10 @@ all: ../liblogic.a
 %.o: %.cc
 	$(CXX) -c -std=c++14 -o $@ $<
 
+dep:
+	@$(CXX) -MM -std=c++14 $(SOURCES) >deps
+
+-include deps
+
 clean:
-	rm $(OBJECTS) ../liblogic.a 2>/dev/null || true
+	rm $(OBJECTS) ../liblogic.a deps 2>/dev/null || true

@@ -24,6 +24,11 @@ all: $(UI_HEADERS) $(MOC_FILES) ../libgui.a
 %.o: %.cc
 	$(CXX) -c -std=c++14 $(GUI_INCLUDES) -o $@ $<
 
+dep: $(UI_HEADERS)
+	@$(CXX) -MM -std=c++14 $(SOURCES) >deps
+
+-include deps
+
 $(UI_HEADERS): ui_%.h: %.ui
 	$(UIC) -o $@ $<
 
@@ -31,4 +36,4 @@ $(MOC_FILES): moc_%.cc: %.hh
 	$(MOC) -o $@ $<
 
 clean:
-	rm $(OBJECTS) $(UI_HEADERS) $(MOC_FILES) ../libgui.a 2>/dev/null || true
+	rm $(OBJECTS) $(UI_HEADERS) $(MOC_FILES) ../libgui.a deps 2>/dev/null || true

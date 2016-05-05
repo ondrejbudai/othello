@@ -5,3 +5,5 @@ moc_*.cc
 ui*.h
 *.a
 *.gch
+deps
+doc
