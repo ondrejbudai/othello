@@ -8,3 +8,6 @@ all:
 
 clean:
 	$(MAKE) -C src clean
+
+doxygen:
+	doxygen
