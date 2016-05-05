@@ -20,19 +20,19 @@ namespace othello {
 
   void PlayMove::Execute(){
         oldBoard_ = (*game_)->GetBoard().GetBoard();
-        oldCurrentPlayer_ = (*game_)->getCurrentPlayerNum();
+        oldCurrentPlayer_ = (*game_)->GetCurrentPlayerNum();
         (*game_)->Event(oldCurrentMove_.first, oldCurrentMove_.second);
         newBoard_ = (*game_)->GetBoard().GetBoard();
-        newCurrentPlayer_ = (*game_)->getCurrentPlayerNum();
+        newCurrentPlayer_ = (*game_)->GetCurrentPlayerNum();
       }
 
       void PlayMove::Undo(){
-        // (*game_)->getLogicRef().setGameBoard(oldBoard_);
+        (*game_)->GetLogic().SetGameBoard(oldBoard_);
         (*game_)->SetCurrentPlayer(oldCurrentPlayer_);
       }
 
       void PlayMove::Redo(){
-        // (*game_)->getLogicRef().setGameBoard(newBoard_);
+        (*game_)->GetLogic().SetGameBoard(newBoard_);
         (*game_)->SetCurrentPlayer(newCurrentPlayer_);
       }
 

@@ -23,9 +23,7 @@ namespace othello {
 
         std::pair<unsigned, unsigned> GetScore() const;
 
-        // void setGameBoard(const GameBoard& t);
-
-        // void setGameBoard(std::vector<std::vector<Field>> y){ board_.setBoard(y);}
+        void SetGameBoard(std::vector<std::vector<Field>> y){ board_.SetBoard(y);}
 
     };
 }

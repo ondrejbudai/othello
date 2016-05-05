@@ -57,7 +57,7 @@ namespace othello {
 
         //void addToHistory(HistoryItem n);
 
-        int getCurrentPlayerNum(){ return current_player_num_;}
+        int GetCurrentPlayerNum(){ return current_player_num_;}
 
         Coords TellAIToPlay();
 
