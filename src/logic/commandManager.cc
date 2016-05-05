@@ -23,8 +23,6 @@ namespace othello {
         oldCurrentPlayer_ = (*game_)->GetCurrentPlayerNum();
         if (!(*game_)->Event(oldCurrentMove_.first, oldCurrentMove_.second))
           return false;
-        newBoard_ = (*game_)->GetBoard().GetBoard();
-        newCurrentPlayer_ = (*game_)->GetCurrentPlayerNum();
         return true;
       }
 
@@ -34,8 +32,9 @@ namespace othello {
       }
 
       void PlayMove::Redo(){
-        (*game_)->GetLogic().SetGameBoard(newBoard_);
-        (*game_)->SetCurrentPlayer(newCurrentPlayer_);
+        (*game_)->Event(oldCurrentMove_.first, oldCurrentMove_.second);
+        //(*game_)->GetLogic().SetGameBoard(newBoard_);
+        //(*game_)->SetCurrentPlayer(newCurrentPlayer_);
       }
 
     void CommandManager::Execute(std::shared_ptr<ICommand> command){
@@ -61,8 +60,16 @@ namespace othello {
       redoStack_.pop();
     }
 
-    // void CommandManager::SaveAll(std::string fileName){
-    // }
+    void CommandManager::SaveAllToFile(std::ostream &outF){
+        while (undoStack_.size() > 0){
+            //
+            // outF<<(hisItem.currentPlayer == Color::BLACK?"black":"white")<<std::endl;
+            // outF<<hisItem.currentMove.first<<std::endl;
+            // outF<<hisItem.currentMove.second<<std::endl;
+            // printBoardToFile(hisItem.board, outF);
+        }
+
+    }
 
 
 }

@@ -181,33 +181,25 @@ namespace othello {
     //--medzerou oddelene historie, kde kazda ma format
     //farba-kto-zahral x y
     //hracia doska
-    //  bool MainGame::SaveGameToFile(std::ofstream &outF){
-    //     //TODO HERE
-    //     outF<<players_[0]->getName()<<std::endl;
-    //     outF<<(players_[0]->isAi() ? "AI":"HUMAN")<<std::endl;
-    //     outF<<players_[1]->getName()<<std::endl;
-    //     outF<<(players_[1]->isAi() ? "AI":"HUMAN")<<std::endl;
-    //     outF<<logic_.GetBoard().GetSize()<<std::endl;
-    //     outF<<current_player_num_<<std::endl;
-    //     outF<<std::endl;
-    //
-    //     //ziskame akutlanu hraciu dosku
-    //     std::vector<std::vector<Field>> board;
-    //     logic_.copyBoard(board);
-    //
-    //     printBoardToFile(board, outF);
-    //
-    //     outF<<"\nHISTORY\n\n";
-    //
-    //     for (auto const& hisItem:history_){
-    //         outF<<(hisItem.currentPlayer == Color::BLACK?"black":"white")<<std::endl;
-    //         outF<<hisItem.currentMove.first<<std::endl;
-    //         outF<<hisItem.currentMove.second<<std::endl;
-    //         printBoardToFile(hisItem.board, outF);
-    //     }
-    //     return true;
-    //  }
-    //
+
+     bool MainGame::SaveGameToFile(std::ofstream &outF){
+        //TODO HERE
+        outF<<players_[0]->GetName()<<std::endl;
+        outF<<(players_[0]->IsAi() ? "AI":"HUMAN")<<std::endl;
+        outF<<players_[1]->GetName()<<std::endl;
+        outF<<(players_[1]->IsAi() ? "AI":"HUMAN")<<std::endl;
+        outF<<logic_.GetBoard().GetSize()<<std::endl;
+        outF<<current_player_num_<<std::endl;
+        outF<<std::endl;
+
+        //ziskame akutlanu hraciu dosku
+        std::vector<std::vector<Field>> board;
+        logic_.GetBoard().Print(outF);
+
+        outF<<"\nHISTORY\n\n";
+        return true;
+     }
+
 
 
     //Funkcia zistuje ci moze aspon jeden hrac hrat, ak nie jedna sa o koneic hry

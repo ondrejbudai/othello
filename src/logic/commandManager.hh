@@ -26,9 +26,7 @@ namespace othello {
   class PlayMove: public ICommand{
       std::unique_ptr<MainGame> *game_;
       std::vector<std::vector<Field>> oldBoard_;
-      std::vector<std::vector<Field>> newBoard_;
       int oldCurrentPlayer_;
-      int newCurrentPlayer_;
       std::pair<unsigned, unsigned> oldCurrentMove_;//nie coords lebo je to class
 
     public:
@@ -40,6 +38,7 @@ namespace othello {
       void Undo() override;
 
       void Redo() override;
+
   };
 
   typedef std::stack<std::shared_ptr<ICommand>> commandStack_t;
@@ -57,7 +56,7 @@ namespace othello {
 
     void Redo();
 
-    void SaveAll(std::string fileName);
+    void SaveAllToFile(std::ostream &outF);
 
   };
 }
