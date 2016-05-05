@@ -126,8 +126,6 @@ namespace othello {
         connect(infoPanel, &InfoPanel::on_ButtonREDO_clicked, this, &OthelloGui::ButtonREDO);
         connect(infoPanel, &InfoPanel::on_ButtonUNDO_clicked, this, &OthelloGui::ButtonUNDO);
         connect(infoPanel, &InfoPanel::on_PlayPause_clicked, this, &OthelloGui::PlayPause);
-        //connect(this, &InfoPanel::changeIcon, infoPanel, &InfoPanel::changeIcon);
-        //connect(this, SIGNAL(changeIcon(bool)), &InfoPanel, SLOT(changeIcon(bool)));
 
         repaintGame();
     }
@@ -175,7 +173,7 @@ namespace othello {
       infoPanel->changeIcon(playAi);
       repaintGame();
     }
-    //TODO vsetko s histroiou do samotneho bloku!
+
     //nacita subor s ulozenou hrou a danu hru vytvori
     void OthelloGui::ButtonLoadGame() {
         //TODO kontrola ci je subor ok a teda assert-y prerobit na hlasku o chybnom subore
@@ -219,66 +217,7 @@ namespace othello {
         unsigned boardSize = static_cast<unsigned>(std::stoi(boardSizeS));
 
         ShowGameBoard(p1, p2, boardSize, names);
-
-        std::string oneLine;
-        int currentPlayer;
-        getline(inF, oneLine);
-        currentPlayer = std::stoi(oneLine);
-        game_->SetCurrentPlayer(currentPlayer);
-
-        //nacitaj aktualnu dosku
-        getline(inF, oneLine);//precitam prazdny riadok
-        std::vector<std::string> gameB;
-        for (unsigned i = 0; i < boardSize; i++) {
-            assert(!inF.eof());
-            getline(inF, oneLine);
-            assert(oneLine.length() == boardSize);
-            gameB.push_back(oneLine);
-        }
-        assert(gameB.size() == boardSize);
-        //game_->setGameBoard(gameB);
-        getline(inF, oneLine);//empty
-        getline(inF, oneLine);//HISTORY
-        getline(inF, oneLine);//empty
-
-        //a nacitame celu historiu
-        // while (!inF.eof()){
-        //     gameB.clear();
-        //     HistoryItem newItem;
-        //     getline(inF, oneLine);//nacitam kto hra
-        //     if (oneLine == "")
-        //         break;
-        //     newItem.currentPlayer = (oneLine == "black" ? Color::BLACK : Color::WHITE);
-        //     getline(inF, oneLine);//nacitam x
-        //     newItem.currentMove.first = stoi(oneLine);
-        //     getline(inF, oneLine);//nacitam y
-        //     newItem.currentMove.second = stoi(oneLine);
-        //
-        //     for (unsigned i = 0; i < boardSize; i++) {
-        //         assert(!inF.eof());
-        //         getline(inF, oneLine);
-        //         assert(oneLine.length() == boardSize);
-        //         newItem.board.emplace_back();
-        //         for (unsigned i = 0; i < oneLine.length(); ++i){
-        //             Field n;
-        //             if (oneLine[i] == '0')
-        //                 n.occupied_ = false;
-        //             else if (oneLine[i] == '1'){
-        //                 n.occupied_ = true;
-        //                 n.piece_ = Color::BLACK;
-        //             } else if (oneLine[i] == '2'){
-        //                 n.occupied_ = true;
-        //                 n.piece_ = Color::WHITE;
-        //             } else
-        //                 assert(false);
-        //             newItem.board.back().push_back(n);
-        //         }
-        //     }
-            //game_->addToHistory(newItem);
-
-            //TODO pridaj board a vloz do hitorie
-            //TODO vloz do historie
-        //}
+        //Nastav ze zo suboru sa hra a zacni hrat
 
         inF.close();
         repaintGame();

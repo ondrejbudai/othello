@@ -94,16 +94,8 @@ namespace othello {
             return false;
         }
 
-        //save game   -aktualny stav + tah co sa ide commitnut + aktualny hrac
-        // HistoryItem newH;
-        // logic_.copyBoard(newH.board);
-        // newH.currentPlayer = current_player.GetColor();
-        // newH.currentMove = {x,y};
-        // history_.push_back(newH);
-
         //zapis tahu
         logic_.CommitTurn(toChange, current_player.GetColor());
-
 
         // zmen hrace, jen pokud ma ten druhy co hrat
         // pokud nema nikdo co hrat, GUI to zjisti
@@ -118,23 +110,6 @@ namespace othello {
         return true;
     }
 
-    //Struktura subora s ulozenou hrou
-    //
-    //BlackPlayerName
-    //typ blackPlayera
-    //WhitePlayerName
-    //typ white player
-    //velkost hracej dosky
-    //farba kto je na rade [0 alebo 1 podla current player]
-    //
-    //Hracia doska
-    //
-    //HISTORY
-    //
-    //--medzerou oddelene historie, kde kazda ma format
-    //farba-kto-zahral x y
-    //hracia doska
-
      bool MainGame::SaveGameToFile(std::ofstream &outF){
         //TODO HERE
         outF<<players_[0]->GetName()<<std::endl;
@@ -142,14 +117,6 @@ namespace othello {
         outF<<players_[1]->GetName()<<std::endl;
         outF<<(players_[1]->IsAi() ? "AI":"HUMAN")<<std::endl;
         outF<<logic_.GetBoard().GetSize()<<std::endl;
-        outF<<current_player_num_<<std::endl;
-        outF<<std::endl;
-
-        //ziskame akutlanu hraciu dosku
-        std::vector<std::vector<Field>> board;
-        logic_.GetBoard().Print(outF);
-
-        outF<<"\nHISTORY\n\n";
         return true;
      }
 

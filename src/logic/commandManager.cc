@@ -64,19 +64,20 @@ namespace othello {
 
     void CommandManager::SaveToFile(std::ostream &outF){
         while (undoStack_.size() > 0){
-          undoStack_.top()->SaveToFile(outF);
           redoStack_.push(undoStack_.top());
           undoStack_.pop();
         }
+
         while (redoStack_.size() > 0){
+          redoStack_.top()->SaveToFile(outF);
           undoStack_.push(redoStack_.top());
           redoStack_.pop();
         }
     }
 
     void PlayMove::SaveToFile(std::ostream &outF){
-            oldBoard_.Print(outF);
-            outF<<std::endl<<oldCurrentPlayer_<<std::endl;
+            //oldBoard_.Print(outF);
+            //outF<<std::endl<<oldCurrentPlayer_<<std::endl;
             outF<<oldCurrentMove_.first<<" "<<oldCurrentMove_.second<<std::endl;
     }
 }
