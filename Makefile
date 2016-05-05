@@ -11,3 +11,6 @@ clean:
 
 doxygen:
 	doxygen
+
+run: all
+	./othello
