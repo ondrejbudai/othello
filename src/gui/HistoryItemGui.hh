@@ -19,7 +19,7 @@ namespace othello{
         ~HistoryItemGui();
         void setColor(Color C);
         void setMove(std::pair<unsigned, unsigned> M);
-        void setBoard(std::vector<std::vector<Field>> &B);
+        void setBoard(GameBoard& B);
 
     private:
         Ui::HistoryItemGui ui;

@@ -13,16 +13,22 @@ namespace othello {
         for (unsigned i = 0; i < size; i++){
             std::vector<Field> newRow;
             for (unsigned j = 0; j < size; j++){
-                newRow.push_back(Field{Color::RED, false});
+                newRow.push_back(Field{});
             }
             board_.push_back(newRow);
         }
         unsigned middle = size / 2;
-        this->setPiece(middle, middle, Color::BLACK);
-        this->setPiece(middle-1, middle-1, Color::BLACK);
 
-        this->setPiece(middle-1, middle, Color::WHITE);
-        this->setPiece(middle, middle-1, Color::WHITE);
+        GetField(middle, middle).SetColor(Color::BLACK);
+        GetField(middle - 1, middle - 1).SetColor(Color::BLACK);
+
+        GetField(middle - 1, middle).SetColor(Color::WHITE);
+        GetField(middle, middle - 1).SetColor(Color::WHITE);
+    }
+
+    Field& GameBoard::GetField(unsigned x, unsigned y) {
+        assert(x < size_ && y < size_);
+        return board_[x][y];
     }
 
     const Field& GameBoard::GetField(unsigned x, unsigned y) const {
@@ -30,19 +36,17 @@ namespace othello {
         return board_[x][y];
     }
 
-    void GameBoard::setPiece(unsigned x, unsigned y, Color c) {
-        assert(x < size_ && y < size_);
-        board_[x][y].occupied_ = true;
-        board_[x][y].piece_ = c;
+    Field& GameBoard::GetField(Coords c) {
+        assert(c.GetX() < size_ && c.GetY() < size_);
+        return board_[c.GetX()][c.GetY()];
     }
 
-    bool GameBoard::isOccupied(unsigned x, unsigned y) const {
-        assert(x < size_ && y < size_);
-        return board_[x][y].occupied_;
+    const Field& GameBoard::GetField(Coords c) const {
+        assert(c.GetX() < size_ && c.GetY() < size_);
+        return board_[c.GetX()][c.GetY()];
     }
 
-
-    std::vector<Coords> GameBoard::getNeighbours(unsigned x, unsigned y) const {
+    std::vector<Coords> GameBoard::GetNeighbours(unsigned x, unsigned y) const {
         assert(x < size_ && y < size_);
         std::vector<Coords> fields;
         int xj = -1;
@@ -59,13 +63,28 @@ namespace othello {
         return fields;
     }
 
-    Color GameBoard::GetColor(unsigned x, unsigned y) const {
-        assert(x < size_ && y < size_);
-        return board_[x][y].piece_;
-    }
+    void GameBoard::Print(std::ostream& os) const {//Zobrazi hraciu plochu na terminal
 
-
-    void GameBoard::copyBoard(Board &toThis){
-        toThis = board_;
+        os << "   ";
+        for (unsigned i = 0; i < GetSize(); i++) {
+            os << i;
+            if (i < 10)
+                os << " ";
+        }
+        os << std::endl;
+        for (unsigned i = 0; i < GetSize(); i++) {
+            if (i < 10)
+                os << " ";
+            os << i << " ";
+            for (unsigned j = 0; j < GetSize(); j++) {
+                Color col;
+                bool occupied = GetField(i, j).GetStatus(col);
+                if (occupied)
+                    os << (col == Color::BLACK ? "\u25CB" : "\u25CD") << " ";
+                else
+                    os << "  ";
+            }
+            os << std::endl;
+        }
     }
 }

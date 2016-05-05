@@ -34,13 +34,13 @@ namespace othello {
         blank = QPixmap::fromImage(QImage("img/blank.jpg"));
 
         const double pieceSize = getPieceSize();
-        for (unsigned x = 0; x < board_.getLogic().getBoard().getSize(); ++x) {
+        for (unsigned x = 0; x < board_.GetBoard().GetSize(); ++x) {
             b.emplace_back();
-            for (unsigned y = 0; y < board_.getLogic().getBoard().getSize(); ++y) {
+            for (unsigned y = 0; y < board_.GetBoard().GetSize(); ++y) {
                 QGraphicsPixmapItem* item = new QGraphicsPixmapItem(blank);
                 b[x].push_back(item);
                 item->setScale(pieceSize / item->boundingRect().width());
-                //item->setPos((board_.getLogic().getBoard().getSize() - 1 - x) * pieceSize, (board_.getLogic().getBoard().getSize() - 1 - y) * pieceSize);
+                //item->setPos((board_.GetBoard().GetSize() - 1 - x) * pieceSize, (board_.GetBoard().GetSize() - 1 - y) * pieceSize);
                 item->setPos(y * pieceSize, x * pieceSize);
                 addItem(item);
             }
@@ -50,19 +50,21 @@ namespace othello {
 
 
     void BoardGraphics::repaint() {
-        for (unsigned x = 0; x < board_.getLogic().getBoard().getSize(); ++x) {
-            for (unsigned y = 0; y < board_.getLogic().getBoard().getSize(); ++y) {
+        for (unsigned x = 0; x < board_.GetBoard().GetSize(); ++x) {
+            for (unsigned y = 0; y < board_.GetBoard().GetSize(); ++y) {
                 auto& piece = b[x][y];
-                if (!board_.getLogic().getBoard().isOccupied(x, y))
+                Color color;
+                bool occupied = board_.GetBoard().GetField(x, y).GetStatus(color);
+                if (!occupied)
                     piece->setPixmap(blank);
-                else if (board_.getLogic().getBoard().GetColor(x, y) == Color::BLACK)
+                else if (color == Color::BLACK)
                     piece->setPixmap(blackDisc);
                 else
                     piece->setPixmap(whiteDisc);
             }
         }
 
-        QPixmap& pixmap = board_.getCurrentPlayer().getColor() == Color::BLACK ? blackDiscLowOpacity : whiteDiscLowOpacity;
+        QPixmap& pixmap = board_.GetCurrentPlayer().GetColor() == Color::BLACK ? blackDiscLowOpacity : whiteDiscLowOpacity;
 
         for(const auto& c: changes){
             b[c.GetX()][c.GetY()]->setPixmap(pixmap);
@@ -95,7 +97,7 @@ namespace othello {
         unsigned y = static_cast<unsigned>(my / getPieceSize());
 
         changes.clear();
-        changes = board_.getLogic().prepareTurn(y, x, board_.getCurrentPlayer().getColor());
+        changes = board_.GetLogic().PrepareTurn(y, x, board_.GetCurrentPlayer().GetColor());
 
         repaint();
     }
@@ -109,7 +111,6 @@ namespace othello {
     }
 
     double BoardGraphics::getPieceSize() const {
-        return static_cast<double>(size) / board_.getLogic().getBoard().getSize();
+        return static_cast<double>(size) / board_.GetBoard().GetSize();
     }
-
 }

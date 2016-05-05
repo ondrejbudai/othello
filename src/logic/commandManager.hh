@@ -14,9 +14,9 @@ namespace othello {
 
   class ICommand {
     public:
-      virtual void execute() = 0;
-      virtual void undo() = 0;
-      virtual void redo() = 0;
+      virtual void Execute() = 0;
+      virtual void Undo() = 0;
+      virtual void Redo() = 0;
   };
 
   //TODO Uklada aj neplatne tahy!
@@ -24,40 +24,40 @@ namespace othello {
   //TODO ukladanie a nacitanie zo suboru
 
   class PlayMove: public ICommand{
-      std::unique_ptr<MainGame> *game;
-      std::vector<std::vector<Field>> oldBoard;
-      std::vector<std::vector<Field>> newBoard;
-      int oldCurrentPlayer;
-      int newCurrentPlayer;
-      std::pair<unsigned, unsigned> oldCurrentMove;//nie coords lebo je to class
+      std::unique_ptr<MainGame> *game_;
+      std::vector<std::vector<Field>> oldBoard_;
+      std::vector<std::vector<Field>> newBoard_;
+      int oldCurrentPlayer_;
+      int newCurrentPlayer_;
+      std::pair<unsigned, unsigned> oldCurrentMove_;//nie coords lebo je to class
 
     public:
 
       PlayMove(std::unique_ptr<MainGame> *g, unsigned x, unsigned y);
 
-      void execute();
+      void Execute();
 
-      void undo();
+      void Undo() override;
 
-      void redo();
+      void Redo() override;
   };
 
   typedef std::stack<std::shared_ptr<ICommand>> commandStack_t;
 
   class CommandManager{
-    commandStack_t undoStack;
-    commandStack_t redoStack;
+    commandStack_t undoStack_;
+    commandStack_t redoStack_;
 
   public:
     CommandManager(){}
 
-    void execute(std::shared_ptr<ICommand> command);
+    void Execute(std::shared_ptr<ICommand> command);
 
-    void undo();
+    void Undo();
 
-    void redo();
+    void Redo();
 
-    void saveAll(std::string fileName);
+    void SaveAll(std::string fileName);
 
   };
 }

@@ -37,7 +37,7 @@ namespace othello{
         QVBoxLayout *lay;
 
     public slots:
-        void HistoryItemSelected(QListWidgetItem* item);
+        // void HistoryItemSelected(QListWidgetItem* item);
 
     };
 
