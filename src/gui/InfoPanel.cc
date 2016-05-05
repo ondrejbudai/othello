@@ -6,7 +6,6 @@ namespace othello {
 
         //iniciaizujeme UI
         ui.setupUi(this);
-
     }
 
     void InfoPanel::WriteScore(std::pair<unsigned, unsigned> score) {
@@ -27,7 +26,7 @@ namespace othello {
         ui.BlackName->setText(black);
         ui.WhiteName->setText(white);
     }
-    
+
     //zvyraznenie kto prave hra - je to najtrivilanejsie riesenie, caka sa ze sa prerobi
     //+ ak sa nezmeni hrac nejake oknieko aby bolo jasne ze sa nezmenil hrac!
     void InfoPanel::HighlightPlayer(Color c){
@@ -40,6 +39,6 @@ namespace othello {
             ui.BlackName->setStyleSheet("QLabel { background-color : transparent}");
 
 
-        }    
+        }
     }
 }
