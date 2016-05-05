@@ -27,6 +27,15 @@ namespace othello {
         ui.WhiteName->setText(white);
     }
 
+    void InfoPanel::changeIcon(bool to){
+      if (to){
+          ui.PlayPause->setText("||");
+      }
+      else{
+        ui.PlayPause->setText("P");
+      }
+    }
+
     //zvyraznenie kto prave hra - je to najtrivilanejsie riesenie, caka sa ze sa prerobi
     //+ ak sa nezmeni hrac nejake oknieko aby bolo jasne ze sa nezmenil hrac!
     void InfoPanel::HighlightPlayer(Color c){

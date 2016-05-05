@@ -48,12 +48,12 @@ namespace othello {
     void OthelloGui::PlayPause(){
       if (playAi){
         playAi = false;
-
+        infoPanel->changeIcon(playAi);
       }
       else{
         playAi = true;
+        infoPanel->changeIcon(playAi);
         repaintGame();
-
       }
     }
 
@@ -172,12 +172,14 @@ namespace othello {
     void OthelloGui::ButtonUNDO() {
       cmd_.undo();
       playAi = false;
+      infoPanel->changeIcon(playAi);
       repaintGame();
     }
 
     void OthelloGui::ButtonREDO() {
       cmd_.redo();
       playAi = false;
+      infoPanel->changeIcon(playAi);
       repaintGame();
     }
     //TODO vsetko s histroiou do samotneho bloku!
@@ -294,8 +296,10 @@ namespace othello {
         // AI na tahu, nedelej nic
         if (game_->getCurrentPlayer().isAi())
             return;
-        else
+        else{
           playAi = true;
+          infoPanel->changeIcon(playAi);
+        }
 
         // update a prekreslit
         std::shared_ptr<ICommand> c(new PlayMove(&game_, mx, my));

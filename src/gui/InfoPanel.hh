@@ -24,9 +24,10 @@ namespace othello {
 
         void HighlightPlayer(Color c);
 
-    // public slots:
-    //
-    //   void changeIcon();
+        void changeIcon(bool to);
+
+      
+
 
     signals:
         void on_ButtonSaveGame_clicked();
