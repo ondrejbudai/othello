@@ -17,6 +17,7 @@ namespace othello {
       virtual bool Execute() = 0;
       virtual void Undo() = 0;
       virtual void Redo() = 0;
+      virtual void SaveToFile(std::ostream &outF) = 0;
   };
 
   //TODO Uklada aj neplatne tahy!
@@ -25,7 +26,8 @@ namespace othello {
 
   class PlayMove: public ICommand{
       std::unique_ptr<MainGame> *game_;
-      std::vector<std::vector<Field>> oldBoard_;
+      //std::vector<std::vector<Field>> oldBoard_;
+      GameBoard oldBoard_;
       int oldCurrentPlayer_;
       std::pair<unsigned, unsigned> oldCurrentMove_;//nie coords lebo je to class
 
@@ -38,6 +40,8 @@ namespace othello {
       void Undo() override;
 
       void Redo() override;
+
+      void SaveToFile(std::ostream &outF) override;
 
   };
 
@@ -56,7 +60,7 @@ namespace othello {
 
     void Redo();
 
-    void SaveAllToFile(std::ostream &outF);
+    void SaveToFile(std::ostream &outF);
 
   };
 }

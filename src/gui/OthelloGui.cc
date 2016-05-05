@@ -165,7 +165,7 @@ namespace othello {
         std::ofstream fl;
         fl.open(fileName);
         game_->SaveGameToFile(fl);
-        cmd_.SaveAllToFile(fl);
+        cmd_.SaveToFile(fl);
         fl.close();
     }
 

@@ -72,6 +72,7 @@ namespace othello {
         void Print(std::ostream& os) const;//Zobrazi hraciu plochu na terminal
 
         void SetBoard(Board b) {board_ = b;}
+        void SetBoard(const GameBoard &b) {board_ = b.board_;}
 
         iterator begin(){return iterator{&board_};};
         const_iterator begin() const {return const_iterator{&board_, true};};

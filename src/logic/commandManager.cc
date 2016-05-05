@@ -13,13 +13,15 @@
 
 namespace othello {
 
-  PlayMove::PlayMove(std::unique_ptr<MainGame> *g, unsigned x, unsigned y){
+  PlayMove::PlayMove(std::unique_ptr<MainGame> *g, unsigned x, unsigned y)
+    :oldBoard_((*g)->GetBoard())
+  {
         game_ = g;
         oldCurrentMove_ = std::make_pair(x, y);
       }
 
   bool PlayMove::Execute(){
-        oldBoard_ = (*game_)->GetBoard().GetBoard();
+        //oldBoard_ = (*game_)->GetBoard().GetBoard();
         oldCurrentPlayer_ = (*game_)->GetCurrentPlayerNum();
         if (!(*game_)->Event(oldCurrentMove_.first, oldCurrentMove_.second))
           return false;
@@ -60,17 +62,22 @@ namespace othello {
       redoStack_.pop();
     }
 
-    void CommandManager::SaveAllToFile(std::ostream &outF){
+    void CommandManager::SaveToFile(std::ostream &outF){
         while (undoStack_.size() > 0){
-            //
-            // outF<<(hisItem.currentPlayer == Color::BLACK?"black":"white")<<std::endl;
-            // outF<<hisItem.currentMove.first<<std::endl;
-            // outF<<hisItem.currentMove.second<<std::endl;
-            // printBoardToFile(hisItem.board, outF);
+          undoStack_.top()->SaveToFile(outF);
+          redoStack_.push(undoStack_.top());
+          undoStack_.pop();
         }
-
+        while (redoStack_.size() > 0){
+          undoStack_.push(redoStack_.top());
+          redoStack_.pop();
+        }
     }
 
-
+    void PlayMove::SaveToFile(std::ostream &outF){
+            oldBoard_.Print(outF);
+            outF<<std::endl<<oldCurrentPlayer_<<std::endl;
+            outF<<oldCurrentMove_.first<<" "<<oldCurrentMove_.second<<std::endl;
+    }
 }
 #endif
