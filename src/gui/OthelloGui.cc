@@ -45,6 +45,18 @@ namespace othello {
         connect(timer, &QTimer::timeout, this, &OthelloGui::TimeoutSlot);
     }
 
+    void OthelloGui::PlayPause(){
+      if (playAi){
+        playAi = false;
+
+      }
+      else{
+        playAi = true;
+        repaintGame();
+
+      }
+    }
+
     //Po kliknuti na zaciatok hry spracuje nastavenia hry, ktore si uziatel zvolil
     void OthelloGui::LoadGameConfiguration(){
 
@@ -111,6 +123,9 @@ namespace othello {
         connect(infoPanel, &InfoPanel::on_ButtonSaveGame_clicked, this, &OthelloGui::ButtonSaveGame);
         connect(infoPanel, &InfoPanel::on_ButtonREDO_clicked, this, &OthelloGui::ButtonREDO);
         connect(infoPanel, &InfoPanel::on_ButtonUNDO_clicked, this, &OthelloGui::ButtonUNDO);
+        connect(infoPanel, &InfoPanel::on_PlayPause_clicked, this, &OthelloGui::PlayPause);
+        //connect(this, &InfoPanel::changeIcon, infoPanel, &InfoPanel::changeIcon);
+        //connect(this, SIGNAL(changeIcon(bool)), &InfoPanel, SLOT(changeIcon(bool)));
 
         repaintGame();
     }
@@ -154,11 +169,13 @@ namespace othello {
 
     void OthelloGui::ButtonUNDO() {
       cmd_.undo();
+      playAi = false;
       repaintGame();
     }
 
     void OthelloGui::ButtonREDO() {
       cmd_.redo();
+      playAi = false;
       repaintGame();
     }
     //TODO vsetko s histroiou do samotneho bloku!
@@ -275,6 +292,8 @@ namespace othello {
         // AI na tahu, nedelej nic
         if (game_->getCurrentPlayer().isAi())
             return;
+        else
+          playAi = true;
 
         // update a prekreslit
         std::shared_ptr<ICommand> c(new PlayMove(&game_, mx, my));
@@ -302,7 +321,7 @@ namespace othello {
             return;
         }
 
-        if (game_->getCurrentPlayer().isAi())
+        if (playAi && game_->getCurrentPlayer().isAi())
             timer->start();
 
     }

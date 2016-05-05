@@ -27,6 +27,8 @@ namespace othello {
 
         void ButtonShowHistory();
 
+        void PlayPause();
+
         void ButtonREDO();
 
         void ButtonUNDO();
@@ -36,6 +38,9 @@ namespace othello {
         void GameClickSlot(unsigned mx, unsigned my);
 
         void TimeoutSlot();
+
+    signals:
+      void changeIcon(); 
 
     private:
         Ui::OthelloGui ui;
@@ -50,6 +55,7 @@ namespace othello {
         HistoryPanel *historyPanel;
         QTimer* timer;
         StartPanel* startPanel;
+        bool playAi = true;
 
         void ShowGameBoard(PlayerType p1, PlayerType p2, unsigned boardSize,
                            const std::pair<std::string, std::string>& names);

@@ -23,12 +23,20 @@ namespace othello {
         void SetNames(const std::pair<std::string, std::string>& names);
 
         void HighlightPlayer(Color c);
+
+    // public slots:
+    //
+    //   void changeIcon();
+
     signals:
         void on_ButtonSaveGame_clicked();
 
         void on_ButtonUNDO_clicked();
 
         void on_ButtonREDO_clicked();
+
+        void on_PlayPause_clicked();
+
 
     };
 }
