@@ -13,6 +13,6 @@ namespace othello {
         Field(Color piece) : occupied_{true}, piece_{piece}{}
         bool GetStatus(Color& color) const;
         bool IsOccupied() const {return occupied_;}
-        bool SetColor(Color color){piece_ = color; occupied_ = true;}
+        void SetColor(Color color){piece_ = color; occupied_ = true;}
     };
 }

@@ -2,6 +2,8 @@ SOURCES := AI.cc GameBoard.cc GameLogic.cc MainGame.cc Player.cc commandManager.
 
 OBJECTS :=	$(SOURCES:.cc=.o)
 
+CXXFLAGS := -std=c++14 -Wall -Wextra -pedantic -g
+
 all: ../liblogic.a
 
 ../liblogic.a: $(OBJECTS)
@@ -9,7 +11,7 @@ all: ../liblogic.a
 	ranlib $@
 
 %.o: %.cc
-	$(CXX) -c -g -std=c++14 -o $@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
 dep:
 	@$(CXX) -MM -std=c++14 $(SOURCES) >deps

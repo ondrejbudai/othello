@@ -25,11 +25,11 @@ namespace othello{
         ui.y->setText(QString::number(M.second));
     }
 
-    void HistoryItemGui::setBoard(GameBoard& B){
-        BoardGraphics* scene;
+    void HistoryItemGui::setBoard(GameBoard&){
+        // BoardGraphics* scene;
         // scene = new BoardGraphics(B);
-        GraphicsView *view = new GraphicsView(scene);
-        ui.BoardLayout->addWidget(view);
+        // GraphicsView *view = new GraphicsView(scene);
+        // ui.BoardLayout->addWidget(view);
 
     }
 }

@@ -188,7 +188,7 @@ namespace othello {
     //--medzerou oddelene historie, kde kazda ma format
     //farba-kto-zahral x y
     //hracia doska
-     bool MainGame::SaveGameToFile(std::ofstream &outF){
+    //  bool MainGame::SaveGameToFile(std::ofstream &outF){
     //     //TODO HERE
     //     outF<<players_[0]->getName()<<std::endl;
     //     outF<<(players_[0]->isAi() ? "AI":"HUMAN")<<std::endl;
@@ -213,7 +213,7 @@ namespace othello {
     //         printBoardToFile(hisItem.board, outF);
     //     }
     //     return true;
-     }
+    //  }
     //
 
 

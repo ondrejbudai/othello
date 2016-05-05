@@ -15,6 +15,8 @@ GUI_INCLUDES :=	-I$(QT_INC)/QtCore -I$(QT_INC)/QtGui -I$(QT_INC)/QtWidgets -I$(Q
 OTHELLO := ../othello
 OTHELLO_CLI := ../othello-cli
 
+CXXFLAGS := -std=c++14 -Wall -Wextra -pedantic -g
+
 LD_LIBRARY_PATH += /usr/local/share/Qt-5.5.1/5.5/gcc_64/lib
 export LD_LIBRARY_PATH
 
@@ -36,10 +38,10 @@ force:
 	@true
 
 $(OBJECTS_GUI): %.o: %.cc
-	$(CXX) -c -std=c++14 $(GUI_INCLUDES) -o $@ $<
+	$(CXX) -c $(CXXFLAGS) $(GUI_INCLUDES) -o $@ $<
 
 $(OBJECTS_CLI): %.o: %.cc
-	$(CXX) -c -std=c++14 -o $@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
 clean: $(SUB_CLEAN)
 	rm $(OBJECTS_CLI) $(OBJECTS_GUI) 2>/dev/null || true

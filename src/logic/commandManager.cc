@@ -58,8 +58,8 @@ namespace othello {
       redoStack_.pop();
     }
 
-    void CommandManager::SaveAll(std::string fileName){
-    }
+    // void CommandManager::SaveAll(std::string fileName){
+    // }
 
 
 }

@@ -6,6 +6,7 @@ HEADERS := $(SOURCES:.cc=.hh)
 MOC_FILES := $(HEADERS:%.hh=moc_%.cc)
 OBJECTS += $(MOC_FILES:.cc=.o)
 
+CXXFLAGS := -std=c++14 -Wall -Wextra -pedantic -g
 
 UI_HEADERS := $(UI:%.ui=ui_%.h)
 
@@ -22,7 +23,7 @@ all: $(UI_HEADERS) $(MOC_FILES) ../libgui.a
 	ranlib $@
 
 %.o: %.cc
-	$(CXX) -c -g -std=c++14 $(GUI_INCLUDES) -o $@ $<
+	$(CXX) -c $(CXXFLAGS) $(GUI_INCLUDES) -o $@ $<
 
 dep: $(UI_HEADERS)
 	@$(CXX) -MM -std=c++14 $(SOURCES) >deps
