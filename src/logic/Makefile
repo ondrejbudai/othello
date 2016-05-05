@@ -9,7 +9,7 @@ all: ../liblogic.a
 	ranlib $@
 
 %.o: %.cc
-	$(CXX) -c -std=c++14 -o $@ $<
+	$(CXX) -c -g -std=c++14 -o $@ $<
 
 dep:
 	@$(CXX) -MM -std=c++14 $(SOURCES) >deps
