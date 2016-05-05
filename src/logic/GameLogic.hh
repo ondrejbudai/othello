@@ -15,7 +15,6 @@ namespace othello {
     public:
         GameLogic(unsigned size) : board_{size} { }
 
-
         std::vector<Coords> prepareTurn(unsigned x, unsigned y, Color addingColor) const;
 
         void copyBoard(std::vector<std::vector<Field>>& toThis) {board_.copyBoard(toThis);};

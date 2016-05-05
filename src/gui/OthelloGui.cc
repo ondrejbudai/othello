@@ -96,11 +96,13 @@ namespace othello {
         infoPanel = new InfoPanel;
         infoPanel->SetNames(names);
 
-        scene = new BoardGraphics(game_->getLogic().getBoard().GetBoard());
+        scene = new BoardGraphics(*game_);
 
         connect(scene, &BoardGraphics::ClickSignal, this, &OthelloGui::GameClickSlot);
         view = new GraphicsView(scene);
         connect(view, &GraphicsView::mouseMoveSignal, scene, &BoardGraphics::mouseMoveSlot);
+        connect(view, &GraphicsView::enterSignal, scene, &BoardGraphics::enterSlot);
+        connect(view, &GraphicsView::leaveSignal, scene, &BoardGraphics::leaveSlot);
 
         clearStackedWidget(ui.gameBoardLayout);
         ui.gameBoardLayout->addWidget(view);

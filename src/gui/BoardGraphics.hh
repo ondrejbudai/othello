@@ -22,11 +22,14 @@ namespace othello {
         GraphicsView(QGraphicsScene* s);
 
         virtual void resizeEvent(QResizeEvent*);
-
-        virtual void mouseMoveEvent(QMouseEvent* mouseEvent);
+        virtual void mouseMoveEvent(QMouseEvent* mouseEvent) override;
+        virtual void enterEvent(QEvent*) override;
+        virtual void leaveEvent(QEvent*) override;
 
     signals:
         void mouseMoveSignal(QPointF coords);
+        void enterSignal();
+        void leaveSignal();
     };
 
 
@@ -44,10 +47,12 @@ namespace othello {
         unsigned size;
 
         QPixmap blackDisc;
+        QPixmap blackDiscLowOpacity;
         QPixmap whiteDisc;
+        QPixmap whiteDiscLowOpacity;
         QPixmap blank;
 
-        BoardGraphics(const std::vector<std::vector<Field>>& logic);
+        BoardGraphics(const MainGame& logic);
 
         void repaint();
 
@@ -55,14 +60,15 @@ namespace othello {
 
     public slots:
         void mouseMoveSlot(QPointF coords);
+        void enterSlot();
+        void leaveSlot();
 
     private:
-        const std::vector<std::vector<Field>>& board_;
+        const MainGame& board_;
+
+        std::vector<Coords> changes;
 
         double getPieceSize() const;
-
-        unsigned int mouseX;
-        unsigned int mouseY;
         bool mouseOver = false;
     };
 }

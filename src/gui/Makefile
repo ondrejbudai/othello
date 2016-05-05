@@ -22,7 +22,7 @@ all: $(UI_HEADERS) $(MOC_FILES) ../libgui.a
 	ranlib $@
 
 %.o: %.cc
-	$(CXX) -c -std=c++14 $(GUI_INCLUDES) -o $@ $<
+	$(CXX) -c -g -std=c++14 $(GUI_INCLUDES) -o $@ $<
 
 dep: $(UI_HEADERS)
 	@$(CXX) -MM -std=c++14 $(SOURCES) >deps

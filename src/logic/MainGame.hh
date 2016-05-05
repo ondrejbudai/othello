@@ -16,7 +16,6 @@ namespace othello {
         HUMAN, AI
     };
 
-
     class MainGame {
     private:
         GameLogic logic_;
@@ -38,7 +37,7 @@ namespace othello {
 
         bool canPlay(Color color) const;
 
-        const GameLogic& getLogic() { return logic_; }
+        const GameLogic& getLogic() const { return logic_; }
 
         GameLogic& getLogicRef() { return logic_; }
 
