@@ -15,7 +15,7 @@ namespace othello {
 
     /**
      * Herná logika pre validáciu ťahov.
-     * @class Gameogic
+     * @class GameLogic
      */
     class GameLogic {
     private:
