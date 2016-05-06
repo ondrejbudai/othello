@@ -9,12 +9,13 @@
 #include <iostream>
 #include "logic/CommandManager.hh"
 #include <memory>
+#include "logic/GameBoard.hh"
 
 int main() {
     //vytvorime obrazovky
     //so vsetkym klikanim a pod
     //ak si vyberie novu hru a klikne start, tak sa zavola funkcia othello::MainGame(parametre)
-    std::unique_ptr<othello::MainGame> g = std::make_unique<othello::MainGame>(8, othello::PlayerType::HUMAN, othello::PlayerType::AI);
+    std::unique_ptr<othello::MainGame> g = std::make_unique<othello::MainGame>(8, othello::PlayerType::AI, othello::PlayerType::AI);
     //othello::MainGame g(8, othello::PlayerType::HUMAN, othello::PlayerType::AI);//toto potom tu nebude
     othello::CommandManager cmd_ = othello::CommandManager();
     //samotne okno pri udalosti, vyvola funkcie, ktore su implementovane v gamelogic a v maingame
@@ -29,6 +30,11 @@ int main() {
         if (!g->GetCurrentPlayer().IsAi()) {
             std::cout << "Zadaj suradnice: " << std::flush;
             std::cin >> x >> y;
+        }
+        else{
+          othello::Coords c = g->TellAIToPlay();
+          x = c.GetX();
+          y = c.GetY();
         }
 
         //g.event(x, y);
