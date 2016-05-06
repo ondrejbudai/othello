@@ -11,7 +11,6 @@
 #include <cassert>
 
 namespace othello {
-
     AI::AI(Color c, const GameLogic& logic, double randomness) : Player(c, logic), randomness_{randomness} {
         std::random_device rd;
         random_ = std::mt19937(rd());

@@ -7,7 +7,7 @@
 
 #include "logic/MainGame.hh"
 #include <iostream>
-#include "logic/commandManager.hh"
+#include "logic/CommandManager.hh"
 #include <memory>
 
 int main() {

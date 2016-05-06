@@ -16,7 +16,7 @@
 #include "BoardGraphics.hh"
 #include "StartPanel.hh"
 #include "ui_OthelloGui.h"
-#include "../logic/commandManager.hh"
+#include "../logic/CommandManager.hh"
 
 namespace othello {
     class OthelloGui : public QWidget {
