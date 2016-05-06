@@ -1,3 +1,10 @@
+/**
+* @file
+* @brief Správa hry.
+* @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+* @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+*/
+
 /*  HLAVICKA
  *  ----------Funkcionalita---------------
  *  Modul sa stara o validitu tahov.

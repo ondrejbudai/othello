@@ -1,6 +1,9 @@
-//
-// Created by ondra on 11.2.16.
-//
+/**
+ * @file
+ * @brief Kontejner pro herní desku.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
 
 #ifndef OTHELLO_GAMEBOARD_HH
 #define OTHELLO_GAMEBOARD_HH

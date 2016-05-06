@@ -1,3 +1,10 @@
+/**
+* @file
+* @brief Spouštěcí soubor pro grafickou verzi.
+* @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+* @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+*/
+
 #include <QApplication>
 
 #include "gui/MainWindow.hh"

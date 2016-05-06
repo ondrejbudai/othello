@@ -1,6 +1,9 @@
-//
-// Created by matej on 11.2.16.
-//
+/**
+ * @file
+ * @brief Herní logika.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
 
 #ifndef OTHELLO_GAMELOGIC_HH
 #define OTHELLO_GAMELOGIC_HH

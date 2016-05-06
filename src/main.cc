@@ -1,6 +1,9 @@
-//
-// Created by ondra on 11.2.16.
-//
+/**
+* @file
+* @brief Spouštěcí soubor pro terminálovou verzi.
+* @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+* @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+*/
 
 #include "logic/MainGame.hh"
 #include <iostream>

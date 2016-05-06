@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @brief Widget na vybírání hráčů.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
+
 #include "PlayerSelection.hh"
 
 PlayerSelection::PlayerSelection(QWidget *parent) :

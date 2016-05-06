@@ -1,6 +1,9 @@
-//
-// Created by ondra on 11.2.16.
-//
+/**
+* @file
+* @brief Definice abstraktního hráče.
+* @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+* @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+*/
 
 #ifndef OTHELLO_PLAYER_HH
 #define OTHELLO_PLAYER_HH
@@ -18,7 +21,7 @@ namespace othello {
     public:
         Player(Color c, const GameLogic& logic) : color_{c}, logic_{logic} { }
 
-        virtual ~Player();
+        virtual ~Player(){}
 
         virtual Coords Play() { return {0, 0}; }
 

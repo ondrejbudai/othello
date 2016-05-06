@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @brief Hlavní okno aplikace.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
+
 #ifndef OTHELLO_MAINWINDOW_HH
 #define OTHELLO_MAINWINDOW_HH
 

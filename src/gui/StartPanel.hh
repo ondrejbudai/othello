@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @brief Panel na zahájení nové hry.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
+
 #ifndef OTHELLO_STARTPANEL_HH
 #define OTHELLO_STARTPANEL_HH
 

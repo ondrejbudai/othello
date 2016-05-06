@@ -1,6 +1,9 @@
-//
-// Created by matej on 11.2.16.
-//
+/**
+ * @file
+ * @brief Manažer undo a redo akcí.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
 
 #ifndef OTHELLO_COMMAND_MANAGER_HH
 #define OTHELLO_COMMAND_MANAGER_HH

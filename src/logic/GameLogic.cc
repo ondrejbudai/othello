@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @brief Herní logika.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
+
 #include "GameLogic.hh"
 #include "MainGame.hh"
 #include <cassert>

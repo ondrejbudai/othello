@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @brief Widget ukazující informace o aktuálně hrané hře.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
+
 #ifndef OTHELLO_INFOPANEL_HH
 #define OTHELLO_INFOPANEL_HH
 

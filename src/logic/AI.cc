@@ -1,6 +1,9 @@
-//
-// Created by ondra on 11.2.16.
-//
+/**
+ * @file
+ * @brief Umělá inteligence pouze s predikcí na jeden tah dopředu.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
 
 #include "AI.hh"
 #include <iostream>

@@ -1,5 +1,11 @@
-#include "BoardGraphics.hh"
+/**
+ * @file
+ * @brief Widget na zobrazování herní grafiky.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
 
+#include "BoardGraphics.hh"
 
 namespace othello {
     GraphicsView::GraphicsView(QGraphicsScene* s) : QGraphicsView(s) {

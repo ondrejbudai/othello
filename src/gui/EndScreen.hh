@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @brief Widget ukazující informace na konci hry.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
+
 #ifndef OTHELLO_ENDSCREEN_HH
 #define OTHELLO_ENDSCREEN_HH
 

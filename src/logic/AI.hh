@@ -1,6 +1,9 @@
-//
-// Created by ondra on 11.2.16.
-//
+/**
+ * @file
+ * @brief Umělá inteligence pouze s predikcí na jeden tah dopředu.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
 
 #ifndef OTHELLO_AI_HH
 #define OTHELLO_AI_HH
@@ -17,6 +20,8 @@ namespace othello {
         double randomness_;
     public:
         AI(Color c, const GameLogic& logic, double randomness = 1);
+
+        ~AI(){}
 
         virtual bool IsAi() const override { return true; }
 

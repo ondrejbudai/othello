@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @brief Jedno herní pole.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
+
 #ifndef OTHELLO_FIELD_HH
 #define OTHELLO_FIELD_HH
 

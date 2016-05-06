@@ -1,6 +1,14 @@
+/**
+ * @file
+ * @brief Widget obsahující jednu instanci hry.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
+
 #ifndef OTHELLO_OTHELLOGUI_HH
 #define OTHELLO_OTHELLOGUI_HH
 
+#include <QTimer>
 #include <QGraphicsView>
 #include "PlayerSelection.hh"
 #include "../logic/MainGame.hh"

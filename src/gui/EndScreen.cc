@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @brief Widget ukazující informace na konci hry.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
+
 #include "EndScreen.hh"
 
 namespace othello {
@@ -41,4 +48,3 @@ namespace othello {
         }
     }
 }
-

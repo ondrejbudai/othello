@@ -1,15 +1,17 @@
+/**
+ * @file
+ * @brief Widget na zobrazování herní grafiky.
+ * @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+ * @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+ */
+
 #ifndef GRAPHICS_SCENE_HH
 #define GRAPHICS_SCENE_HH
 
-#include <QApplication>
-#include <QMainWindow>
-#include <QGridLayout>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
-#include <QtCore>
-#include <iostream>
 #include <QResizeEvent>
 #include <QPixmap>
 #include "../logic/MainGame.hh"

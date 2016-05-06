@@ -1,6 +1,9 @@
-//
-// Created by ondra on 11.2.16.
-//
+/**
+* @file
+* @brief Správa hry.
+* @author Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+* @author Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+*/
 
 #ifndef OTHELLO_MAINGAME_HH
 #define OTHELLO_MAINGAME_HH
