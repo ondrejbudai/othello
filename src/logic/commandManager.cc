@@ -67,7 +67,7 @@ namespace othello {
           redoStack_.push(undoStack_.top());
           undoStack_.pop();
         }
-
+        outF<<redoStack_.size()<<std::endl;
         while (redoStack_.size() > 0){
           redoStack_.top()->SaveToFile(outF);
           undoStack_.push(redoStack_.top());

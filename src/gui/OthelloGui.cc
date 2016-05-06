@@ -219,6 +219,18 @@ namespace othello {
         ShowGameBoard(p1, p2, boardSize, names);
         //Nastav ze zo suboru sa hra a zacni hrat
 
+        int count;
+        inF>>count;
+
+        std::cout<<"Zaznamov je "<<count<<"\n";
+        int mx;
+        int my;
+        for (int i = 0; i < count; i++){
+          inF>>mx;
+          inF>>my;
+          std::shared_ptr<ICommand> c(new PlayMove(&game_, mx, my));
+          cmd_.Execute(c);
+        }
         inF.close();
         repaintGame();
     }
