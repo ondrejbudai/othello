@@ -75,8 +75,8 @@ namespace othello {
         void SetBoard(const GameBoard &b) {board_ = b.board_;}
 
         iterator begin(){return iterator{&board_};};
-        const_iterator begin() const {return const_iterator{&board_, true};};
-        iterator end(){return iterator{&board_};};
+        const_iterator begin() const {return const_iterator{&board_};};
+        iterator end(){return iterator{&board_, true};};
         const_iterator end() const {return const_iterator{&board_, true};};
     };
 }
