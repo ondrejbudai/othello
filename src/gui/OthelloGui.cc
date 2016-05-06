@@ -222,7 +222,6 @@ namespace othello {
         int count;
         inF>>count;
 
-        std::cout<<"Zaznamov je "<<count<<"\n";
         int mx;
         int my;
         for (int i = 0; i < count; i++){
