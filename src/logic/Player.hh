@@ -18,6 +18,8 @@ namespace othello {
     public:
         Player(Color c, const GameLogic& logic) : color_{c}, logic_{logic} { }
 
+        virtual ~Player();
+
         virtual Coords Play() { return {0, 0}; }
 
         virtual Color GetColor() const { return color_; }

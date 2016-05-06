@@ -1,3 +1,6 @@
+#ifndef OTHELLO_FIELD_HH
+#define OTHELLO_FIELD_HH
+
 namespace othello {
 
     enum class Color {
@@ -16,3 +19,5 @@ namespace othello {
         void SetColor(Color color){piece_ = color; occupied_ = true;}
     };
 }
+
+#endif

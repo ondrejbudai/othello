@@ -5,7 +5,7 @@
 #include <QFrame>
 #include <string>
 #include "ui_InfoPanel.h"
-#include "../logic/GameBoard.hh"
+#include "../logic/Field.hh"
 
 namespace othello {
     class InfoPanel : public QFrame {
@@ -26,7 +26,7 @@ namespace othello {
 
         void changeIcon(bool to);
 
-      
+
 
 
     signals:
