@@ -11,22 +11,26 @@
 #include <QFrame>
 #include "ui_PlayerSelection.h"
 
-class PlayerSelection : public QFrame
-{
-    Q_OBJECT
+namespace othello {
 
-public:
-    explicit PlayerSelection(QWidget *parent = 0);
-    ~PlayerSelection();
+    class PlayerSelection : public QFrame
+    {
+        Q_OBJECT
 
-    std::array<QString, 2> getNames();
+    public:
+        explicit PlayerSelection(QWidget *parent = 0);
+        ~PlayerSelection();
 
-    std::array<QString, 2> getTypes();
-    QString getBoardSize();
-signals:
-    void on_ButtonStartGame_clicked();
-private:
-    Ui::PlayerSelection *ui;
-};
+        std::array<QString, 2> getNames();
+
+        std::array<QString, 2> getTypes();
+        QString getBoardSize();
+    signals:
+        void on_ButtonStartGame_clicked();
+    private:
+        Ui::PlayerSelection *ui;
+    };
+
+}
 
 #endif // PLAYERSELECTION_H
