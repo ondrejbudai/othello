@@ -15,7 +15,7 @@
 namespace othello {
 
     /**
-     * Hlavní okno, obsahuje panely s jednotlivými instancemi her
+     * @brief Hlavní okno, obsahuje panely s jednotlivými instancemi her
      */
     class MainWindow : public QTabWidget {
     Q_OBJECT

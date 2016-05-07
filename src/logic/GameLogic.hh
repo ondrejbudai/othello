@@ -14,14 +14,14 @@
 namespace othello {
 
     /**
-     * Herná logika pre validáciu ťahov.
+     * @brief Herná logika pre validáciu ťahov.
      * @class GameLogic
      */
     class GameLogic {
     private:
 
         /**
-         * Uloženie aktuálnej GameBoard.
+         * @brief Uloženie aktuálnej GameBoard.
          * @var board_
          */
         GameBoard board_;
@@ -29,25 +29,25 @@ namespace othello {
     public:
 
         /**
-         * Konštruktor hernej logicky.
+         * @brief Konštruktor hernej logicky.
          * @method GameLogic
          * @arg size  Veľkosť hracej dosky.
          */
         GameLogic(unsigned size) : board_{size} { }
 
         /**
-         * Kontrola validity ťahu a zistenie kameňov, ktoré sa majú obráťiť.
+         * @brief Kontrola validity ťahu a zistenie kameňov, ktoré sa majú obráťiť.
          * @method PrepareTurn
-         * @arg x   X súradnica pripravovaného ťahu.
-         * @arg y   Y súradnica pripravovaného ťahu.
-         * @arg addingColor   Farba hráča, ktorý hrá.
+         * @param x   X súradnica pripravovaného ťahu.
+         * @param y   Y súradnica pripravovaného ťahu.
+         * @param addingColor   Farba hráča, ktorý hrá.
          * @return Všetky kamene, ktoré sa nastavia na farbu hráča.
          *
          */
         std::vector<Coords> PrepareTurn(unsigned x, unsigned y, Color addingColor) const;
 
         /**
-         * Zápis ťahu - nastavenie kameňov.
+         * @brief Zápis ťahu - nastavenie kameňov.
          * @method CommitTurn
          * @param  pieces     Všetky kamene, ktoré majú byť nastavené.
          * @param  player     Farba hráča, na ktorú maju byť kamene nastavené.
@@ -55,21 +55,21 @@ namespace othello {
         void CommitTurn(const std::vector<Coords>& pieces, Color player);
 
         /**
-         * Vráti referenciu na aktuálnu dosku.
+         * @brief Vráti referenciu na aktuálnu dosku.
          * @method GetBoard
          * @return Referencia na aktuálnu dosku.
          */
         const GameBoard& GetBoard() const { return board_; }
 
         /**
-         * Vráti aktuáne skóre.
+         * @brief Vráti aktuáne skóre.
          * @method GetScore
          * @return Pár skóre čierneho, skóre bieleho
          */
         std::pair<unsigned, unsigned> GetScore() const;
 
         /**
-         * Nastaví aktuálnu hraciu plochu.
+         * @brief Nastaví aktuálnu hraciu plochu.
          * @method SetGameBoard
          * @param  old          Hracua plocha, ktorá sa má nastaviť.
          */

@@ -16,25 +16,25 @@
 
 namespace othello {
     /**
-     * Súradnice.
+     * @brief Súradnice.
      * @class Coords
      */
     class Coords {
     private:
         /**
-         * Súradnica x.
+         * @brief Súradnica x.
          * @var x_
          */
         unsigned x_;
 
         /**
-         * Súradnica y.
+         * @brief Súradnica y.
          * @var y_
          */
         unsigned y_;
     public:
         /**
-         * Konštruktor súradníc
+         * @brief Konštruktor súradníc
          * @method Coords
          * @arg x Súradnica x.
          * @arg y Súradnica y.
@@ -42,44 +42,49 @@ namespace othello {
         Coords(unsigned x, unsigned y) : x_{x}, y_{y} { }
 
         /**
-         * Vráti x-ovú časť súradnice.
+         * @brief Vráti x-ovú časť súradnice.
          * @method GetX
          * @return x-ová časť súradnice.
          */
         unsigned GetX() const { return x_; }
 
         /**
-         * Vráti y-ovú časť súradnice.
+         * @brief Vráti y-ovú časť súradnice.
          * @method GetY
          * @return y-ová časť súradnice.
          */
         unsigned GetY() const { return y_; }
     };
 
-    inline Color GetOppositeColor(Color myColor) {
-        return myColor == Color::BLACK ? Color::WHITE : Color::BLACK;
+    /**
+     * @brief Vrať opačnou barvu
+     * @param  my_color Barva na obrácení
+     * @return Opačná barva
+     */
+    inline Color GetOppositeColor(Color my_color) {
+        return my_color == Color::BLACK ? Color::WHITE : Color::BLACK;
     }
 
     /**
-     * Hracia doska.
+     * @brief Hracia doska.
      * @class GameBoard
      */
     class GameBoard {
     private:
         /**
-         * Hracia doska je vektor vektorov políčok.
+         * @brief Hracia doska je vektor vektorov políčok.
          * @typedef Board
          */
         using Board = std::vector<std::vector<Field>>;
 
         /**
-         * Hracia doska.
+         * @brief Hracia doska.
          * @var board_
          */
         Board board_;
 
         /**
-         * Veľkosť hracej dosky.
+         * @brief Veľkosť hracej dosky.
          * @var size_
          */
         const unsigned size_;
@@ -110,21 +115,21 @@ namespace othello {
 
     public:
         /**
-         * Konštruktor hracej dosky.
+         * @brief Konštruktor hracej dosky.
          * @method GameBoard
          * @arg size  Veĺkosť hracej dosky.
          */
         GameBoard(unsigned size);
 
         /**
-         * Vráti hraciu dosku.
+         * @brief Vráti hraciu dosku.
          * @method GetBoard
          * @return Referencia na hraciu dosku.
          */
         const Board& GetBoard() const {return board_;}
 
         /**
-         * Vráti políčko z hracej dosky, určené súradnicami.
+         * @brief Vráti políčko z hracej dosky, určené súradnicami.
          * @method GetField
          * @param  x        X-ová súradnica.
          * @param  y        Y-ová súradnica.
@@ -133,7 +138,7 @@ namespace othello {
         Field& GetField(unsigned x, unsigned y);
 
         /**
-         * Vráti políčko z hracej dosky, určené súradnicami.
+         * @brief Vráti políčko z hracej dosky, určené súradnicami.
          * @method GetField
          * @param  x        X-ová súradnica.
          * @param  y        Y-ová súradnica.
@@ -142,7 +147,7 @@ namespace othello {
         const Field& GetField(unsigned x, unsigned y) const;
 
         /**
-         * Vráti políčko z hracej dosky, určené súradnicami.
+         * @brief Vráti políčko z hracej dosky, určené súradnicami.
          * @method GetField
          * @param  c        súradnice bodu.
          * @return          Referenica na vybrané políčko.
@@ -150,7 +155,7 @@ namespace othello {
         Field& GetField(Coords c);
 
         /**
-         * Vráti políčko z hracej dosky, určené súradnicami.
+         * @brief Vráti políčko z hracej dosky, určené súradnicami.
          * @method GetField
          * @param  c        súradnice bodu.
          * @return          Konštantná referenica na vybrané políčko.
@@ -158,14 +163,14 @@ namespace othello {
         const Field& GetField(Coords c) const;
 
         /**
-         * Vráti veľkosť hracej dosky.
+         * @brief Vráti veľkosť hracej dosky.
          * @method GetSize
          * @return Veľkosť hracej dosky.
          */
         unsigned GetSize() const { return size_; }
 
         /**
-         * Vráti všetky susediace políčka.
+         * @brief Vráti všetky susediace políčka.
          * @method GetNeighbours
          * @arg x   X-ová súradnica.
          * @arg y   Y-ová súradnica.
@@ -174,21 +179,21 @@ namespace othello {
         std::vector<Coords> GetNeighbours(unsigned x, unsigned y) const;
 
         /**
-         * Zapíše hraciu plochu do súboru.
+         * @brief Zapíše hraciu plochu do súboru.
          * @method Print
          * @param  os    pripravený výstupný súbor.
          */
         void Print(std::ostream& os) const;//Zobrazi hraciu plochu na terminal
 
         /**
-         * Nastaví hraciu plochu.
+         * @brief Nastaví hraciu plochu.
          * @method SetBoard
          * @param  b        Vzor plochy, ktorá sa má nastaviť.
          */
         void SetBoard(Board b) {board_ = b;}
 
         /**
-         * Nastaví hraciu plochu.
+         * @brief Nastaví hraciu plochu.
          * @method SetBoard
          * @param  b        Vzor plochy, ktorá sa má nastaviť.
          */

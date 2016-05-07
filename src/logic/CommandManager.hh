@@ -16,56 +16,56 @@
 
 namespace othello {
   /**
-   * Zásobník príkazov.
+   * @brief Zásobník príkazov.
    * @typedef commandStack_t
    */
   typedef std::stack<std::shared_ptr<ICommand>> commandStack_t;
 
   /**
-   * Ulož príkazy a prepínaj medzi nimi.
+   * @brief Ulož príkazy a prepínaj medzi nimi.
    * @class CommandManager
    */
   class CommandManager{
     /**
-     * Zásobník príkazov, ktoré je možné vrátiť späť.
+     * @brief Zásobník príkazov, ktoré je možné vrátiť späť.
      * @var undoStack_
      */
     commandStack_t undoStack_;
 
     /**
-     * Zásobník stavov, s ktorými je možné urobiť krok vpred.
+     * @brief Zásobník stavov, s ktorými je možné urobiť krok vpred.
      * @var redoStack_
      */
     commandStack_t redoStack_;
 
   public:
     /**
-     * Konštruktor CommandManager.
+     * @brief Konštruktor CommandManager.
      * @method CommandManager
      */
     CommandManager(){}
 
     /**
-     * Vykonaj a ulož príkaz predaný parametrom
+     * @brief Vykonaj a ulož príkaz predaný parametrom
      * @method Execute
      * @param  command príkaz, ktorý má byť vykonaný a uložený.
      */
     void Execute(std::shared_ptr<ICommand> command);
 
     /**
-     * Vrať jeden príkaz späť.
+     * @brief Vrať jeden príkaz späť.
      * @method Undo
      */
     void Undo();
 
     /**
-     * O jeden príkaz krok vpred.
+     * @brief O jeden príkaz krok vpred.
      * @method Redo
      */
     void Redo();
 
     /**
-     * Ulož všetky príkazy do súboru.
+     * @brief Ulož všetky príkazy do súboru.
      * @method SaveToFile
      * @param  outF       otvorený popisovač súboru.
      */
