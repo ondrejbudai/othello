@@ -84,6 +84,11 @@ namespace othello {
          */
         const unsigned size_;
 
+        /**
+         * Šablóna na dvojrozmerné pole
+         * @tparam T Prvý rozmer
+         * @tparam C Druhý rozmer
+         */
         template <typename T, typename C> class iterator_template {
             public:
                 typedef iterator_template self_type;
