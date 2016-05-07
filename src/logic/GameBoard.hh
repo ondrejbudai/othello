@@ -10,7 +10,6 @@
 
 #include<vector>
 #include<memory>
-#include<iostream>
 
 #include "Field.hh"
 
@@ -89,28 +88,111 @@ namespace othello {
          */
         const unsigned size_;
 
+        /**
+         * @brief Šablona třídy pro iterátory kontejneru GameBoard
+         * @tparam T Typ jednoho pole
+         * @tparam C Typ celého kontejneru
+         */
         template <typename T, typename C> class iterator_template {
+            private:
+                /**
+                 * @brief Ukazatel na kontejner, nad kterým je vytvořený iterátor
+                 */
+                C* ptr_;
+
+                /**
+                 * @brief Aktuální souřadnice x
+                 */
+                size_t x_ = 0;
+
+                /**
+                 * @brief Aktuální souřadnice y
+                 */
+                size_t y_;
+
+                /**
+                 * @brief Velikost hrací desky
+                 */
+                size_t size_;
+
             public:
+                /**
+                 * @brief Vlastní typ
+                 */
                 typedef iterator_template self_type;
+
+                /**
+                 * @brief Typ hodnoty
+                 */
                 typedef T value_type;
+
+                /**
+                 * @brief Typ reference na hodnotu
+                 */
                 typedef T& reference;
+
+                /**
+                 * @brief Typ pointeru na hodnotu
+                 */
                 typedef T* pointer;
+
+                /**
+                 * @brief Kategorie iterátoru - toto je dopředný iterátor
+                 */
                 typedef std::forward_iterator_tag iterator_category;
+
+                /**
+                 * @brief Typ rozdílu
+                 */
                 typedef int difference_type;
 
+                /**
+                 * @brief Konstruktor iterátoru
+                 * @param ptr Pointer na iterovaný kontejner
+                 * @param end Vytvoří pointer na konec kontejneru
+                 */
                 iterator_template(C* ptr, bool end = false) : ptr_{ptr}, size_{ptr->size()} {if(end) {y_ = size_;} else {y_ = 0;}}
+
+                /**
+                 * @brief Operátor postinkrementace
+                 */
                 self_type operator++() { self_type i = *this; x_++; if(x_ >= size_){ y_++; x_ = 0;} return i; }
+
+                /**
+                 * @brief Operátor preinrementace
+                 */
                 self_type operator++(int) { x_++; if(x_ >= size_){ y_++; x_ = 0;} return *this; }
+
+                /**
+                 * @brief Operátor dereference - vrátím objekt, na který iterátor poukazuje
+                 */
                 reference operator*() { return (*ptr_)[x_][y_]; }
+
+                /**
+                 * @brief Vrátím pointer na objekt, na který ukazuje iterátor
+                 */
                 pointer operator->() { return &(*ptr_)[x_][y_]; }
+
+                /**
+                 * @brief Operátor rovnosti dvou iterátorů
+                 */
                 bool operator==(const self_type& b) { return ptr_ == b.ptr_ && x_ == b.x_ && y_ == b.y_; }
+
+                /**
+                 * @brief Operátor nerovnosti dvou iterátorů
+                 */
                 bool operator!=(const self_type& b) { return ptr_ != b.ptr_ || x_ != b.x_ || y_ != b.y_; }
-            private:
-                C* ptr_;
-                size_t x_ = 0, y_, size_;
         };
 
+        /**
+         * @brief Iterátor herní deskou
+         */
+
         using iterator = iterator_template<Field, Board>;
+
+        /**
+         * @brief Konstantní iterátor herní deskou
+         */
         using const_iterator = iterator_template<const Field, const Board>;
 
     public:
