@@ -14,8 +14,8 @@ namespace othello {
     {
         ui_.setupUi(this);
 
-        connect(ui_.name1, SIGNAL(textChanged(const QString &)), ui_.player1L, SLOT(setText(const QString &)));
-        connect(ui_.name2, SIGNAL(textChanged(const QString &)), ui_.player2L, SLOT(setText(const QString &)));
+        connect(ui_.name1, &QLineEdit::textChanged, ui_.player1L, &QLabel::setText);
+        connect(ui_.name2, &QLineEdit::textChanged, ui_.player2L, &QLabel::setText);
 
 
     }
