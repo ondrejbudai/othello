@@ -25,42 +25,42 @@ namespace othello {
     OthelloGui::OthelloGui(QWidget* parent) : QWidget(parent) {
 
         //iniciaizujeme UI
-        ui.setupUi(this);
+        ui_.setupUi(this);
 
         //inicializujem si okno pre vyber hracov
-        playerScreen = new PlayerSelection();
+        player_screen_ = new PlayerSelection();
 
         //inicilziujeme a nastavime uvodnu obrazovku
         QImage image("img/startScreenImage.jpg");
-        startScene = new QGraphicsScene();
-        startView = new QGraphicsView(startScene);
+        start_scene_ = new QGraphicsScene();
+        start_view_ = new QGraphicsView(start_scene_);
         QGraphicsPixmapItem* startImage = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-        startScene->addItem(startImage);
-        ui.gameBoardLayout->addWidget(startView);
+        start_scene_->addItem(startImage);
+        ui_.gameBoardLayout->addWidget(start_view_);
 
-        startPanel = new StartPanel;
-        ui.infoPanelLayout->addWidget(startPanel);
+        start_panel_ = new StartPanel;
+        ui_.infoPanelLayout->addWidget(start_panel_);
 
-        connect(playerScreen, &PlayerSelection::on_ButtonStartGame_clicked, this, &OthelloGui::LoadGameConfiguration);
-        connect(startPanel, &StartPanel::on_ButtonNewGame_clicked, this, &OthelloGui::ButtonNewGame);
-        connect(startPanel, &StartPanel::on_ButtonLoadGame_clicked, this, &OthelloGui::ButtonLoadGame);
+        connect(player_screen_, &PlayerSelection::on_ButtonStartGame_clicked, this, &OthelloGui::LoadGameConfiguration);
+        connect(start_panel_, &StartPanel::on_ButtonNewGame_clicked, this, &OthelloGui::ButtonNewGame);
+        connect(start_panel_, &StartPanel::on_ButtonLoadGame_clicked, this, &OthelloGui::ButtonLoadGame);
 
-        timer = new QTimer();
-        timer->setInterval(AI_TIMEOUT);
-        timer->setSingleShot(true);
+        timer_ = new QTimer();
+        timer_->setInterval(AI_TIMEOUT);
+        timer_->setSingleShot(true);
 
-        connect(timer, &QTimer::timeout, this, &OthelloGui::TimeoutSlot);
+        connect(timer_, &QTimer::timeout, this, &OthelloGui::TimeoutSlot);
     }
 
     void OthelloGui::PlayPause(){
-      if (playAi){
-        playAi = false;
-        infoPanel->ChangeIcon(playAi);
+      if (play_ai_){
+        play_ai_ = false;
+        info_panel_->ChangeIcon(play_ai_);
       }
       else{
-        playAi = true;
-        infoPanel->ChangeIcon(playAi);
-        repaintGame();
+        play_ai_ = true;
+        info_panel_->ChangeIcon(play_ai_);
+        RepaintGame();
       }
     }
 
@@ -68,9 +68,9 @@ namespace othello {
     void OthelloGui::LoadGameConfiguration(){
 
         //vektor na stiahnutie mien hracov
-        std::array<QString, 2> names = playerScreen->getNames();
+        std::array<QString, 2> names = player_screen_->getNames();
         //vektor na stiahnutie typu hracov
-        std::array<QString, 2> types = playerScreen->getTypes();
+        std::array<QString, 2> types = player_screen_->getTypes();
 
         std::pair<std::string, std::string> namesStd{names[0].toStdString(), names[1].toStdString()};
 
@@ -98,7 +98,7 @@ namespace othello {
             p2 = PlayerType::HUMAN;
 
         //precitame zvolenu velkost dosky a prekonvertujeme na int
-        QString boardSizeS = playerScreen->getBoardSize();
+        QString boardSizeS = player_screen_->getBoardSize();
         unsigned boardSize = boardSizeS.toUInt();
 
         ShowGameBoard(p1, p2, boardSize, namesStd);
@@ -112,43 +112,43 @@ namespace othello {
 
         game_->SetNames(names);
 
-        infoPanel = new InfoPanel;
-        infoPanel->SetNames(names);
+        info_panel_ = new InfoPanel;
+        info_panel_->SetNames(names);
 
-        scene = new BoardGraphics(*game_);
+        scene_ = new BoardGraphics(*game_);
 
-        connect(scene, &BoardGraphics::ClickSignal, this, &OthelloGui::GameClickSlot);
-        view = new GraphicsView(scene);
-        connect(view, &GraphicsView::MouseMoveSignal, scene, &BoardGraphics::MouseMoveSlot);
-        connect(view, &GraphicsView::EnterSignal, scene, &BoardGraphics::EnterSlot);
-        connect(view, &GraphicsView::LeaveSignal, scene, &BoardGraphics::LeaveSlot);
+        connect(scene_, &BoardGraphics::ClickSignal, this, &OthelloGui::GameClickSlot);
+        view_ = new GraphicsView(scene_);
+        connect(view_, &GraphicsView::MouseMoveSignal, scene_, &BoardGraphics::MouseMoveSlot);
+        connect(view_, &GraphicsView::EnterSignal, scene_, &BoardGraphics::EnterSlot);
+        connect(view_, &GraphicsView::LeaveSignal, scene_, &BoardGraphics::LeaveSlot);
 
-        clearStackedWidget(ui.gameBoardLayout);
-        ui.gameBoardLayout->addWidget(view);
+        clearStackedWidget(ui_.gameBoardLayout);
+        ui_.gameBoardLayout->addWidget(view_);
 
-        clearStackedWidget(ui.infoPanelLayout);
-        ui.infoPanelLayout->addWidget(infoPanel);
+        clearStackedWidget(ui_.infoPanelLayout);
+        ui_.infoPanelLayout->addWidget(info_panel_);
 
-        connect(infoPanel, &InfoPanel::on_ButtonSaveGame_clicked, this, &OthelloGui::ButtonSaveGame);
-        connect(infoPanel, &InfoPanel::on_ButtonREDO_clicked, this, &OthelloGui::ButtonREDO);
-        connect(infoPanel, &InfoPanel::on_ButtonUNDO_clicked, this, &OthelloGui::ButtonUNDO);
-        connect(infoPanel, &InfoPanel::on_PlayPause_clicked, this, &OthelloGui::PlayPause);
+        connect(info_panel_, &InfoPanel::on_ButtonSaveGame_clicked, this, &OthelloGui::ButtonSaveGame);
+        connect(info_panel_, &InfoPanel::on_ButtonREDO_clicked, this, &OthelloGui::ButtonREDO);
+        connect(info_panel_, &InfoPanel::on_ButtonUNDO_clicked, this, &OthelloGui::ButtonUNDO);
+        connect(info_panel_, &InfoPanel::on_PlayPause_clicked, this, &OthelloGui::PlayPause);
 
-        repaintGame();
+        RepaintGame();
     }
 
 
     void OthelloGui::ShowInfoPanel(){
-        clearStackedWidget(ui.infoPanelLayout);
-        ui.infoPanelLayout->addWidget(infoPanel);
+        clearStackedWidget(ui_.infoPanelLayout);
+        ui_.infoPanelLayout->addWidget(info_panel_);
     }
 
 
     // v pravem sloupci, zobrazi obrazovku s vyberem hracu
     void OthelloGui::ButtonNewGame() {
 
-        clearStackedWidget(ui.gameBoardLayout);
-        ui.gameBoardLayout->addWidget(playerScreen);
+        clearStackedWidget(ui_.gameBoardLayout);
+        ui_.gameBoardLayout->addWidget(player_screen_);
     }
 
     //umozni hracovi ulozit hru do suboru
@@ -169,16 +169,16 @@ namespace othello {
 
     void OthelloGui::ButtonUNDO() {
       cmd_.Undo();
-      playAi = false;
-      infoPanel->ChangeIcon(playAi);
-      repaintGame();
+      play_ai_ = false;
+      info_panel_->ChangeIcon(play_ai_);
+      RepaintGame();
     }
 
     void OthelloGui::ButtonREDO() {
       cmd_.Redo();
-      playAi = false;
-      infoPanel->ChangeIcon(playAi);
-      repaintGame();
+      play_ai_ = false;
+      info_panel_->ChangeIcon(play_ai_);
+      RepaintGame();
     }
 
     //nacita subor s ulozenou hrou a danu hru vytvori
@@ -238,7 +238,7 @@ namespace othello {
           cmd_.Execute(c);
         }
         inF.close();
-        repaintGame();
+        RepaintGame();
     }
 
 
@@ -247,15 +247,15 @@ namespace othello {
         if (game_->GetCurrentPlayer().IsAi())
             return;
         else{
-          playAi = true;
-          infoPanel->ChangeIcon(playAi);
+          play_ai_ = true;
+          info_panel_->ChangeIcon(play_ai_);
         }
 
         // update a prekreslit
         std::shared_ptr<ICommand> c(new PlayMove(&game_, mx, my));
         cmd_.Execute(c);
         //game_->event(mx, my);
-        repaintGame();
+        RepaintGame();
     }
 
     void OthelloGui::TimeoutSlot() {
@@ -263,35 +263,35 @@ namespace othello {
         std::shared_ptr<ICommand> c(new PlayMove(&game_, coor.GetX(), coor.GetY()));
         cmd_.Execute(c);
         //game_->event(0, 0);
-        repaintGame();
+        RepaintGame();
     }
 
-    void OthelloGui::repaintGame() {
-        scene->Repaint();
-        infoPanel->WriteScore(game_->GetLogic().GetScore());
-        infoPanel->HighlightPlayer(game_->GetCurrentPlayer().GetColor());
+    void OthelloGui::RepaintGame() {
+        scene_->Repaint();
+        info_panel_->WriteScore(game_->GetLogic().GetScore());
+        info_panel_->HighlightPlayer(game_->GetCurrentPlayer().GetColor());
 
         // zkontroluj konec
         if (game_->IsEnd()) {
-            endGame();
+            EndGame();
             return;
         }
 
-        if (playAi && game_->GetCurrentPlayer().IsAi())
-            timer->start();
+        if (play_ai_ && game_->GetCurrentPlayer().IsAi())
+            timer_->start();
 
     }
 
-    void OthelloGui::endGame() {
-        clearStackedWidget(ui.gameBoardLayout);
-        clearStackedWidget(ui.infoPanelLayout);
+    void OthelloGui::EndGame() {
+        clearStackedWidget(ui_.gameBoardLayout);
+        clearStackedWidget(ui_.infoPanelLayout);
 
         EndScreen* end = new EndScreen;
         end->SetNames(game_->GetNames());
         end->SetScores(game_->GetLogic().GetScore());
 
-        ui.infoPanelLayout->addWidget(startPanel);
-        ui.gameBoardLayout->addWidget(end);
+        ui_.infoPanelLayout->addWidget(start_panel_);
+        ui_.gameBoardLayout->addWidget(end);
 
         game_ = nullptr;
 
