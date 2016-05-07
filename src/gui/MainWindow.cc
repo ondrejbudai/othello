@@ -10,23 +10,23 @@
 
 namespace othello {
     MainWindow::MainWindow(QWidget* parent) : QTabWidget{parent} {
-        ui.setupUi(this);
+        ui_.setupUi(this);
 
-        addGame();
-        connect(this, &MainWindow::tabBarClicked, this, &MainWindow::tabChangedSlot);
-        connect(this, &MainWindow::tabCloseRequested, this, &MainWindow::closeRequestSlot);
+        AddGame();
+        connect(this, &MainWindow::tabBarClicked, this, &MainWindow::TabChangedSlot);
+        connect(this, &MainWindow::tabCloseRequested, this, &MainWindow::CloseRequestSlot);
     }
 
-    void MainWindow::tabChangedSlot(int index) {
+    void MainWindow::TabChangedSlot(int index) {
         // pokud menime na jiny nez posledni, event nas nezajima
         if (index != count() - 1)
             return;
 
         // pridame hru
-        addGame();
+        AddGame();
     }
 
-    void MainWindow::closeRequestSlot(int index) {
+    void MainWindow::CloseRequestSlot(int index) {
         // pridavaci tab se nesmi zavrit
         if (index == count() - 1)
             return;
@@ -36,14 +36,14 @@ namespace othello {
 
         // pokud zbyl pouze pridavaci tab, pridame novy
         if (count() == 1)
-            addGame();
+            AddGame();
 
         // pokud se pridavaci tab stane aktivnim, nastavime aktivnim tab predesly
         if (index == count() - 1)
             setCurrentIndex(index - 1);
     }
 
-    void MainWindow::addGame() {
+    void MainWindow::AddGame() {
         int tabs = count();
 
         // smaz pridavaci tab, pokud existuje
@@ -52,7 +52,7 @@ namespace othello {
 
         // nastavime jmeno hry
         QString gameName("Game #");
-        gameName.append(QString::number(++games));
+        gameName.append(QString::number(++games_));
 
         // pridame tab se hrou
         addTab(new OthelloGui, gameName);

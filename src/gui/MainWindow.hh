@@ -13,22 +13,49 @@
 
 
 namespace othello {
+
+    /**
+     * Hlavní okno, obsahuje panely s jednotlivými instancemi her
+     */
     class MainWindow : public QTabWidget {
     Q_OBJECT
     private:
-        Ui::MainWindow ui;
+        /**
+         * @brief Definice grafiky widgetu
+         */
+        Ui::MainWindow ui_;
 
-        void addGame();
+        /**
+         * @brief Počet vytvořených her od začátku
+         */
+        unsigned games_ = 0;
 
-        unsigned games = 0;
+        /**
+         * @brief Přidat další záložku se hrou
+         */
+        void AddGame();
+
     public:
-        explicit MainWindow(QWidget* parent = 0);
 
-    public slots:
+        /**
+         * Konstruktor widgetu
+         * @param  parent Rodičovský widget
+         */
+        explicit MainWindow(QWidget* parent = nullptr);
 
-        void tabChangedSlot(int index);
+    private slots:
 
-        void closeRequestSlot(int index);
+        /**
+         * Slot na změnu záložky
+         * @param index Index záložky, na kterou se uživatel přepnul
+         */
+        void TabChangedSlot(int index);
+
+        /**
+         * Slot na zavření záložky
+         * @param index Index zavírané záložky
+         */
+        void CloseRequestSlot(int index);
 
     };
 }
