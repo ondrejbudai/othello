@@ -119,9 +119,9 @@ namespace othello {
 
         connect(scene, &BoardGraphics::ClickSignal, this, &OthelloGui::GameClickSlot);
         view = new GraphicsView(scene);
-        connect(view, &GraphicsView::mouseMoveSignal, scene, &BoardGraphics::mouseMoveSlot);
-        connect(view, &GraphicsView::enterSignal, scene, &BoardGraphics::enterSlot);
-        connect(view, &GraphicsView::leaveSignal, scene, &BoardGraphics::leaveSlot);
+        connect(view, &GraphicsView::MouseMoveSignal, scene, &BoardGraphics::MouseMoveSlot);
+        connect(view, &GraphicsView::EnterSignal, scene, &BoardGraphics::EnterSlot);
+        connect(view, &GraphicsView::LeaveSignal, scene, &BoardGraphics::LeaveSlot);
 
         clearStackedWidget(ui.gameBoardLayout);
         ui.gameBoardLayout->addWidget(view);
@@ -267,7 +267,7 @@ namespace othello {
     }
 
     void OthelloGui::repaintGame() {
-        scene->repaint();
+        scene->Repaint();
         infoPanel->WriteScore(game_->GetLogic().GetScore());
         infoPanel->HighlightPlayer(game_->GetCurrentPlayer().GetColor());
 
