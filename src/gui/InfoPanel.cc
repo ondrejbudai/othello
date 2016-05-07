@@ -11,14 +11,14 @@ namespace othello {
     InfoPanel::InfoPanel(QWidget* parent) : QFrame(parent) {
 
         //iniciaizujeme UI
-        ui.setupUi(this);
+        ui_.setupUi(this);
     }
 
     void InfoPanel::WriteScore(std::pair<unsigned, unsigned> score) {
         QString sb = QString::number(score.first);
-        ui.BlackScoreLabel->setText(sb);
+        ui_.BlackScoreLabel->setText(sb);
         QString sw = QString::number(score.second);
-        ui.WhiteScoreLabel->setText(sw);
+        ui_.WhiteScoreLabel->setText(sw);
     }
     // v pravem sloupci, zobrazi obrazovku s vyberem hracu
 
@@ -29,16 +29,16 @@ namespace othello {
 
         black.prepend("<span style=\" font-size:14pt;\">").append("<\\span>");
         white.prepend("<span style=\" font-size:14pt;\">").append("<\\span>");
-        ui.BlackName->setText(black);
-        ui.WhiteName->setText(white);
+        ui_.BlackName->setText(black);
+        ui_.WhiteName->setText(white);
     }
 
-    void InfoPanel::changeIcon(bool to){
+    void InfoPanel::ChangeIcon(bool to){
       if (to){
-          ui.PlayPause->setText("||");
+          ui_.PlayPause->setText("||");
       }
       else{
-        ui.PlayPause->setText("P");
+        ui_.PlayPause->setText("P");
       }
     }
 
@@ -47,11 +47,11 @@ namespace othello {
     void InfoPanel::HighlightPlayer(Color c){
 
         if (c == Color::BLACK){
-            ui.BlackName->setStyleSheet("QLabel { background-color : red}");
-            ui.WhiteName->setStyleSheet("QLabel { background-color : transparent}");
+            ui_.BlackName->setStyleSheet("QLabel { background-color : red}");
+            ui_.WhiteName->setStyleSheet("QLabel { background-color : transparent}");
         } else {
-            ui.WhiteName->setStyleSheet("QLabel { background-color : red}");
-            ui.BlackName->setStyleSheet("QLabel { background-color : transparent}");
+            ui_.WhiteName->setStyleSheet("QLabel { background-color : red}");
+            ui_.BlackName->setStyleSheet("QLabel { background-color : transparent}");
 
 
         }

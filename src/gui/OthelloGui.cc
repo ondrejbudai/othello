@@ -55,11 +55,11 @@ namespace othello {
     void OthelloGui::PlayPause(){
       if (playAi){
         playAi = false;
-        infoPanel->changeIcon(playAi);
+        infoPanel->ChangeIcon(playAi);
       }
       else{
         playAi = true;
-        infoPanel->changeIcon(playAi);
+        infoPanel->ChangeIcon(playAi);
         repaintGame();
       }
     }
@@ -170,14 +170,14 @@ namespace othello {
     void OthelloGui::ButtonUNDO() {
       cmd_.Undo();
       playAi = false;
-      infoPanel->changeIcon(playAi);
+      infoPanel->ChangeIcon(playAi);
       repaintGame();
     }
 
     void OthelloGui::ButtonREDO() {
       cmd_.Redo();
       playAi = false;
-      infoPanel->changeIcon(playAi);
+      infoPanel->ChangeIcon(playAi);
       repaintGame();
     }
 
@@ -248,7 +248,7 @@ namespace othello {
             return;
         else{
           playAi = true;
-          infoPanel->changeIcon(playAi);
+          infoPanel->ChangeIcon(playAi);
         }
 
         // update a prekreslit
