@@ -19,6 +19,10 @@
 #include "../logic/CommandManager.hh"
 
 namespace othello {
+
+    /**
+     * @brief Třída obsahující jednu instanci hry - všechny panely, které k ní patří a hru samotnou
+     */
     class OthelloGui : public QWidget {
     Q_OBJECT
 
