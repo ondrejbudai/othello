@@ -13,22 +13,50 @@
 
 namespace othello {
 
+    /**
+     * @brief Widget umožňující nastavení hráčů v nové hře
+     */
     class PlayerSelection : public QFrame
     {
         Q_OBJECT
 
-    public:
-        explicit PlayerSelection(QWidget *parent = 0);
-        ~PlayerSelection();
-
-        std::array<QString, 2> getNames();
-
-        std::array<QString, 2> getTypes();
-        QString getBoardSize();
-    signals:
-        void on_ButtonStartGame_clicked();
     private:
-        Ui::PlayerSelection *ui;
+        /**
+         * @brief Definice grafiky widgetu
+         */
+        Ui::PlayerSelection ui_;
+
+    public:
+
+        /**
+         * @brief Konstruktor widgetu
+         * @param  parent Rodičovský objekt
+         */
+        explicit PlayerSelection(QWidget *parent = nullptr);
+
+        /**
+         * @brief Zjisti jména hráčů
+         * @return Jména obou hráčů
+         */
+        std::pair<QString, QString> GetNames();
+
+        /**
+         * @brief Zjisti typy hráčů
+         * @return Typy obou hráčů
+         */
+        std::pair<QString, QString> GetTypes();
+
+        /**
+         * Zjisti velikost hrací desky, kterou si uživatel zvolil
+         * @return Velikost hrací desky
+         */
+        QString GetBoardSize();
+
+    signals:
+        /**
+         * Signál kliknutí na tlačítko start nové hry
+         */
+        void on_ButtonStartGame_clicked();
     };
 
 }

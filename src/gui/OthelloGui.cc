@@ -68,15 +68,15 @@ namespace othello {
     void OthelloGui::LoadGameConfiguration(){
 
         //vektor na stiahnutie mien hracov
-        std::array<QString, 2> names = player_screen_->getNames();
+        std::pair<QString, QString> names = player_screen_->GetNames();
         //vektor na stiahnutie typu hracov
-        std::array<QString, 2> types = player_screen_->getTypes();
+        std::pair<QString, QString> types = player_screen_->GetTypes();
 
-        std::pair<std::string, std::string> namesStd{names[0].toStdString(), names[1].toStdString()};
+        std::pair<std::string, std::string> namesStd{names.first.toStdString(), names.second.toStdString()};
 
         //Kontrola ci nie su prazdne mena
         const static QString emptyString{""};
-        if (names[0] == emptyString || names[1] == emptyString){
+        if (names.first == emptyString || names.second == emptyString){
             QMessageBox emptyPlayer;
             emptyPlayer.setText("Meno hraca nemoze byt prazdne");
             emptyPlayer.exec();
@@ -88,17 +88,17 @@ namespace othello {
         const static QString Human{"Human"};
         PlayerType p1;
         PlayerType p2;
-        if (types[0] == AI)
+        if (types.first == AI)
             p1 = PlayerType::AI;
         else
             p1 = PlayerType::HUMAN;
-        if (types[1] == AI)
+        if (types.second == AI)
             p2 = PlayerType::AI;
         else
             p2 = PlayerType::HUMAN;
 
         //precitame zvolenu velkost dosky a prekonvertujeme na int
-        QString boardSizeS = player_screen_->getBoardSize();
+        QString boardSizeS = player_screen_->GetBoardSize();
         unsigned boardSize = boardSizeS.toUInt();
 
         ShowGameBoard(p1, p2, boardSize, namesStd);
