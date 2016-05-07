@@ -27,10 +27,10 @@ namespace othello {
         //iniciaizujeme UI
         ui_.setupUi(this);
 
-        //inicializujem si okno pre vyber hracov
+        //inicializujeme si okno pro vyber hracu
         player_screen_ = new PlayerSelection();
 
-        //inicilziujeme a nastavime uvodnu obrazovku
+        //inicializujeme a nastavime uvodnu obrazovku
         QImage image("img/startScreenImage.jpg");
         start_scene_ = new QGraphicsScene();
         start_view_ = new QGraphicsView(start_scene_);
@@ -38,13 +38,16 @@ namespace othello {
         start_scene_->addItem(startImage);
         ui_.gameBoardLayout->addWidget(start_view_);
 
+        // přídáme start panel
         start_panel_ = new StartPanel;
         ui_.infoPanelLayout->addWidget(start_panel_);
 
+        // signály
         connect(player_screen_, &PlayerSelection::on_ButtonStartGame_clicked, this, &OthelloGui::LoadGameConfiguration);
         connect(start_panel_, &StartPanel::on_ButtonNewGame_clicked, this, &OthelloGui::ButtonNewGame);
         connect(start_panel_, &StartPanel::on_ButtonLoadGame_clicked, this, &OthelloGui::ButtonLoadGame);
 
+        // nastavení Timeru pro AI
         timer_ = new QTimer();
         timer_->setInterval(AI_TIMEOUT);
         timer_->setSingleShot(true);
@@ -109,30 +112,33 @@ namespace othello {
 
         //inicilizujeme hraciu dosku
         game_ = std::make_unique<MainGame>(boardSize, p2, p1);
-
         game_->SetNames(names);
 
+        // přidáme InfoPanel
         info_panel_ = new InfoPanel;
         info_panel_->SetNames(names);
-
-        scene_ = new BoardGraphics(*game_);
-
-        connect(scene_, &BoardGraphics::ClickSignal, this, &OthelloGui::GameClickSlot);
-        view_ = new GraphicsView(scene_);
-        connect(view_, &GraphicsView::MouseMoveSignal, scene_, &BoardGraphics::MouseMoveSlot);
-        connect(view_, &GraphicsView::EnterSignal, scene_, &BoardGraphics::EnterSlot);
-        connect(view_, &GraphicsView::LeaveSignal, scene_, &BoardGraphics::LeaveSlot);
-
-        clearStackedWidget(ui_.gameBoardLayout);
-        ui_.gameBoardLayout->addWidget(view_);
-
         clearStackedWidget(ui_.infoPanelLayout);
         ui_.infoPanelLayout->addWidget(info_panel_);
 
+        // propojíme signály
         connect(info_panel_, &InfoPanel::on_ButtonSaveGame_clicked, this, &OthelloGui::ButtonSaveGame);
         connect(info_panel_, &InfoPanel::on_ButtonREDO_clicked, this, &OthelloGui::ButtonREDO);
         connect(info_panel_, &InfoPanel::on_ButtonUNDO_clicked, this, &OthelloGui::ButtonUNDO);
         connect(info_panel_, &InfoPanel::on_PlayPause_clicked, this, &OthelloGui::PlayPause);
+
+        // přidáme herní obrazovku
+        scene_ = new BoardGraphics(*game_);
+        view_ = new GraphicsView(scene_);
+        clearStackedWidget(ui_.gameBoardLayout);
+        ui_.gameBoardLayout->addWidget(view_);
+
+        // popropojujeme signály
+        connect(scene_, &BoardGraphics::ClickSignal, this, &OthelloGui::GameClickSlot);
+        connect(view_, &GraphicsView::MouseMoveSignal, scene_, &BoardGraphics::MouseMoveSlot);
+        connect(view_, &GraphicsView::EnterSignal, scene_, &BoardGraphics::EnterSlot);
+        connect(view_, &GraphicsView::LeaveSignal, scene_, &BoardGraphics::LeaveSlot);
+
+
 
         RepaintGame();
     }
@@ -154,7 +160,7 @@ namespace othello {
     //umozni hracovi ulozit hru do suboru
     void OthelloGui::ButtonSaveGame() {
 
-        //this is fu**ing awesome!
+        // toto je krásné
         QString fileName_ = QFileDialog::getSaveFileName(this, tr("Save File"), ".", "Text Files (*.txt)");
 
         std::string fileName = fileName_.toUtf8().constData();
@@ -183,7 +189,7 @@ namespace othello {
 
     //nacita subor s ulozenou hrou a danu hru vytvori
     void OthelloGui::ButtonLoadGame() {
-        //TODO kontrola ci je subor ok a teda assert-y prerobit na hlasku o chybnom subore
+
         QString fileName_ = QFileDialog::getOpenFileName(this, tr("Open File"), ".");
 
         // zkontroluj, zda hrac vybral nejaky soubor
