@@ -8,9 +8,9 @@
 #include "StartPanel.hh"
 
 namespace othello {
-    StartPanel::StartPanel(QWidget* parent) : QFrame(parent), ui(new Ui::StartPanel) {
+    StartPanel::StartPanel(QWidget* parent) : QFrame(parent) {
 
         //iniciaizujeme UI
-        ui->setupUi(this);
+        ui_.setupUi(this);
     }
 }
