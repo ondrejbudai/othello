@@ -107,8 +107,9 @@ namespace othello {
         double mx = coords.x();
         double my = coords.y();
 
-        if (mx < 0 || mx >= width() || my < 0 || my >= height())
+        if (mx < 0 || mx >= width() || my < 0 || my >= height()){
             return;
+        }
 
         mouse_over_ = true;
 
@@ -128,6 +129,7 @@ namespace othello {
 
     void BoardGraphics::LeaveSlot(){
         mouse_over_ = false;
+        Repaint();
     }
 
     double BoardGraphics::GetPieceSize() const {
