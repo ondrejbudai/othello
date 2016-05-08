@@ -110,6 +110,8 @@ namespace othello {
         if (mx < 0 || mx >= width() || my < 0 || my >= height())
             return;
 
+        mouse_over_ = true;
+
         unsigned x = static_cast<unsigned>(mx / GetPieceSize());
         unsigned y = static_cast<unsigned>(my / GetPieceSize());
 
