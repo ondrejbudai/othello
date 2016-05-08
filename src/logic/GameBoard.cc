@@ -91,12 +91,4 @@ namespace othello {
         }
     }
 
-    void GameBoard::ClearFlags() const{
-      for(auto fs: board_)
-        for(auto f: fs){
-          f.SetPossible(false);
-      }
-    }
-
-
 }

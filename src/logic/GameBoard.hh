@@ -290,7 +290,6 @@ namespace othello {
          * @brief Zmaže všetky dočasné možnosti.
          * @method ClearFlags
          */
-        void ClearFlags() const;
     };
 }
 
