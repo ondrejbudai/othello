@@ -10,6 +10,7 @@
 
 #include "GameBoard.hh"
 #include <string>
+#include <map>
 
 namespace othello {
 
@@ -71,10 +72,30 @@ namespace othello {
         /**
          * @brief Nastaví aktuálnu hraciu plochu.
          * @method SetGameBoard
-         * @param  old          Hracua plocha, ktorá sa má nastaviť.
+         * @param  old          Hracia plocha, ktorá sa má nastaviť.
          */
         void SetGameBoard(const GameBoard &old){ board_.SetBoard(old);}
 
+        /**
+         * @brief Získa validné ťahy pre hráča.
+         * @method GetValidMoves
+         * @param  current          Aktuálny hráč.
+         * @return Mapa súradníc a počtom obráteních kameňov.
+         */
+        std::multimap<unsigned, Coords> GetValidMoves(Color current) const;
+
+        /**
+         * @brief Zapíše možné ťahy.
+         * @method MarkPossibleMoves
+         * @param  current           Aktuálny hráč.
+         */
+        void MarkPossibleMoves(Color current);
+
+        /**
+         * Zmaže všetky dočasné značky.
+         * @method ClearFlags
+         */
+        void ClearFlags();
     };
 }
 

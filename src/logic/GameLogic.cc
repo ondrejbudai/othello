@@ -9,6 +9,7 @@
 #include "MainGame.hh"
 #include <cassert>
 #include <algorithm>
+#include <map>
 
 namespace othello {
 
@@ -105,4 +106,41 @@ namespace othello {
 
         return score;
     }
+
+    std::multimap<unsigned, Coords> GameLogic::GetValidMoves(Color current) const{
+      std::vector<Coords> emptyFields;
+      // najdi vsechna volna policka
+      for (unsigned x = 0; x < board_.GetSize(); ++x) {
+          for (unsigned y = 0; y < board_.GetSize(); ++y) {
+              if (!board_.GetField(x, y).IsOccupied())
+                  emptyFields.emplace_back(x, y);
+          }
+      }
+      assert(!emptyFields.empty());
+
+
+      // projdi vsechny, uloz do validMoves s indexem pocet upravenych kamenu
+      std::multimap<unsigned, Coords> validMoves;
+      for (const auto& f : emptyFields) {
+          unsigned changedPieces = unsigned(PrepareTurn(f.GetX(), f.GetY(), current).size());
+          if (changedPieces > 0)
+              validMoves.insert({changedPieces, f});
+      }
+    return validMoves;
+    }
+
+    void GameLogic::MarkPossibleMoves(Color current){
+
+      std::multimap<unsigned, Coords> validMoves = GetValidMoves(current);
+      for (auto const& fld: validMoves) {
+          board_.GetField(fld.second).SetPossible(true);
+      }
+    }
+
+    void GameLogic::ClearFlags(){
+      for(auto& f: board_)
+        f.SetPossible(false);
+    }
+
+
 }

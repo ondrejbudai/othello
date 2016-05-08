@@ -285,6 +285,12 @@ namespace othello {
         const_iterator begin() const {return const_iterator{&board_};};
         iterator end(){return iterator{&board_, true};};
         const_iterator end() const {return const_iterator{&board_, true};};
+
+        /**
+         * @brief Zmaže všetky dočasné možnosti.
+         * @method ClearFlags
+         */
+        void ClearFlags() const;
     };
 }
 

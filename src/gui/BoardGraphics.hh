@@ -105,6 +105,11 @@ namespace othello {
         QPixmap blank_;
 
         /**
+         * @brief Sprite mozne herního pole
+         */
+        QPixmap possible_;
+
+        /**
          * @brief Velikost herní desky (kolik kamenů je v herní sloupci)
          */
         unsigned size_;

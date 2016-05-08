@@ -104,6 +104,8 @@ namespace othello {
         //zapis tahu
         logic_.CommitTurn(toChange, current_player.GetColor());
 
+        logic_.ClearFlags();
+
         // zmen hrace, jen pokud ma ten druhy co hrat
         // pokud nema nikdo co hrat, GUI to zjisti
         if(CanPlay(GetOppositeColor(current_player.GetColor()))){
@@ -114,6 +116,8 @@ namespace othello {
             //nejaka hlasa na obrazovku
             std::cout<<"Opposite player has no valid moves\n";
         }
+        //Zapis nove mozne tahy
+        logic_.MarkPossibleMoves((*players_[current_player_num_]).GetColor());
         return true;
     }
 

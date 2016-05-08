@@ -17,27 +17,9 @@ namespace othello {
     }
 
     Coords AI::Play() {
-        std::vector<Coords> emptyFields;
         const GameBoard& board = logic_.GetBoard();
-
-        // najdi vsechna volna policka
-        for (unsigned x = 0; x < board.GetSize(); ++x) {
-            for (unsigned y = 0; y < board.GetSize(); ++y) {
-                if (!board.GetField(x, y).IsOccupied())
-                    emptyFields.emplace_back(x, y);
-            }
-        }
-        assert(!emptyFields.empty());
-
-
-        // projdi vsechny, uloz do validMoves s indexem pocet upravenych kamenu
         std::multimap<unsigned, Coords> validMoves;
-        for (const auto& f : emptyFields) {
-            unsigned changedPieces = unsigned(logic_.PrepareTurn(f.GetX(), f.GetY(), color_).size());
-            if (changedPieces > 0)
-                validMoves.insert({changedPieces, f});
-        }
-
+        validMoves = logic_.GetValidMoves(color_);
         assert(!validMoves.empty());
 
         for (const auto& f : validMoves) {

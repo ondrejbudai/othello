@@ -37,6 +37,7 @@ namespace othello {
         white_disc_ = QPixmap::fromImage(QImage("img/whiteDisc.jpg"));
         white_disc_shadow_ = QPixmap::fromImage(QImage("img/whiteLowOpacity.png"));
         blank_ = QPixmap::fromImage(QImage("img/blank.jpg"));
+        possible_ = QPixmap::fromImage(QImage("img/possible.png"));
 
         // vytvoreni metice spritu pro obrazky
         const double pieceSize = GetPieceSize();
@@ -64,7 +65,11 @@ namespace othello {
                 auto& piece = graphics_matrix_[x][y];
                 Color color;
                 bool occupied = game_.GetBoard().GetField(x, y).GetStatus(color);
-                if (!occupied)
+                bool possible = game_.GetBoard().GetField(x, y).IsPossible();
+                if (possible){
+                  piece->setPixmap(possible_);
+                }
+                else if (!occupied)
                     piece->setPixmap(blank_);
                 else if (color == Color::BLACK)
                     piece->setPixmap(black_disc_);

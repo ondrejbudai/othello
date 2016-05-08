@@ -35,12 +35,17 @@ namespace othello {
          */
         Color piece_;
 
+        /**
+         * @brief Aktuány hráč sem môže položiť kameň.
+         * @var possible_
+         */
+        bool possible_;
     public:
         /**
          * @brief Základný konštruktor na políčko, impicitne neobsadené.
          * @method Field
          */
-        Field() : occupied_{false}{}
+        Field() : occupied_{false}, possible_(false){}
 
         /**
          * @brief Konšturktor na políčko, ktorý ho rovno obsadí.
@@ -70,6 +75,20 @@ namespace othello {
          * @param  color    Farba hráča, ktorý si obsadzuje políčko.
          */
         void SetColor(Color color){piece_ = color; occupied_ = true;}
+
+        /**
+         * @brief Nastaví možnosť obsadené.
+         * @method SetPossible
+         * @param  to          Nová hodnota možnosti obsadené.
+         */
+        void SetPossible(bool to){possible_ = to;}
+
+        /**
+         * @brief Vráti hodnotu možnosti obsadené
+         * @method IsPossible
+         * @return Hodnota možnosti obsadené.
+         */
+        bool IsPossible() const {return possible_;}
     };
 }
 
