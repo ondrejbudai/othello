@@ -14,33 +14,33 @@
 namespace othello {
 
     /**
-     * Hráč hry.
+     * @brief Hráč hry.
      * @class Player
      */
     class Player {
     protected:
 
         /**
-         * Farba hráča.
+         * @brief Farba hráča.
          * @var color_
          */
         Color color_;
 
         /**
-         * Meno hráča.
+         * @brief Meno hráča.
          * @var name_
          */
         std::string name_;
 
         /**
-         * Referenica na hernú logiku.
+         * @brief Referenica na hernú logiku.
          * @var logic_
          */
         const GameLogic& logic_;
     public:
 
         /**
-         * Konšturktor hráča.
+         * @brief Konšturktor hráča.
          * @method Player
          * @arg   c   Farba hráča.
          * @arg logic Referenica na GameLogic
@@ -48,41 +48,41 @@ namespace othello {
         Player(Color c, const GameLogic& logic) : color_{c}, logic_{logic} { }
 
         /**
-         * Deštruktor hráča.
+         * @brief Deštruktor hráča.
          * @method ~Player
          */
         virtual ~Player(){}
 
         /**
-         * Výpočet pozície, ktorú chce hráč hrať.
+         * @brief Výpočet pozície, ktorú chce hráč hrať.
          * @method Play
          * @return Súradnice, ktoré chce hráč zahrať.
          */
         virtual Coords Play() { return {0, 0}; }
 
         /**
-         * Vráti farbu hráča.
+         * @brief Vráti farbu hráča.
          * @method GetColor
          * @return Farba hráča.
          */
         virtual Color GetColor() const { return color_; }
 
         /**
-         * Overenie či sa jedná o človeka, alebo počítač.
+         * @brief Overenie či sa jedná o človeka, alebo počítač.
          * @method IsAi
          * @return False
          */
         virtual bool IsAi() const { return false; }
 
         /**
-         * Nastaví meno hráča.
+         * @brief Nastaví meno hráča.
          * @method SetName
          * @param  name    Meno, ktoré má byť hráčovy nastavené.
          */
         void SetName(std::string name) { name_ = name; }
 
         /**
-         * Vráti meno hráča.
+         * @brief Vráti meno hráča.
          * @method GetName
          * @return Meno hráča.
          */

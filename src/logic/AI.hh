@@ -15,26 +15,25 @@
 namespace othello {
 
     /**
-     * Varianta hráča ovládaného počítačom.
+     * @brief Varianta hráča ovládaného počítačom.
      * @class AI
      */
     class AI : public Player {
     private:
         /**
-         * Mersanne-twister generátor.
+         * @brief Mersanne-twister generátor.
          * @var random_
          */
         std::mt19937 random_;
 
         /**
-         * Level obtiažnosti.
-         * @var random_
+         * @brief Level obtiažnosti.
          */
         double randomness_;
     public:
 
        /**
-       * Construct object.
+       * @brief Construct object.
        * @method AI
        * @param  c                farba hráča
        * @param  logic            ukazateľ na aktuálnu GameLogic
@@ -49,14 +48,14 @@ namespace othello {
         ~AI(){}
 
         /**
-         * Rozlíš medzi hrajúcim človekom a počítačom.
+         * @brief Rozlíš medzi hrajúcim človekom a počítačom.
          * @method IsAi
          * @return True
          */
         virtual bool IsAi() const override { return true; }
 
         /**
-         * AI is vyberie svoj ťah.
+         * @brief AI is vyberie svoj ťah.
          * @method Play
          * @return Súradníce, ktoré AI chce zahrať
          */

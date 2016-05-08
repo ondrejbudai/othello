@@ -14,66 +14,72 @@ namespace othello {
 
     void GraphicsView::resizeEvent(QResizeEvent*) {
         fitInView(0, 0, GAME_SIZE, GAME_SIZE, Qt::KeepAspectRatio);
-        //dynamic_cast<BoardGraphics*>(scene())->setSize(event->size());
     }
 
-    void GraphicsView::mouseMoveEvent(QMouseEvent* mouseEvent) {
-        emit mouseMoveSignal(mapToScene(mouseEvent->pos()));
+    void GraphicsView::mouseMoveEvent(QMouseEvent* mouse_event) {
+        emit MouseMoveSignal(mapToScene(mouse_event->pos()));
     }
 
     void GraphicsView::enterEvent(QEvent*){
-        emit enterSignal();
+        emit EnterSignal();
     }
 
     void GraphicsView::leaveEvent(QEvent*){
-        emit leaveSignal();
+        emit LeaveSignal();
     }
 
-    BoardGraphics::BoardGraphics(const MainGame& board) : QGraphicsScene{0, 0, GAME_SIZE,
-                                                                                                GAME_SIZE},
-                                                                                 size{GAME_SIZE}, board_{board} {
+    BoardGraphics::BoardGraphics(const MainGame& game)
+        : QGraphicsScene{0, 0, GAME_SIZE, GAME_SIZE}, size_{GAME_SIZE}, game_{game} {
 
-        blackDisc = QPixmap::fromImage(QImage("img/blackDisc.jpg"));
-        blackDiscLowOpacity = QPixmap::fromImage(QImage("img/blackLowOpacity.png"));
-        whiteDisc = QPixmap::fromImage(QImage("img/whiteDisc.jpg"));
-        whiteDiscLowOpacity = QPixmap::fromImage(QImage("img/whiteLowOpacity.png"));
-        blank = QPixmap::fromImage(QImage("img/blank.jpg"));
+        // nahrati spritu pro vsechny obrazky
+        black_disc_ = QPixmap::fromImage(QImage("img/blackDisc.jpg"));
+        black_disc_shadow_ = QPixmap::fromImage(QImage("img/blackLowOpacity.png"));
+        white_disc_ = QPixmap::fromImage(QImage("img/whiteDisc.jpg"));
+        white_disc_shadow_ = QPixmap::fromImage(QImage("img/whiteLowOpacity.png"));
+        blank_ = QPixmap::fromImage(QImage("img/blank.jpg"));
 
-        const double pieceSize = getPieceSize();
-        for (unsigned x = 0; x < board_.GetBoard().GetSize(); ++x) {
-            b.emplace_back();
-            for (unsigned y = 0; y < board_.GetBoard().GetSize(); ++y) {
-                QGraphicsPixmapItem* item = new QGraphicsPixmapItem(blank);
-                b[x].push_back(item);
+        // vytvoreni metice spritu pro obrazky
+        const double pieceSize = GetPieceSize();
+        for (unsigned x = 0; x < game_.GetBoard().GetSize(); ++x) {
+            graphics_matrix_.emplace_back();
+            for (unsigned y = 0; y < game_.GetBoard().GetSize(); ++y) {
+                QGraphicsPixmapItem* item = new QGraphicsPixmapItem(blank_);
+                graphics_matrix_[x].push_back(item);
                 item->setScale(pieceSize / item->boundingRect().width());
-                //item->setPos((board_.GetBoard().GetSize() - 1 - x) * pieceSize, (board_.GetBoard().GetSize() - 1 - y) * pieceSize);
                 item->setPos(y * pieceSize, x * pieceSize);
                 addItem(item);
             }
         }
-        repaint();
+
+        // prekresleni aktualniho stavu
+        Repaint();
     }
 
 
-    void BoardGraphics::repaint() {
-        for (unsigned x = 0; x < board_.GetBoard().GetSize(); ++x) {
-            for (unsigned y = 0; y < board_.GetBoard().GetSize(); ++y) {
-                auto& piece = b[x][y];
+    void BoardGraphics::Repaint() {
+
+        // prekresli vsechny pole
+        for (unsigned x = 0; x < game_.GetBoard().GetSize(); ++x) {
+            for (unsigned y = 0; y < game_.GetBoard().GetSize(); ++y) {
+                auto& piece = graphics_matrix_[x][y];
                 Color color;
-                bool occupied = board_.GetBoard().GetField(x, y).GetStatus(color);
+                bool occupied = game_.GetBoard().GetField(x, y).GetStatus(color);
                 if (!occupied)
-                    piece->setPixmap(blank);
+                    piece->setPixmap(blank_);
                 else if (color == Color::BLACK)
-                    piece->setPixmap(blackDisc);
+                    piece->setPixmap(black_disc_);
                 else
-                    piece->setPixmap(whiteDisc);
+                    piece->setPixmap(white_disc_);
             }
         }
 
-        QPixmap& pixmap = board_.GetCurrentPlayer().GetColor() == Color::BLACK ? blackDiscLowOpacity : whiteDiscLowOpacity;
+        // pokud je mys nad hraci deskou, prekresli vsechna pole, kde by doslo po kliknuti ke zmene
+        if(mouse_over_){
+            QPixmap& pixmap = game_.GetCurrentPlayer().GetColor() == Color::BLACK ? black_disc_shadow_ : white_disc_shadow_;
 
-        for(const auto& c: changes){
-            b[c.GetX()][c.GetY()]->setPixmap(pixmap);
+            for(const auto& c: current_changes_){
+                graphics_matrix_[c.GetX()][c.GetY()]->setPixmap(pixmap);
+            }
         }
     }
 
@@ -81,42 +87,43 @@ namespace othello {
         double mx = mouseEvent->scenePos().x();
         double my = mouseEvent->scenePos().y();
 
-        // TODO: otestuj, jestli je tato podminka dostatecne silna!
+        // zjisti, zda jsme stale uvnitr widgetu
         if (mx < 0 || mx > width() || my < 0 || my > height())
             return;
 
-        unsigned x = static_cast<unsigned>(mx / getPieceSize());
-        unsigned y = static_cast<unsigned>(my / getPieceSize());
+        // transformuj souradnice
+        unsigned x = static_cast<unsigned>(mx / GetPieceSize());
+        unsigned y = static_cast<unsigned>(my / GetPieceSize());
 
         emit ClickSignal(y, x);
     }
 
-    void BoardGraphics::mouseMoveSlot(QPointF coords) {
+    void BoardGraphics::MouseMoveSlot(QPointF coords) {
         double mx = coords.x();
         double my = coords.y();
 
-        // TODO: otestuj, jestli je tato podminka dostatecne silna!
         if (mx < 0 || mx >= width() || my < 0 || my >= height())
             return;
 
-        unsigned x = static_cast<unsigned>(mx / getPieceSize());
-        unsigned y = static_cast<unsigned>(my / getPieceSize());
+        unsigned x = static_cast<unsigned>(mx / GetPieceSize());
+        unsigned y = static_cast<unsigned>(my / GetPieceSize());
 
-        changes.clear();
-        changes = board_.GetLogic().PrepareTurn(y, x, board_.GetCurrentPlayer().GetColor());
+        // pridej vsechny mozne změněné pole, pokud by uzivatel klikl na pole, kde je aktuálně kurzor
+        current_changes_.clear();
+        current_changes_ = game_.GetLogic().PrepareTurn(y, x, game_.GetCurrentPlayer().GetColor());
 
-        repaint();
+        Repaint();
     }
 
-    void BoardGraphics::enterSlot(){
-        mouseOver = true;
+    void BoardGraphics::EnterSlot(){
+        mouse_over_ = true;
     }
 
-    void BoardGraphics::leaveSlot(){
-        mouseOver = false;
+    void BoardGraphics::LeaveSlot(){
+        mouse_over_ = false;
     }
 
-    double BoardGraphics::getPieceSize() const {
-        return static_cast<double>(size) / board_.GetBoard().GetSize();
+    double BoardGraphics::GetPieceSize() const {
+        return static_cast<double>(size_) / game_.GetBoard().GetSize();
     }
 }
