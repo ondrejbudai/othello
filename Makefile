@@ -19,4 +19,4 @@ run: all
 
 zip: clean
 	rm xbudai00-xmarus06.zip 2>/dev/null || true
-	zip -r xbudai00-xmarus06.zip Makefile README findqt.sh src img/*{.png,.jpg} Doxyfile
+	zip -r xbudai00-xmarus06.zip Makefile README findqt.sh src img/*{.png,.jpg} Doxyfile examples

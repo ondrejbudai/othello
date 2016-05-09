@@ -18,9 +18,9 @@
 #include "MainGame.hh"
 #include "AI.hh"
 #include "HardAI.hh"
-#include <iostream>
 #include <cassert>
 #include <memory>
+#include <iostream>
 
 //TODO event vracia bool
 //TODO GRaphics scene ma [0,0] v lavom dolnom rohu a rastie smerom hore...
@@ -57,8 +57,6 @@ namespace othello {
 
     MainGame::MainGame(unsigned size, PlayerType white, PlayerType black) : logic_{size} {
         //Inicilaizacia hracov
-        //TODO je to ozaj najlepsie miesto, nie radsej v OthelloGui a main-cli ?
-        std::cout << int(white) << int(black) << "\n";
         if (black == PlayerType::HUMAN){
             players_.push_back(std::make_unique<Player>(Color::BLACK, logic_));
         } else if(black == PlayerType::AI){

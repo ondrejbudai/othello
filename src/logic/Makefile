@@ -1,3 +1,10 @@
+# Makefile
+# Authors:
+# Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+# Matej Marusak <xmarus06@stud.fit.vutbr.cz>
+#
+# Makefile zodpovědný za sestavení logiky hry
+
 SOURCES := AI.cc GameBoard.cc GameLogic.cc HardAI.cc MainGame.cc Player.cc CommandManager.cc Command.cc Field.cc
 
 OBJECTS :=	$(SOURCES:.cc=.o)

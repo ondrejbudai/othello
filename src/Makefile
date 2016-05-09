@@ -1,3 +1,11 @@
+# Makefile
+# Authors:
+# Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+# Matej Marusak <xmarus06@stud.fit.vutbr.cz>
+#
+# Makefile zodpovědný za sestavení obou binárek
+
+
 SOURCES_GUI := main-qt.cc
 OBJECTS_GUI := $(SOURCES_GUI:.cc=.o)
 

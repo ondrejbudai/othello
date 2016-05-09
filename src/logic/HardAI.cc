@@ -6,9 +6,6 @@
  */
 
 #include "HardAI.hh"
-#include <iostream>
-#include <map>
-#include <cassert>
 
 namespace othello {
 
@@ -17,7 +14,6 @@ namespace othello {
     HardAI::HardAI(Color c, const GameLogic& logic, double randomness) : Player(c, logic), randomness_{randomness} {
         std::random_device rd;
         random_ = std::mt19937(rd());
-        std::cout << "Die!" << "\n";
     }
 
     // Coords HardAI::Play2() {

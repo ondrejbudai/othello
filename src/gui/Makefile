@@ -1,3 +1,10 @@
+# Makefile
+# Authors:
+# Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+# Matej Marusak <xmarus06@stud.fit.vutbr.cz>
+#
+# Makefile zodpovědný za sestavení grafického prostředí
+
 SOURCES := BoardGraphics.cc EndScreen.cc InfoPanel.cc MainWindow.cc OthelloGui.cc PlayerSelection.cc StartPanel.cc
 UI := EndScreen.ui InfoPanel.ui MainWindow.ui OthelloGui.ui PlayerSelection.ui StartPanel.ui
 
