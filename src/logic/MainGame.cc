@@ -77,9 +77,6 @@ namespace othello {
 
     Coords MainGame::TellAIToPlay(){
         Player& current_player = *players_[current_player_num_];
-        assert(logic_.CanPlay(current_player.GetColor()));
-        assert(current_player.IsAi());
-
         Coords c = current_player.Play();
         return c;
 
