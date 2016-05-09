@@ -37,4 +37,4 @@ $(MOC_FILES): moc_%.cc: %.hh
 	$(MOC) -o $@ $<
 
 clean:
-	rm $(OBJECTS) $(UI_HEADERS) $(MOC_FILES) ../libgui.a deps 2>/dev/null || true
+	rm $(OBJECTS) ui_*.h moc_*.cc ../libgui.a deps 2>/dev/null || true
