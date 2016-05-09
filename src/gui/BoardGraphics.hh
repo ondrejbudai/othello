@@ -119,6 +119,9 @@ namespace othello {
          */
         const MainGame& game_;
 
+        /**
+         * @brief Zobrazovanie_nápovedy
+         */
         int show_help;
 
         /**
