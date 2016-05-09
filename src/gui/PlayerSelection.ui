@@ -109,6 +109,11 @@
      <string>AI</string>
     </property>
    </item>
+   <item>
+    <property name="text">
+     <string>HardAI</string>
+    </property>
+   </item>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -165,6 +170,11 @@
    <item>
     <property name="text">
      <string>AI</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>HardAI</string>
     </property>
    </item>
   </widget>

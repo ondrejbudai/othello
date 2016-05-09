@@ -1,4 +1,4 @@
-SOURCES := AI.cc GameBoard.cc GameLogic.cc MainGame.cc Player.cc CommandManager.cc Command.cc Field.cc
+SOURCES := AI.cc GameBoard.cc GameLogic.cc HardAI.cc MainGame.cc Player.cc CommandManager.cc Command.cc Field.cc
 
 OBJECTS :=	$(SOURCES:.cc=.o)
 

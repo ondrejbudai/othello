@@ -9,8 +9,9 @@
 #define OTHELLO_MAINGAME_HH
 
 #include <memory>
-#include "AI.hh"
+#include "GameLogic.hh"
 #include "GameBoard.hh"
+#include "Player.hh"
 #include <fstream>
 
 namespace othello {
@@ -19,7 +20,7 @@ namespace othello {
      * @enum PlayerType
      */
     enum class PlayerType {
-        HUMAN, AI
+        HUMAN, AI, HARD_AI
     };
 
     /**
@@ -78,14 +79,6 @@ namespace othello {
          * @return True ak už nie sú validné ťahy, inak false.
          */
         bool IsEnd() const;
-
-        /**
-         * @brief Vracia stav hry pre hráča.
-         * @method CanPlay
-         * @param  color   Hráč, pre ktorého zistujeme stav hry.
-         * @return         True ak má validný ťah, inak false.
-         */
-        bool CanPlay(Color color) const;
 
         /**
          * @brief Vracia referenciu na hernú logiku.

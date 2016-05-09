@@ -87,18 +87,26 @@ namespace othello {
         }
 
         //Spracujeme hracov podla ich typu
-        const static QString AI{"AI"};
-        const static QString Human{"Human"};
+        const static QString ai{"AI"};
+        const static QString human{"Human"};
+        const static QString hard_ai{"HardAI"};
         PlayerType p1;
         PlayerType p2;
-        if (types.first == AI)
+
+        if (types.first == ai){
             p1 = PlayerType::AI;
-        else
+        } else if (types.first == human) {
             p1 = PlayerType::HUMAN;
-        if (types.second == AI)
+        } else {
+            p1 = PlayerType::HARD_AI;
+        }
+        if (types.second == ai){
             p2 = PlayerType::AI;
-        else
+        } else if (types.second == human) {
             p2 = PlayerType::HUMAN;
+        } else {
+            p2 = PlayerType::HARD_AI;
+        }
 
         //precitame zvolenu velkost dosky a prekonvertujeme na int
         QString boardSizeS = player_screen_->GetBoardSize();

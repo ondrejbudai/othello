@@ -96,6 +96,14 @@ namespace othello {
          * @method ClearFlags
          */
         void ClearFlags();
+
+        /**
+         * @brief Vracia stav hry pre hráča.
+         * @method CanPlay
+         * @param  color   Hráč, pre ktorého zistujeme stav hry.
+         * @return         True ak má validný ťah, inak false.
+         */
+        bool CanPlay(Color color) const;
     };
 }
 

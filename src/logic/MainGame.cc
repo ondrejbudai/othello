@@ -16,6 +16,8 @@
  */
 
 #include "MainGame.hh"
+#include "AI.hh"
+#include "HardAI.hh"
 #include <iostream>
 #include <cassert>
 #include <memory>
@@ -56,21 +58,26 @@ namespace othello {
     MainGame::MainGame(unsigned size, PlayerType white, PlayerType black) : logic_{size} {
         //Inicilaizacia hracov
         //TODO je to ozaj najlepsie miesto, nie radsej v OthelloGui a main-cli ?
-        if (black == PlayerType::HUMAN)
+        std::cout << int(white) << int(black) << "\n";
+        if (black == PlayerType::HUMAN){
             players_.push_back(std::make_unique<Player>(Color::BLACK, logic_));
-        else
+        } else if(black == PlayerType::AI){
             players_.push_back(std::make_unique<AI>(Color::BLACK, logic_, StrengtOfThatBastard ));
+        } else
+            players_.push_back(std::make_unique<HardAI>(Color::BLACK, logic_, StrengtOfThatBastard ));
 
-        if (white == PlayerType::HUMAN)
+        if (white == PlayerType::HUMAN){
             players_.push_back(std::make_unique<Player>(Color::WHITE, logic_));
-        else
+        } else if(white == PlayerType::AI){
             players_.push_back(std::make_unique<AI>(Color::WHITE, logic_,  StrengtOfThatBastard ));
+        } else
+            players_.push_back(std::make_unique<HardAI>(Color::WHITE, logic_, StrengtOfThatBastard ));
 
     }
 
     Coords MainGame::TellAIToPlay(){
         Player& current_player = *players_[current_player_num_];
-        assert(CanPlay(current_player.GetColor()));
+        assert(logic_.CanPlay(current_player.GetColor()));
         assert(current_player.IsAi());
 
         Coords c = current_player.Play();
@@ -85,7 +92,7 @@ namespace othello {
     bool MainGame::Event(unsigned x, unsigned y) { // event funkce
 
         Player& current_player = *players_[current_player_num_];
-        assert(CanPlay(current_player.GetColor()));
+        assert(logic_.CanPlay(current_player.GetColor()));
 
 
       // priprava tahu
@@ -108,10 +115,10 @@ namespace othello {
 
         // zmen hrace, jen pokud ma ten druhy co hrat
         // pokud nema nikdo co hrat, GUI to zjisti
-        if(CanPlay(GetOppositeColor(current_player.GetColor()))){
+        if(logic_.CanPlay(GetOppositeColor(current_player.GetColor()))){
             current_player_num_++;
             current_player_num_ = current_player_num_ % 2;
-        } else if (CanPlay(current_player.GetColor())){
+        } else if (logic_.CanPlay(current_player.GetColor())){
             //TODO nemoze hrat super, ale mozme hrat my
             //nejaka hlasa na obrazovku
             std::cout<<"Opposite player has no valid moves\n";
@@ -135,21 +142,7 @@ namespace othello {
 
     //Funkcia zistuje ci moze aspon jeden hrac hrat, ak nie jedna sa o koneic hry
     bool MainGame::IsEnd() const {
-        return !CanPlay(Color::BLACK) && !CanPlay(Color::WHITE);
-    }
-
-    //Urcuje ci moze hrat hrac zadany parametrom
-    bool MainGame::CanPlay(Color color) const {
-        const GameBoard& board = logic_.GetBoard();
-
-        for (unsigned x = 0; x < board.GetSize(); ++x) {
-            for (unsigned y = 0; y < board.GetSize(); ++y) {
-                if (!logic_.PrepareTurn(x, y, color).empty())
-                    return true;
-            }
-        }
-
-        return false;
+        return !logic_.CanPlay(Color::BLACK) && !logic_.CanPlay(Color::WHITE);
     }
 
     //Nastvuje mena hracov
