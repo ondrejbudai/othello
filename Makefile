@@ -15,7 +15,7 @@ doxygen:
 	doxygen
 
 run: all
-	./othello
+	./hra2016
 
 zip: clean
 	rm xbudai00-xmarus06.zip 2>/dev/null || true

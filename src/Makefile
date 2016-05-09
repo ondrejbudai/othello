@@ -12,8 +12,8 @@ SUB_CLEAN := $(SUBDIRECTORIES:%=%clean)
 GUI_LIBS:= -L$(QT_LIB) -lQt5Widgets -lQt5Gui -lQt5Core -fPIC
 GUI_INCLUDES :=	-I$(QT_INC)/QtCore -I$(QT_INC)/QtGui -I$(QT_INC)/QtWidgets -I$(QT_INC) -fPIC
 
-OTHELLO := ../othello
-OTHELLO_CLI := ../othello-cli
+OTHELLO := ../hra2016
+OTHELLO_CLI := ../hra2016-cli
 
 CXXFLAGS := -std=c++14 -Wall -Wextra -pedantic -g
 
