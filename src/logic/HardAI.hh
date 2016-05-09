@@ -61,6 +61,15 @@ namespace othello {
         virtual Coords Play() override;
 
     private:
+        /**
+         * @brief  Metoda pro rozhodnuti
+         * @param  depth Zbývající hloubka
+         * @param  alpha Alpha parametr
+         * @param  beta  Beta parametr
+         * @param  me    Ukazatel, jestli jsem na tahu já (maximalizující hráč)
+         * @param  old   Aktuální herní deska
+         * @return       Hodnotu algoritmu na aktuální úrovni
+         */
         int Alphabeta(unsigned depth, int alpha, int beta, bool me, const GameLogic& old);
     };
 

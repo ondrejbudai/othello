@@ -56,7 +56,8 @@ namespace othello {
     // }
 
     int HardAI::Alphabeta(unsigned depth, int alpha, int beta, bool me, const GameLogic& old) {
-    	int v;
+
+        // spocti skore, pokud jsme dosahli pozadovane hloubky
     	if (depth == 0){
             auto score = old.GetScore();
             if(color_ == Color::BLACK){
@@ -65,36 +66,49 @@ namespace othello {
                 return score.second - score.first;
             }
         }
+
+        // kdo aktualne jsem
         Color current_color = me ? color_ : GetOppositeColor(color_);
 
+        // pokud v tomhle zanoreni vubec nemuzu hrat, vratim relevantni hodnotu alphy/bety
         if(!old.CanPlay(current_color)){
             return me ? alpha : beta;
         }
+
+        // vezmi mozne tahy
         auto possible_moves = old.GetValidMoves(current_color);
+        int v;
 
     	if (me) {
+            // maximizujici hrac
     		v = std::numeric_limits<int>::min();
     		for (const auto& c: possible_moves) {
+                // okopiruj logiku a proved tah
                 GameLogic logic = old;
                 logic.CommitTurn(logic.PrepareTurn(c.second.GetX(), c.second.GetY(), current_color), current_color);
+
+                // rekurzni sestup dal
     			v = std::max(v, Alphabeta(depth - 1, alpha, beta, false, logic));
     			alpha = std::max(alpha, v);
+                // alpha-beta rez zde
     			if (alpha >= beta)
     				break;
     		}
-    		return v;
+    		return alpha;
     	} else {
+            // minimalizujici hrac
     		v = std::numeric_limits<int>::max();
     		for (const auto& c : possible_moves) {
                 GameLogic logic = old;
                 logic.CommitTurn(logic.PrepareTurn(c.second.GetX(), c.second.GetY(), current_color), current_color);
     			v = std::min(v, Alphabeta(depth - 1, alpha, beta, true, logic));
     			beta = std::min(beta, v);
+                // alpha-beta rez zde
     			if (alpha >= beta)
     				break;
 
     		}
-    		return v;
+    		return beta;
     	}
     }
 
