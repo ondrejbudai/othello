@@ -7,3 +7,4 @@ ui*.h
 *.gch
 deps
 doc
+*.zip
