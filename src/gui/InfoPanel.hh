@@ -80,6 +80,11 @@ namespace othello {
          */
         void on_PlayPause_clicked();
 
+        /**
+         * @brief Signál zmeny zaškrtávatka pre zobrazovanie pomoci
+         */
+        void on_CheckHelp_stateChanged(int state);
+
 
     };
 }
