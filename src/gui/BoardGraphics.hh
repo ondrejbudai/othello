@@ -119,6 +119,8 @@ namespace othello {
          */
         const MainGame& game_;
 
+        int show_help;
+
         /**
          * @brief Seznam kamenů, které se změní, pokud hráč provede zamýšlený tah
          */
@@ -128,6 +130,7 @@ namespace othello {
          * @brief Indikátor, zda je kurzor nad deskou
          */
         bool mouse_over_ = false;
+
 
         /**
          * @brief Matice spritů herních polí a kamenů na desce
@@ -140,6 +143,13 @@ namespace othello {
          */
         double GetPieceSize() const;
     public:
+
+      /**
+       * @brief Zmena stavu zobrazovania nápovedy
+       * @param state Nový stav pre zobrazenie nápovedy
+       */
+        void Set_show_help(int state){show_help = state;}
+
         /**
          * @brief Konstruktor grafiky herní desky
          * @param game Vykreslovaná hra

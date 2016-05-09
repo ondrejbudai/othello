@@ -200,6 +200,19 @@
     <string>||</string>
    </property>
   </widget>
+  <widget class="QCheckBox" name="CheckHelp">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>370</y>
+     <width>95</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Help </string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

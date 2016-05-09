@@ -58,7 +58,6 @@ namespace othello {
 
 
     void BoardGraphics::Repaint() {
-
         // prekresli vsechny pole
         for (unsigned x = 0; x < game_.GetBoard().GetSize(); ++x) {
             for (unsigned y = 0; y < game_.GetBoard().GetSize(); ++y) {
@@ -66,7 +65,7 @@ namespace othello {
                 Color color;
                 bool occupied = game_.GetBoard().GetField(x, y).GetStatus(color);
                 bool possible = game_.GetBoard().GetField(x, y).IsPossible();
-                if (possible){
+                if (show_help && possible){
                   piece->setPixmap(possible_);
                 }
                 else if (!occupied)
@@ -79,7 +78,7 @@ namespace othello {
         }
 
         // pokud je mys nad hraci deskou, prekresli vsechna pole, kde by doslo po kliknuti ke zmene
-        if(mouse_over_){
+        if(show_help && mouse_over_){
             QPixmap& pixmap = game_.GetCurrentPlayer().GetColor() == Color::BLACK ? black_disc_shadow_ : white_disc_shadow_;
 
             for(const auto& c: current_changes_){

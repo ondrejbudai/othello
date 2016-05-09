@@ -88,6 +88,11 @@ namespace othello {
         bool play_ai_ = true;
 
         /**
+         * @brief Zobrazuje sa nápoveda
+         */
+        int show_help = 0;
+
+        /**
          * @brief Vytvoř a zobraz herní desku
          * @param p1        Typ prvního hráče
          * @param p2        Typ druhého hráče
@@ -173,6 +178,12 @@ namespace othello {
          * @brief Slot vypršení času časovače pro AI
          */
         void TimeoutSlot();
+
+        /**
+         * @brief Nastavuje zmenu zobrazovania pomoci
+         * @state Nový stav zobrazovania
+         */
+        void ToggleHelp(int state);
     };
 }
 

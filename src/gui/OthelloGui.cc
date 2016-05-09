@@ -67,6 +67,12 @@ namespace othello {
       }
     }
 
+    void OthelloGui::ToggleHelp(int state){
+      show_help = state;
+      RepaintGame();
+    }
+
+
     //Po kliknuti na zaciatok hry spracuje nastavenia hry, ktore si uziatel zvolil
     void OthelloGui::LoadGameConfiguration(){
 
@@ -125,6 +131,7 @@ namespace othello {
         connect(info_panel_, &InfoPanel::on_ButtonREDO_clicked, this, &OthelloGui::ButtonREDO);
         connect(info_panel_, &InfoPanel::on_ButtonUNDO_clicked, this, &OthelloGui::ButtonUNDO);
         connect(info_panel_, &InfoPanel::on_PlayPause_clicked, this, &OthelloGui::PlayPause);
+        connect(info_panel_, &InfoPanel::on_CheckHelp_stateChanged, this, &OthelloGui::ToggleHelp);
 
         // přidáme herní obrazovku
         scene_ = new BoardGraphics(*game_);
@@ -273,6 +280,7 @@ namespace othello {
     }
 
     void OthelloGui::RepaintGame() {
+        scene_->Set_show_help(show_help);
         scene_->Repaint();
         info_panel_->WriteScore(game_->GetLogic().GetScore());
         info_panel_->HighlightPlayer(game_->GetCurrentPlayer().GetColor());
