@@ -51,7 +51,7 @@ namespace othello {
          * @method IsAi
          * @return True
          */
-        virtual bool IsAi() const override { return true; }
+        virtual int IsAi() const override { return 2; }
 
         /**
          * @brief AI is vyberie svoj ťah.

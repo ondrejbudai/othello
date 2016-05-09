@@ -232,10 +232,15 @@ namespace othello {
         PlayerType p2;
         if (types.first == "AI")
             p1 = PlayerType::AI;
+        else if (types.first == "HARDAI")
+            p1 = PlayerType::HARD_AI;
         else
             p1 = PlayerType::HUMAN;
+
         if (types.second == "AI")
             p2 = PlayerType::AI;
+        else if (types.second == "HARDAI")
+            p2 = PlayerType::HARD_AI;
         else
             p2 = PlayerType::HUMAN;
 

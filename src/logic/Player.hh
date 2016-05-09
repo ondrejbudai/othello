@@ -72,7 +72,7 @@ namespace othello {
          * @method IsAi
          * @return False
          */
-        virtual bool IsAi() const { return false; }
+        virtual int IsAi() const { return 0; }
 
         /**
          * @brief Nastaví meno hráča.

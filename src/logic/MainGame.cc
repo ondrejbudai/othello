@@ -131,9 +131,24 @@ namespace othello {
      bool MainGame::SaveGameToFile(std::ofstream &outF){
         //TODO HERE
         outF<<players_[0]->GetName()<<std::endl;
-        outF<<(players_[0]->IsAi() ? "AI":"HUMAN")<<std::endl;
+
+        int p = players_[0]->IsAi();
+        if ( p == 0)
+          outF<<"HUMAN"<<std::endl;
+        else if (p == 1)
+          outF<<"AI"<<std::endl;
+        else
+          outF<<"HARDAI"<<std::endl;
+
         outF<<players_[1]->GetName()<<std::endl;
-        outF<<(players_[1]->IsAi() ? "AI":"HUMAN")<<std::endl;
+        p = players_[1]->IsAi();
+        if ( p == 0)
+          outF<<"HUMAN"<<std::endl;
+        else if (p == 1)
+          outF<<"AI"<<std::endl;
+        else
+          outF<<"HARDAI"<<std::endl;
+
         outF<<logic_.GetBoard().GetSize()<<std::endl;
         return true;
      }
