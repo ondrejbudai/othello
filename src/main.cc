@@ -11,6 +11,11 @@
 #include <memory>
 #include "logic/GameBoard.hh"
 
+/**
+ * @brief Prostor jmen pro hru Othello
+ */
+namespace othello{}
+
 int main() {
     //vytvorime obrazovky
     //so vsetkym klikanim a pod

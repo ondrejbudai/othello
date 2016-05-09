@@ -1,0 +1,30 @@
+Othello
+=======
+
+Autoři:
+-------
+- Ondřej Budai <xbudai00@stud.fit.vutbr.cz>
+- Matej Marušák <xmarus06@stud.fit.vutbr.cz>
+
+Sestavení a spuštění:
+---------------------
+Sestavení hry probíhá následovně:
+
+$ make
+
+Spuštění hry lze provést taktéž pomocí příkazu make následovně:
+
+$ make run
+
+Minimální požadavky:
+--------------------
+
+- Kompilátor jazyka C++, kompatibilní s normou C++14
+- Qt 5.x
+- GNU Make
+- Bash
+- Pkg-config
+
+Popis:
+------
+Othello je implementací stejnojmenné deskové hry, známé také jako Reversi. Podporována je hra dvou hráčů na jednom počítači, případně je možné  hrát i proti počítači - implementovány jsou 2 různé algoritmy pro umělou inteligence. Oproti původně hře je implementována i možnost hry s různými velikostmi herní desky, hráč si může vybrat mezi 6x6, 8x8 a 10x10. Hra umožňuje ukládat a načítat hry, taktéž je možné mít rozehraných více her najednou.
